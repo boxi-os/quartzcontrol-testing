@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "plugins": {
+    "frame-1787507702336": {
+      "source": "/Users/boxi/Documents/gui-test/.quartz-gui/authored-frames/frame-1787507702336",
+      "resolved": "/Users/boxi/Documents/gui-test/.quartz-gui/authored-frames/frame-1787507702336",
+      "commit": "local",
+      "installedAt": "2026-08-23T17:56:35.090Z"
+    },
+    "frame-1787519243386": {
+      "source": "/Users/boxi/Documents/gui-test/.quartz-gui/authored-frames/frame-1787519243386",
+      "resolved": "/Users/boxi/Documents/gui-test/.quartz-gui/authored-frames/frame-1787519243386",
+      "commit": "local",
+      "installedAt": "2026-08-23T21:09:20.726Z"
+    }
+  }
+}

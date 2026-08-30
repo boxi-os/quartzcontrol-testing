@@ -12,3 +12,6 @@ replit.nix
 .quartz/
 quartz/cli/tui/dist/
 .turbo/
+
+# Arbeitsverzeichnis von QuartzControl (Backups, Presets, Deploy-Manifest)
+.quartz-gui/
