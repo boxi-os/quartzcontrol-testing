@@ -4,10 +4,9 @@ configuration:
   pageTitleSuffix: ""
   enableSPA: true
   enablePopovers: true
-  analytics:
-    provider: plausible
+  analytics: null
   locale: de-DE
-  baseUrl: testing.borkel.net/quartzcontrol-test-mac
+  baseUrl: boxi-os.github.io/quartzcontrol-testing
   ignorePatterns:
     - private
     - templates
@@ -217,13 +216,13 @@ plugins:
     enabled: true
     layout:
       position: beforeBody
-      priority: 20
+      priority: 40
     order: 340
   - source: "@quartz-community/tag-list"
     enabled: false
     layout:
       position: beforeBody
-      priority: 30
+      priority: 50
     order: 350
   - source: "@quartz-community/page-title"
     enabled: true
@@ -235,21 +234,21 @@ plugins:
     enabled: true
     layout:
       position: left
-      priority: 30
+      priority: 40
       group: toolbar
     order: 370
   - source: "@quartz-community/reader-mode"
     enabled: true
     layout:
       position: left
-      priority: 40
+      priority: 30
       group: toolbar
     order: 380
   - source: "@quartz-community/breadcrumbs"
     enabled: true
     layout:
       position: beforeBody
-      priority: 5
+      priority: 20
       condition: not-index
     order: 390
   - source: "@quartz-community/comments"
@@ -301,7 +300,7 @@ plugins:
     order: 450
     layout:
       position: beforeBody
-      priority: 15
+      priority: 30
       display: all
   - source: "@quartz-community/obsidian-plugin-excalidraw"
     enabled: false
