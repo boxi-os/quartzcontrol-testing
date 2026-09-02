@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+    <channel>
+      <title>test2</title>
+      <link>https://boxi-os.github.io/quartzcontrol-testing</link>
+      <description>Last 10 notes on test2</description>
+      <generator>Quartz -- quartz.jzhao.xyz</generator>
+      <item>
+    <title>artikel</title>
+    <link>https://boxi-os.github.io/quartzcontrol-testing/tags/artikel</link>
+    <guid>https://boxi-os.github.io/quartzcontrol-testing/tags/artikel</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Wed, 02 Sep 2026 12:07:10 GMT</pubDate>
+  </item><item>
+    <title>Tag-Übersicht</title>
+    <link>https://boxi-os.github.io/quartzcontrol-testing/tags/</link>
+    <guid>https://boxi-os.github.io/quartzcontrol-testing/tags/</guid>
+    <description><![CDATA[  ]]></description>
+    <pubDate>Wed, 02 Sep 2026 12:07:10 GMT</pubDate>
+  </item><item>
+    <title>index</title>
+    <link>https://boxi-os.github.io/quartzcontrol-testing/</link>
+    <guid>https://boxi-os.github.io/quartzcontrol-testing/</guid>
+    <description><![CDATA[ Alle relevanten Elemente zum layouten (h1) Bild (h2) Texte (h2) Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ]]></description>
+    <pubDate>Sun, 30 Aug 2026 00:50:45 GMT</pubDate>
+  </item>
+    </channel>
+  </rss>
