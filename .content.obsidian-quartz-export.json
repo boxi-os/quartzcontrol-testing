@@ -1,0 +1,9 @@
+{
+  "tool": "obsidian-quartz5-exporter",
+  "manifest_version": 2,
+  "site": "css",
+  "content_dir_name": "content",
+  "markdown_count": 62,
+  "asset_count": 0,
+  "policy": "Staging-Baum 60 Publish/<site>/ 1:1 + publish:true je Datei + Public-Asset-Allowlist"
+}

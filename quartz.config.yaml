@@ -110,6 +110,8 @@ plugins:
   - source: "@quartz-community/quartz-fonts"
     enabled: true
     order: 130
+    options:
+      fontOrigin: selfHosted
   - source: "@quartz-themes/core"
     enabled: false
     options:
@@ -128,7 +130,7 @@ plugins:
     enabled: true
     order: 150
   - source: "@quartz-community/explicit-publish"
-    enabled: false
+    enabled: true
     order: 160
   - source: "@quartz-community/unlisted-pages"
     enabled: true
@@ -309,11 +311,7 @@ plugins:
       darkMode: auto
       exportPadding: 20
     order: 460
-  - source: /Users/boxi/Documents/gui-test/.quartz-gui/authored-frames/frame-1787507702336
-    enabled: true
-    options: {}
-    order: 50
-  - source: /Users/boxi/Documents/gui-test/.quartz-gui/authored-frames/frame-1787519243386
+  - source: /Users/boxi/Documents/QuartzProjekte/gui-test/.quartz-gui/authored-frames/frame-1787519243386
     enabled: true
     options: {}
     order: 50
