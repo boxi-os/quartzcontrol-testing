@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: Schatten nur im angedockten Zustand – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+:root { --header-height: 4rem; }
+.site-header { position: sticky; top: 0; z-index: 10; min-block-size: var(--header-height); background: Canvas; }
+.site-header__inner { display: flex; align-items: center; min-block-size: var(--header-height); padding: 0 1rem; background: #fff; }
+</style>
+<style data-beispiel>
+@supports (container-type: scroll-state) {
+  .site-header {
+    container-type: scroll-state;
+  }
+
+  .site-header__inner {
+    transition: box-shadow 0.3s ease;
+
+    @container scroll-state(stuck: top) {
+      box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
+    }
+  }
+}
+</style>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „Sticky-Header einrichten“</p>
+  <h1>Schatten nur im angedockten Zustand</h1>
+  <p>Scrollen: Sobald der Header oben andockt, bekommt er einen Schatten.</p>
+  <p class="klein">Scroll-State-Queries: nur Chrome/Edge ab 133. In anderen Browsern bleibt der Schatten aus.</p>
+  <p class="klein">Getestet in Chrome 152. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<header class="site-header">
+  <div class="site-header__inner">Seitenkopf</div>
+</header>
+<div class="beispiel-buehne fuell"><p>Fülltext 1: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 2: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 3: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 4: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 5: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 6: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 7: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 8: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 9: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 10: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 11: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 12: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p></div>
+</body>
+</html>

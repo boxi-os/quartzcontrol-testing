@@ -33,6 +33,8 @@ CSS hat zwei Mechanismen für Bewegung:
 }
 ```
 
+<a href="beispiele/transitions-01-transition-und-keyframes.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
+
 ## Hintergrund
 
 Transitions heißen auch „implizite“ Übergänge, weil nur Anfang und Ende feststehen.[^mdn-transitions] Keyframes machen den Ablauf explizit.
@@ -84,6 +86,8 @@ Flüssig bleiben Animationen von **`transform` und `opacity`**. Eigenschaften, d
 }
 ```
 
+<a href="beispiele/transitions-02-linear-easing.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
+
 Das Beispiel (kurz überschwingen, zurückfedern) ist eigene Konstruktion aus der Syntax. In Chrome 152 getestet: Bei `scale` von 1 auf 2 erreicht der Wert zwischendurch etwa 2,17 und pendelt dann auf 2 ein.
 
 ### Custom Properties animieren
@@ -117,6 +121,8 @@ Karte beim Hover leicht anheben – nur `translate` und Schatten auf einem Pseud
 .card:hover::after { opacity: 1; }
 ```
 
+<a href="beispiele/transitions-03-karte-anheben.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
+
 Das Muster „Schatten per `opacity` einblenden statt `box-shadow` animieren“ folgt der Regel aus web.dev, ist dort aber nicht vorgeführt.
 
 Endloser Lade-Spinner:
@@ -129,6 +135,8 @@ Endloser Lade-Spinner:
   animation: spin 1s linear infinite;
 }
 ```
+
+<a href="beispiele/transitions-04-spinner.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
 Beide Beispiele gehören für bewegungsempfindliche Menschen in `@media (prefers-reduced-motion: no-preference)` – siehe [[animation/barrierearme-animationen|Barrierearme Animationen]]. Endlos laufende Bewegung neben anderem Inhalt kann außerdem unter WCAG 2.2.2 fallen, sobald sie länger als fünf Sekunden läuft. Ob und wann Ladeanzeigen als „essenziell“ ausgenommen sind, ist hier nicht ausgewertet.
 

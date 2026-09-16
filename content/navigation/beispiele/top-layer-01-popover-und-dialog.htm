@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: Popover und modaler Dialog – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+
+</style>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „Top Layer mit popover und dialog“</p>
+  <h1>Popover und modaler Dialog</h1>
+  <p>„Info“ öffnet ein nicht modales Popover (Klick daneben schließt). „Löschen …“ öffnet einen modalen Dialog; die Seite dahinter ist gesperrt, <code>Esc</code> schließt.</p>
+  <p class="klein">Der Dialog öffnet über Invoker Commands (Chrome 135, Firefox 144, Safari 26.2).</p>
+  <p class="klein">Getestet in Chrome 152. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<main class="beispiel-buehne">
+<button popovertarget="info">Info</button>
+<div id="info" popover>Nicht modal, schließt bei Klick daneben.</div>
+
+<button commandfor="frage" command="show-modal">Löschen …</button>
+<dialog id="frage">
+  <p>Wirklich löschen?</p>
+  <button commandfor="frage" command="close">Abbrechen</button>
+</dialog>
+</main>
+</body>
+</html>

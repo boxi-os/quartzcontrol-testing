@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: Popover unter seinem Button – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+.hinweis { padding: .5rem .75rem; border: 1px solid #d0d7de; border-radius: .5rem; background: #fff; }
+.start { margin-left: 8rem; }
+</style>
+<style data-beispiel>
+.hinweis {
+  margin: 0;
+  inset: auto;
+  position-area: bottom;
+}
+</style>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „Top Layer mit popover und dialog“</p>
+  <h1>Popover unter seinem Button</h1>
+  <p>Button klicken: Das Popover erscheint unter dem Button – über die implizite Ankerbeziehung und <code>position-area: bottom</code>.</p>
+  <p class="klein">Anchor Positioning: Chrome 129, Firefox 147, Safari 26. Ohne Unterstützung landet das Popover oben links.</p>
+  <p class="klein">Getestet in Chrome 152. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<main class="beispiel-buehne">
+<p class="start"><button popovertarget="hinweis-1">Hinweis anzeigen</button></p>
+<div id="hinweis-1" class="hinweis" popover>Popover unter dem Button</div>
+</main>
+</body>
+</html>

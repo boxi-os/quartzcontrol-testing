@@ -1,8 +1,160 @@
 @use "./variables.scss" as *;
 
 /* --- Quartz-GUI:managed:imports:start --- */
+@use "./custom/base";
+@use "./custom/nav-header";
+@use "./custom/nav-search";
+@use "./custom/nav-darkmode";
+@use "./custom/nav-reader-mode";
+@use "./custom/nav-explorer";
+@use "./custom/nav-language-switcher";
+@use "./custom/meta-breadcrumbs";
+@use "./custom/meta-title-and-date";
+@use "./custom/meta-note-properties";
+@use "./custom/meta-tag-list";
+@use "./custom/aside-toc";
+@use "./custom/aside-backlinks";
+@use "./custom/aside-graph";
+@use "./custom/aside-recent-notes";
+@use "./custom/body-content";
+@use "./custom/body-callouts";
+@use "./custom/body-code";
+@use "./custom/body-math";
+@use "./custom/body-mermaid";
+@use "./custom/body-media";
+@use "./custom/page-listing";
+@use "./custom/page-bases";
+@use "./custom/page-canvas";
+@use "./custom/page-popover";
+@use "./custom/page-search-results";
+@use "./custom/page-404";
+@use "./custom/plugin-layout-box";
+@use "./custom/site-footer";
+@use "./custom/a11y";
 @use "./custom/callouts";
 @use "./custom/fix-heading-fonts";
 /* --- Quartz-GUI:managed:imports:end --- */
 
-// put your custom CSS here! 
+// ─────────────────────────────────────────────────────────────────────────────
+// Example
+//
+// Everything this template styles lives in quartz/styles/custom/, one file per
+// component, loaded in the order listed in the block above. Nothing is styled
+// here directly - this file only holds the import order and this note.
+//
+// Two things are worth knowing before changing anything:
+//
+//   • No colour and no measure of the design is written literally in those
+//     files. Both come from CSS variables, which the app manages under
+//     "Stile → Variablen" (the `css-vars` block further down this file). Change
+//     --tpl-space-md there and every gap in the site follows. What does stand
+//     literally is named and accounted for: the callout and syntax colours,
+//     because they mean status rather than palette; hairlines; and the
+//     breakpoints, since a media query cannot read a variable.
+//
+//   • The colours were measured, not chosen by eye: every text/background pair
+//     in this template, including all thirteen callout types, meets WCAG AA in
+//     both light and dark mode. Quartz's own callout colours do not - eleven of
+//     its thirteen fail against a light ground and four against a dark one -
+//     which is why body-callouts.scss restates them.
+//
+// ─────────────────────────────────────────────────────────────────────────────
+
+/* --- Quartz-GUI:managed:fonts:start --- */
+@font-face {
+  font-family: "Instrument Sans";
+  src: url("/static/fonts/instrument-sans-latin-400-700.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/static/fonts/inter-latin-400-700.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/static/fonts/inter-latin-italic-400-700.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/static/fonts/jetbrains-mono-latin-400-700.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* --- Quartz-GUI:managed:fonts:end --- */
+
+/* --- Quartz-GUI:managed:css-vars:start --- */
+:root {
+  --titleFont: "Instrument Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --headerFont: "Instrument Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --bodyFont: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --codeFont: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  --font-interface: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --tpl-space-3xs: 0.125rem;
+  --tpl-space-2xs: 0.25rem;
+  --tpl-space-xs: 0.5rem;
+  --tpl-space-sm: 0.75rem;
+  --tpl-space-md: 1rem;
+  --tpl-space-lg: 1.5rem;
+  --tpl-space-xl: 2.5rem;
+  --tpl-space-2xl: 4rem;
+  --tpl-radius-sm: 4px;
+  --tpl-radius-md: 8px;
+  --tpl-radius-lg: 14px;
+  --tpl-rule: var(--lightgray);
+  --tpl-rule-strong: var(--gray);
+  --tpl-rule-width: 1px;
+  --tpl-rule-control: color-mix(in srgb, var(--gray) 70%, var(--light));
+  --tpl-surface: var(--lightgray);
+  --tpl-surface-code: color-mix(in srgb, var(--lightgray) 40%, var(--light));
+  --tpl-surface-tint: var(--highlight);
+  --tpl-text-xs: 0.78rem;
+  --tpl-text-sm: 0.875rem;
+  --tpl-text-base: 1rem;
+  --tpl-text-lg: 1.15rem;
+  --tpl-text-xl: 1.4rem;
+  --tpl-text-2xl: 1.75rem;
+  --tpl-text-3xl: 2.25rem;
+  --tpl-leading-tight: 1.25;
+  --tpl-leading-normal: 1.6;
+  --tpl-leading-snug: 1.4rem;
+  --tpl-tracking-label: 0.08em;
+  --tpl-tracking-caps: 0.06em;
+  --tpl-underline-offset: 0.18em;
+  --tpl-focus-color: var(--secondary);
+  --tpl-focus-width: 2px;
+  --tpl-focus-offset: 2px;
+  --tpl-shadow: 0 6px 24px rgba(23, 23, 26, 0.10);
+  --tpl-motion: 150ms ease;
+  --tpl-target: 44px;
+  --tpl-icon: 1.1rem;
+  --tpl-accent-bar: 3px;
+  --tpl-positive: #136B34;
+  --tpl-indent: 0.85rem;
+  --tpl-icon-sm: 0.95rem;
+  --tpl-fade: 14px;
+  --tpl-page-fade: 24px;
+  --tpl-drawer-width: min(86vw, 340px);
+}
+
+:root[saved-theme="dark"] {
+  --tpl-surface-code: var(--lightgray);
+  --tpl-shadow: 0 6px 24px rgba(0, 0, 0, 0.55);
+  --tpl-positive: #6DD68F;
+}
+/* --- Quartz-GUI:managed:css-vars:end --- */

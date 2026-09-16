@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: Navigation als Linkliste mit Flexbox – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+
+</style>
+<style data-beispiel>
+.nav-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-list a {
+  display: block;
+  padding: 0.5rem 0.25rem;
+}
+
+.nav-list a[aria-current="page"] {
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+}
+
+.nav-list a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+</style>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „Hauptnavigation semantisch aufbauen“</p>
+  <h1>Navigation als Linkliste mit Flexbox</h1>
+  <p>Mit <code>Tab</code> durch die Links gehen: deutlicher Fokusring. Die aktuelle Seite ist fett und unterstrichen. Schmales Fenster: Die Liste bricht um.</p>
+  <p class="klein">Getestet in Chrome 152. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<main class="beispiel-buehne">
+<nav aria-label="Hauptmenü">
+  <ul class="nav-list">
+    <li><a href="/">Start</a></li>
+    <li><a href="/leistungen/" aria-current="page">Leistungen</a></li>
+    <li><a href="/blog/">Blog</a></li>
+    <li><a href="/kontakt/">Kontakt</a></li>
+  </ul>
+</nav>
+</main>
+</body>
+</html>

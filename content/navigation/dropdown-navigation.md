@@ -65,6 +65,8 @@ Platzierung unter dem Header, volle Breite – angelehnt an Lehner, der `top`, `
 }
 ```
 
+<a href="beispiele/dropdown-01-unter-dem-header.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
+
 Oder direkt unter dem Button, als Erweiterung für Browser mit Anchor Positioning. Popover und Button sind über `popovertarget` bzw. `commandfor` implizit verankert, `anchor-name` und `position-anchor` sind nicht nötig:[^mdn-popover][^mdn-anchor]
 
 ```css
@@ -77,6 +79,8 @@ Oder direkt unter dem Button, als Erweiterung für Browser mit Anchor Positionin
   }
 }
 ```
+
+<a href="beispiele/dropdown-02-am-button.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
 ### Variante B: klassisch mit `aria-expanded`
 
@@ -101,6 +105,8 @@ Optik an den Zustand koppeln statt an eine Klasse:
 button[aria-expanded="true"]::after { rotate: 180deg; }
 ```
 
+<a href="beispiele/dropdown-03-aria-expanded.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
+
 Das APG zeichnet den Pfeil mit Rahmen in `::after`, damit er im Hochkontrastmodus sichtbar bleibt.[^apg]
 
 ## Warum funktioniert das?
@@ -123,6 +129,7 @@ Die letzte Zeile ist getestet, nicht belegt: Weder MDN noch de Vries/O’Hara be
 
 - **Popover per Skript öffnen:** Dann entfällt das automatische `aria-expanded`.[^hidde]
 - **Untermenü mit CSS `display: block` erzwingen** (z. B. für Desktop): Der Button meldet trotzdem „zugeklappt“.[^hidde]
+- **`width: 100%` mit Innenabstand oder Rahmen:** Das Untermenü wird dann breiter als der Viewport und erzeugt horizontales Scrollen. `box-sizing: border-box` am Untermenü verhindert das – im Beispiel mit Chrome 152 nachgestellt (34 Pixel Überstand ohne).
 - **Standard-Position des Popovers:** mittig im Viewport mit Rahmen. Ohne eigene Platzierung wirkt das Untermenü „verloren“.[^mdn-popover]
 - **Popover per `showPopover()` ohne Button geöffnet:** Dann fehlt die implizite Ankerbeziehung, das Popover landet mit `inset: auto; margin: 0` oben links im Viewport (Chrome 152 getestet). Mit `showPopover({ source: button })` stimmt die Position wieder.
 - **`position-area` mischt nicht:** Physische und logische Werte in einer Deklaration machen sie ungültig – `bottom span-right` geht, `block-end span-right` nicht.[^mdn-anchor]

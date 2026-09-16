@@ -28,6 +28,8 @@ Der Unterschied liegt im Verhalten:
 </dialog>
 ```
 
+<a href="beispiele/top-layer-01-popover-und-dialog.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
+
 ## Hintergrund
 
 Überlagerungen waren lange Handarbeit: `position: fixed`, ein hoher `z-index`, JavaScript für Öffnen, Schließen, `Esc`, Fokus und `aria-expanded`. Genau diese Teile übernimmt der Browser inzwischen – aber nicht alle, und nicht bei beiden gleich.
@@ -104,6 +106,8 @@ Popover neben seinem Button statt mittig – über die implizite Ankerbeziehung 
 }
 ```
 
+<a href="beispiele/top-layer-02-popover-am-button.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
+
 Hintergrund eines modalen Dialogs abdunkeln:
 
 ```css
@@ -111,6 +115,8 @@ dialog::backdrop {
   background-color: rgb(0 0 0 / 40%);
 }
 ```
+
+<a href="beispiele/top-layer-03-backdrop.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
 Nicht modaler Dialog, der wie ein Popover schließt: `dialog` bekommt zusätzlich `popover`, der Button `popovertarget`.[^mdn-dialog]
 

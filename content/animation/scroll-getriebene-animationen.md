@@ -35,6 +35,8 @@ Eine normale CSS-Animation läuft auf der Zeit ab. Bei einer scroll-getriebenen 
 }
 ```
 
+<a href="beispiele/scroll-getrieben-01-lesefortschritt.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
+
 Ohne die `@supports`-Weiche stünde der Balken in Browsern ohne Unterstützung dauerhaft in voller Breite da. In Chrome 152 nachgestellt: Eine Animation ohne Zeitleiste und ohne Dauer hinterlässt `transform: none`, der Balken ist voll breit.
 
 ## Hintergrund
@@ -101,6 +103,8 @@ Bild gleitet beim Hereinscrollen ein und steht ab der Hälfte still – nach Web
   }
 }
 ```
+
+<a href="beispiele/scroll-getrieben-02-einblenden.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
 WebKit schreibt `transform: translateX(100%)` und `@media not (prefers-reduced-motion)` ohne `@supports`. Die Umstellung auf `translate`, `both` und die `@supports`-Hülle sind eigene Änderungen.
 

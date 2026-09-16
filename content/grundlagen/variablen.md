@@ -31,6 +31,8 @@ Streng genommen ist eine benutzerdefinierte Eigenschaft keine Variable — sie *
 <ul><li>Welt</li></ul>
 ```
 
+<a href="beispiele/variablen-01-aufloesungszeitpunkt.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
+
 Das `li` bleibt **rot**. `color` wurde bereits auf dem `ul` aufgelöst — vererbt wird der berechnete Wert, nicht die Rechenvorschrift. Das `--farbe: blue` auf dem `li` hat keine Wirkung, weil dort keine Eigenschaft `var(--farbe)` verwendet.
 
 Anders liegt der Fall, wenn die verwendende Regel auf dem Element selbst greift:
@@ -42,6 +44,8 @@ Anders liegt der Fall, wenn die verwendende Regel auf dem Element selbst greift:
   section.b   { --farbe: blue; }
 </style>
 ```
+
+<a href="beispiele/variablen-02-aufloesung-pro-element.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
 Hier wird pro `p` neu aufgelöst, weil die `color`-Deklaration jedes Mal auf dem `p` angewendet wird und `--farbe` von der jeweiligen `section` erbt. Ergebnis: erster Absatz rot, zweiter blau.
 
@@ -79,6 +83,8 @@ Ohne Registrierung ist der Typ eines Custom Property unbekannt: alles ist ein To
 }
 ```
 
+<a href="beispiele/variablen-03-property-animierbar.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
+
 Was das bringt:
 
 - **Animierbarkeit.** Ohne Typ kann der Browser nicht interpolieren und schaltet zwischen Keyframe-Werten hart um. Erst die Registrierung macht weiche Übergänge auf Custom Properties möglich.
@@ -96,6 +102,8 @@ Custom Properties speichern Werte, `calc()` macht sie rechenbar. Siehe [[grundla
   font-size: calc(var(--scale) * 1rem);  /* Einheit anhängen */
 }
 ```
+
+<a href="beispiele/variablen-04-skalieren.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
 ### Aus JavaScript
 
@@ -133,6 +141,8 @@ Theme mit Dark Mode über einen Satz Tokens:
 body { background: var(--bg); color: var(--text); }
 ```
 
+<a href="beispiele/variablen-05-farbschema.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
+
 Countdown ohne JavaScript:
 
 ```html
@@ -146,6 +156,8 @@ Countdown ohne JavaScript:
 }
 @keyframes roundtime { to { transform: scaleX(0); } }
 ```
+
+<a href="beispiele/variablen-06-countdown.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
 `transform: scaleX()` statt `width` zu animieren, ist die performantere Variante.
 

@@ -4,6 +4,6 @@
   "site": "css",
   "content_dir_name": "content",
   "markdown_count": 62,
-  "asset_count": 0,
+  "asset_count": 61,
   "policy": "Staging-Baum 60 Publish/<site>/ 1:1 + publish:true je Datei + Public-Asset-Allowlist"
 }

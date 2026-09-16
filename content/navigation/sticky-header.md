@@ -39,6 +39,8 @@ Stand 2026-09-12. **In Chrome 152 (macOS), 2026-09-13 getestet:** Header klebt, 
    }
    ```
 
+   <a href="beispiele/sticky-header-01-sticky.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
+
    Der Hintergrund ist nötig, sonst scheint der Inhalt beim Scrollen durch.
 
 2. **Header als direktes Kind von `body` platzieren.** Ein sticky Element klebt nur, bis es an den gegenüberliegenden Rand seines Containing Blocks stößt.[^mdn] Steckt der Header in einem Wrapper, der nur so hoch ist wie er selbst, gibt es keinen Weg, auf dem er kleben könnte.
@@ -55,6 +57,8 @@ Stand 2026-09-12. **In Chrome 152 (macOS), 2026-09-13 getestet:** Header klebt, 
    }
    ```
 
+   <a href="beispiele/sticky-header-02-scroll-margin-top.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
+
    Alternative am Scroll-Container statt an jedem Ziel:
 
    ```css
@@ -62,6 +66,8 @@ Stand 2026-09-12. **In Chrome 152 (macOS), 2026-09-13 getestet:** Header klebt, 
      scroll-padding-top: calc(var(--header-height) + 1rem);
    }
    ```
+
+   <a href="beispiele/sticky-header-03-scroll-padding-top.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
 5. **Optional: Schatten, sobald der Header angedockt ist.** Das abgefragte Element ist der Header selbst, reagieren kann nur ein Kind.[^scroll-state]
 
@@ -86,6 +92,8 @@ Stand 2026-09-12. **In Chrome 152 (macOS), 2026-09-13 getestet:** Header klebt, 
      }
    }
    ```
+
+   <a href="beispiele/sticky-header-04-schatten-angedockt.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
 ## Warum funktioniert das?
 

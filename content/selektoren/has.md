@@ -16,6 +16,8 @@ description: "Elemente abhängig von ihrem Inhalt oder ihrer Nachbarschaft ausw�
 figure:has(figcaption) { margin-block-end: 2rem; }
 ```
 
+<a href="beispiele/has-01-figure-mit-caption.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
+
 Der geläufige Name „Parent Selector" beschreibt nur den einfachsten Fall. Weil im Argument beliebige Selektoren stehen dürfen, lassen sich auch Geschwister- und Zustandsbeziehungen ausdrücken.
 
 ## Hintergrund
@@ -47,6 +49,8 @@ Kombiniert mit weiteren Selektoren wird der Treffer weitergereicht:
 figure:has(figcaption) img { border-radius: 0; }
 ```
 
+<a href="beispiele/has-02-bild-in-figure.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
+
 ### Negation
 
 Die interessanteste Kombination ist die mit `:not()` — „enthält nicht":
@@ -54,6 +58,8 @@ Die interessanteste Kombination ist die mit `:not()` — „enthält nicht":
 ```css
 .card:not(:has(img)) { padding-block-start: 2rem; }
 ```
+
+<a href="beispiele/has-03-karte-ohne-bild.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
 ### Spezifität
 
@@ -81,17 +87,23 @@ Formularfeld abhängig vom Zustand seines Inputs:
 .field:has(input:checked) .label { font-weight: 600; }
 ```
 
+<a href="beispiele/has-04-formularfeld.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
+
 Layoutentscheidung abhängig vom Inhalt:
 
 ```css
 .card:has(> .media) { grid-template-columns: 8rem 1fr; }
 ```
 
+<a href="beispiele/has-05-karte-mit-media.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
+
 Zustand am Wurzelelement — der Fall, für den man früher eine Klasse per JavaScript gesetzt hätte:
 
 ```css
 body:has(dialog[open]) { overflow: hidden; }
 ```
+
+<a href="beispiele/has-06-dialog-sperrt-scrollen.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
 ## Eigene Notizen / Einordnung
 

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: Aufklappen mit grid-template-rows – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+.panel { background: #eef2ff; max-width: 30rem; }
+.inhalt p { margin: 0; padding: .5rem 1rem; }
+</style>
+<style data-beispiel>
+.panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 300ms ease;
+}
+.panel.is-open {
+  grid-template-rows: 1fr;
+}
+.panel > * {
+  overflow: hidden;
+}
+</style>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „Ein- und Ausblenden mit CSS animieren“</p>
+  <h1>Aufklappen mit grid-template-rows</h1>
+  <p>Button klicken: Das Panel klappt über <code>0fr</code> → <code>1fr</code> auf – funktioniert in allen aktuellen Browsern.</p>
+  <p class="klein">Getestet in Chrome 152. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<main class="beispiel-buehne">
+<button data-umschalten>Panel umschalten</button>
+<div class="panel" id="panel"><div class="inhalt"><p>Erster Absatz im Panel.</p><p>Zweiter Absatz im Panel.</p><p>Dritter Absatz im Panel.</p></div></div>
+<p>Inhalt nach dem Panel</p>
+</main>
+<script>
+// Rahmen-Skript: schaltet die Klasse aus der Notiz
+document.querySelector("[data-umschalten]").addEventListener("click", () => {
+  document.getElementById("panel").classList.toggle("is-open");
+});
+</script>
+</body>
+</html>

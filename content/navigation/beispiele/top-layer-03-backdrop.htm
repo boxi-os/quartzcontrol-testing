@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: Hintergrund eines modalen Dialogs abdunkeln – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+dialog { max-width: 22rem; }
+</style>
+<style data-beispiel>
+dialog::backdrop {
+  background-color: rgb(0 0 0 / 40%);
+}
+</style>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „Top Layer mit popover und dialog“</p>
+  <h1>Hintergrund eines modalen Dialogs abdunkeln</h1>
+  <p>Dialog öffnen: <code>::backdrop</code> legt eine halbtransparente Fläche über die Seite.</p>
+  <p class="klein">Der Dialog öffnet über Invoker Commands (Chrome 135, Firefox 144, Safari 26.2).</p>
+  <p class="klein">Getestet in Chrome 152. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<main class="beispiel-buehne">
+<button commandfor="d" command="show-modal">Dialog öffnen</button>
+<dialog id="d"><p>Der Hintergrund ist abgedunkelt.</p><button commandfor="d" command="close">Schließen</button></dialog>
+</main>
+</body>
+</html>

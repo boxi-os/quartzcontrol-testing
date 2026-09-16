@@ -74,6 +74,8 @@ Der Unterschied ist nicht die Syntax, sondern der Umfang: `hsl()` **kann** keine
 }
 ```
 
+<a href="beispiele/farben-01-color-mix.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
+
 Zwei Dinge sind daran wichtig:
 
 1. Der Farbraum ist Pflicht (`in oklab`, `in srgb` …). Ohne `in …` ist der Ausdruck ungültig.
@@ -89,6 +91,8 @@ Der gewählte Mischfarbraum bestimmt das Ergebnis: `in oklab` liefert gleichmä�
 :root { --bg-color: blue; }
 .overlay { background: rgb(from var(--bg-color) r g b / 20%); }
 ```
+
+<a href="beispiele/farben-02-relative-farbe.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
 Die Kanäle werden durch die Buchstaben des jeweiligen Farbmodells benannt (`r g b`, `l c h`, `l a b`), die Deckkraft über `alpha`. Ein Kanal, der unverändert bleiben soll, wird einfach als Buchstabe notiert; ein Kanal, der sich ändern soll, wird gerechnet — siehe [[grundlagen/berechnungen|CSS calc()]]:
 
@@ -106,6 +110,8 @@ Die Kanäle werden durch die Buchstaben des jeweiligen Farbmodells benannt (`r g
   /* triadisch: calc(h + 120) und calc(h - 120) */
 }
 ```
+
+<a href="beispiele/farben-03-farbfamilie.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
 Damit verschwindet die häufigste Sorte **Magic Number** aus dem Stylesheet: Statt `#3a7bd5` und daneben `#2a6bb8` ohne erkennbaren Zusammenhang steht die Herleitung im Code.
 
@@ -155,6 +161,8 @@ Eine Palette mit konstanter Helligkeitsstufung — in OKLCH trivial, in HSL Hand
 }
 ```
 
+<a href="beispiele/farben-04-gleiche-helligkeit.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
+
 Abstufungen desselben Farbtons über die Lightness:
 
 ```css
@@ -164,6 +172,8 @@ Abstufungen desselben Farbtons über die Lightness:
   --brand-700: oklch(0.40 0.12 210);
 }
 ```
+
+<a href="beispiele/farben-05-farbskala.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
 ## Eigene Notizen / Einordnung
 

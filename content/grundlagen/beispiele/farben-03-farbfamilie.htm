@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: Farbfamilie aus einer Basisfarbe – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+.swatches { display: flex; flex-wrap: wrap; gap: .75rem; }
+.swatch { width: 10rem; height: 6rem; border-radius: .5rem; display: flex; align-items: end; padding: .5rem; color: white; font-size: .8rem; }
+</style>
+<style data-beispiel>
+:root {
+  --base: oklch(0.55 0.14 210);
+
+  /* Helligkeitsstufen */
+  --base-light: oklch(from var(--base) calc(l + 0.25) c h);
+  --base-dark:  oklch(from var(--base) calc(l - 0.25) c h);
+
+  /* Harmonien über den Farbtonwinkel */
+  --accent-warm:       oklch(from var(--base) l c calc(h + 20));
+  --accent-complement: oklch(from var(--base) l c calc(h + 180));
+  /* triadisch: calc(h + 120) und calc(h - 120) */
+}
+</style>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „Farben in CSS“</p>
+  <h1>Farbfamilie aus einer Basisfarbe</h1>
+  <p>Alle Felder leiten sich aus <code>--base</code> ab: heller, dunkler und über den Farbtonwinkel.</p>
+  <p class="klein">Getestet in Chrome 152. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<main class="beispiel-buehne">
+<div class="swatches">
+  <div class="swatch" style="background: var(--base)">--base</div>
+  <div class="swatch" style="background: var(--base-light); color: #1f2328">--base-light</div>
+  <div class="swatch" style="background: var(--base-dark)">--base-dark</div>
+  <div class="swatch" style="background: var(--accent-warm)">--accent-warm</div>
+  <div class="swatch" style="background: var(--accent-complement)">--accent-complement</div>
+</div>
+</main>
+</body>
+</html>

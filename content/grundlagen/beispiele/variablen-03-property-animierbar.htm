@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: @property macht Custom Properties animierbar – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+.feld { padding: 1rem; margin-bottom: .75rem; background: #1e293b; max-width: 30rem; font-weight: 600; }
+.registriert { --textcolor: white; color: var(--textcolor); transition: --textcolor 1s; }
+.registriert:hover { --textcolor: #f59e0b; }
+.frei { --freifarbe: white; color: var(--freifarbe); transition: --freifarbe 1s; }
+.frei:hover { --freifarbe: #f59e0b; }
+</style>
+<style data-beispiel>
+@property --textcolor {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: white;
+}
+</style>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „CSS Custom Properties“</p>
+  <h1>@property macht Custom Properties animierbar</h1>
+  <p>Mit der Maus über beide Felder fahren: Das obere geht fließend in Orange über, weil <code>--textcolor</code> als <code>&lt;color&gt;</code> registriert ist. Das untere, nicht registrierte springt.</p>
+  <p class="klein">Getestet in Chrome 152. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<main class="beispiel-buehne">
+<div class="feld registriert">Registriert mit @property</div>
+<div class="feld frei">Nicht registriert</div>
+</main>
+</body>
+</html>

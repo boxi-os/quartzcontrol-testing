@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: Transition und Keyframe-Animation – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+.button { background: #e5e7eb; border: 0; padding: .75rem 1.25rem; border-radius: .5rem; font: inherit; cursor: pointer; }
+.button:hover { color: white; }
+.badge { display: inline-block; margin-left: 1rem; padding: .25rem .75rem; border-radius: 1rem; background: #fde68a; }
+</style>
+<style data-beispiel>
+/* Transition: reagiert auf eine Zustandsänderung */
+.button {
+  transition: background-color 200ms ease-out;
+}
+.button:hover {
+  background-color: oklch(55% 0.15 250);
+}
+
+/* Keyframes: eigener Ablauf */
+@keyframes pulse {
+  50% { scale: 1.05; }
+}
+.badge {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+</style>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „CSS-Transitions und Keyframe-Animationen“</p>
+  <h1>Transition und Keyframe-Animation</h1>
+  <p>Hover über den Button: Die Hintergrundfarbe geht über (Transition). Das Abzeichen pulsiert von selbst (Keyframes).</p>
+  <p class="klein">Getestet in Chrome 152. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<main class="beispiel-buehne">
+<button class="button">Hover</button><span class="badge">Neu</span>
+</main>
+</body>
+</html>

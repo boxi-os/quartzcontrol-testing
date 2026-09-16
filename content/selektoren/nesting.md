@@ -23,6 +23,8 @@ CSS erlaubt es, Regeln ineinander zu schreiben, statt jeden Selektor vollständi
 }
 ```
 
+<a href="beispiele/nesting-01-karte.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
+
 ## Hintergrund
 
 Der Gewinn ist nicht Tipparbeit, sondern **Lokalität**: Alles, was zu einer Komponente gehört — Zustände, Breakpoints, Kindelemente — steht an einer Stelle. Wer die Komponente löscht, löscht auch ihre Sonderfälle mit, statt sie irgendwo im Stylesheet zurückzulassen.
@@ -105,6 +107,8 @@ Zustände und Breakpoints bei der Komponente statt am Ende des Stylesheets:
   &[disabled] { opacity: 0.5; cursor: not-allowed; }
 }
 ```
+
+<a href="beispiele/nesting-02-button.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
 Gilt eine Media Query für mehrere Komponenten, gehört sie **nicht** ins Nesting, sondern als eigener Block nach außen.
 

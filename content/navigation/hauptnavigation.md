@@ -90,6 +90,8 @@ Stand 2026-09-12. Die Regeln stammen aus W3C WAI, APG und WebAIM (siehe Quellen)
    }
    ```
 
+   <a href="beispiele/hauptnavigation-01-linkliste.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
+
 7. **Skip-Link sichtbar machen, sobald er fokussiert ist:**
 
    ```css
@@ -104,6 +106,8 @@ Stand 2026-09-12. Die Regeln stammen aus W3C WAI, APG und WebAIM (siehe Quellen)
      translate: 0 0;
    }
    ```
+
+   <a href="beispiele/hauptnavigation-02-skip-link.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
 8. **Ziel des Skip-Links** ist `main`:
 

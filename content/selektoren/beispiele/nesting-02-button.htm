@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: Button-Zustände verschachtelt – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+:root { --brand: oklch(0.55 0.14 210); }
+.button { border: 0; padding: .75rem 1.25rem; border-radius: .5rem; font: inherit; cursor: pointer; margin-right: .5rem; }
+</style>
+<style data-beispiel>
+.button {
+  background: var(--brand);
+  color: white;
+
+  &:hover  { background: color-mix(in oklab, var(--brand) 80%, black); }
+  &:focus-visible { outline: 2px solid currentColor; }
+  &[disabled] { opacity: 0.5; cursor: not-allowed; }
+}
+</style>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „CSS-Nesting“</p>
+  <h1>Button-Zustände verschachtelt</h1>
+  <p>Hover dunkelt ab, Tab zeigt den Fokusring, der zweite Button ist deaktiviert.</p>
+  <p class="klein">Getestet in Chrome 152. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<main class="beispiel-buehne">
+<button class="button">Normal</button><button class="button" disabled>Deaktiviert</button>
+</main>
+</body>
+</html>

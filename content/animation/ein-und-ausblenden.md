@@ -82,6 +82,8 @@ Stand 2026-09-12. Die CSS-Muster stammen aus MDN. **In Chrome 152 (macOS), 2026-
 }
 ```
 
+<a href="beispiele/ein-ausblenden-01-popover.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
+
 Das ist das MDN-Beispiel mit `translate` statt `transform: scaleX()` und eingebettet in die Media Query.[^mdn-popover] Für einen modalen Dialog dasselbe mit `dialog:open` und `dialog` – oder `dialog[open]`, wo `:open` fehlt.[^mdn-dialog]
 
 Kürzer, aber mit allen Eigenschaften: `transition: all 200ms allow-discrete;` – so steht es als Kommentar im MDN-Beispiel.[^mdn-popover]
@@ -101,6 +103,8 @@ Mit Keyframe-Animationen ist `@starting-style` nicht nötig, und `display` darf 
   animation: fade-out 300ms forwards;
 }
 ```
+
+<a href="beispiele/ein-ausblenden-02-keyframes.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
 `forwards` hält den Endzustand fest.[^chrome-entry-exit] Keyframes lohnen sich bei mehrstufigen Effekten, die mit einer Transition nicht gehen. Die Klasse muss dann ein Skript setzen. Wer das Element anschließend entfernt, wartet das Ende der Animation ab.
 
@@ -123,6 +127,8 @@ Mit Keyframe-Animationen ist `@starting-style` nicht nötig, und `display` darf 
 }
 ```
 
+<a href="beispiele/ein-ausblenden-03-height-auto.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
+
 `interpolate-size` wird vererbt; auf `:root` gilt es für die ganze Seite, auf einem Teilbaum wie `main` nur dort.[^height-auto] Browser ohne Unterstützung springen einfach – das ist gewollt.[^height-auto]
 
 Wer die Animation überall braucht: Grid-Zeilen lassen sich animieren (laut `web-features` 3.38.0 Baseline *widely available* seit 2022-10-27).
@@ -140,6 +146,8 @@ Wer die Animation überall braucht: Grid-Zeilen lassen sich animieren (laut `web
   overflow: hidden;
 }
 ```
+
+<a href="beispiele/ein-ausblenden-04-grid-rows.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
 Der `0fr`/`1fr`-Trick ist in keiner der ausgewerteten Quellen beschrieben, sondern verbreitete Praxis. In Chrome 152 getestet; ob er in Firefox und Safari genauso läuft, ist offen, obwohl die Baseline-Daten dafür sprechen.
 

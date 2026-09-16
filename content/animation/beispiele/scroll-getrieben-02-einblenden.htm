@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: Bilder gleiten beim Hereinscrollen ein – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+.article { overflow-x: clip; }
+.article img { display: block; width: min(20rem, 80%); height: auto; margin: 3rem 0; }
+</style>
+<style data-beispiel>
+@keyframes slide-in {
+  from { opacity: 0; translate: 100% 0; }
+  to   { opacity: 1; translate: 0 0; }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .article img {
+      animation: slide-in linear both;
+      animation-timeline: view();
+      animation-range: 0% 50%;
+    }
+  }
+}
+</style>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „Scroll-getriebene Animationen“</p>
+  <h1>Bilder gleiten beim Hereinscrollen ein</h1>
+  <p>Scrollen: Jedes Bild gleitet von rechts herein und steht ab der Hälfte des Viewports still.</p>
+  <p class="klein">Firefox fehlt – dort stehen die Bilder einfach da. Bei „Bewegung reduzieren“ entfällt die Animation bewusst.</p>
+  <p class="klein">Getestet in Chrome 152. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<main class="beispiel-buehne">
+<div class="article fuell"><p>Fülltext 1: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 2: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 3: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 4: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 5: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 6: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 7: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 8: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 9: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 10: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 11: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 12: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='180'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2360a5fa'/%3E%3Cstop offset='1' stop-color='%231e3a8a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='320' height='180' fill='url(%23g)'/%3E%3C/svg%3E" alt="" width="320" height="180"><p>Fülltext 1: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 2: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 3: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 4: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 5: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 6: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 7: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 8: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 9: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 10: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 11: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 12: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='180'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2360a5fa'/%3E%3Cstop offset='1' stop-color='%231e3a8a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='320' height='180' fill='url(%23g)'/%3E%3C/svg%3E" alt="" width="320" height="180"><p>Fülltext 1: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 2: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 3: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 4: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 5: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 6: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 7: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 8: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 9: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 10: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 11: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 12: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p></div>
+</main>
+</body>
+</html>

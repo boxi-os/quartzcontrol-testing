@@ -96,6 +96,8 @@ Die Entscheidungsregeln sind eigene Einordnung aus den Eigenschaften von `dialog
    }
    ```
 
+   <a href="beispiele/mobilmenue-01-vollbild-dialog.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
+
    `dvh` folgt den ein- und ausfahrenden Browserleisten auf Mobilgeräten.[^viewport] Das Zurücksetzen von `max-width` und `max-height` beruht auf der Annahme, dass Browser modale Dialoge standardmäßig begrenzen – nicht an einer Quelle belegt. `box-sizing: border-box` ist nötig, weil `dialog` in Chrome standardmäßig `padding: 16px` hat; ohne diese Zeile war das Menü im Test 17 × 32 Pixel größer als der Viewport.
 
 5. **Button nur auf kleinen Bildschirmen zeigen**, sonst die normale Navigation:
@@ -109,6 +111,8 @@ Die Entscheidungsregeln sind eigene Einordnung aus den Eigenschaften von `dialog
    }
    ```
 
+   <a href="beispiele/mobilmenue-02-breakpoint.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
+
    Die Links stehen damit zweimal im HTML: sichtbar im Header und im Dialog. Das ist ein bewusster Kompromiss, damit der Dialog nicht per CSS zwangsweise angezeigt werden muss. Alternativ nutzt man das Menü bei allen Breiten – so macht es Bushell.
 
 ### Variante B: Menü als Popover
@@ -119,6 +123,8 @@ Die Entscheidungsregeln sind eigene Einordnung aus den Eigenschaften von `dialog
   <ul>…</ul>
 </nav>
 ```
+
+<a href="beispiele/mobilmenue-03-popover.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
 - Klick daneben und `Esc` schließen, `aria-expanded` am Button setzt der Browser, der Fokus springt beim Tabben in das Menü.[^mdn-popover][^hidde]
 - Die Seite dahinter bleibt bedienbar – kein Fokusfang, kein inerter Hintergrund. Für ein Panel, das nur einen Teil der Seite überdeckt, passt das.
@@ -134,6 +140,8 @@ Die Entscheidungsregeln sind eigene Einordnung aus den Eigenschaften von `dialog
   </nav>
 </details>
 ```
+
+<a href="beispiele/mobilmenue-04-details.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
 Ohne JavaScript und ohne Top Layer: Das Menü schiebt den Inhalt nach unten. `details` ist ein natives Disclosure-Widget.[^mdn-details] Wie Screenreader `summary` als Menüschalter ansagen, ist hier nicht geprüft.
 
@@ -166,6 +174,8 @@ Das Menü fährt von rechts herein und blendet dabei auf – nach dem Muster aus
   }
 }
 ```
+
+<a href="beispiele/mobilmenue-05-einfahren.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
 Hintergründe und Fallen: [[animation/ein-und-ausblenden|Ein- und Ausblenden mit CSS animieren]].
 

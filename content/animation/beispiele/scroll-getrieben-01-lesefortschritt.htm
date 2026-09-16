@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: Lesefortschritt mit animation-timeline: scroll() – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+.reading-progress { background: #f97316; z-index: 10; }
+</style>
+<style data-beispiel>
+@keyframes grow-progress {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+.reading-progress {
+  display: none;
+}
+
+@supports (animation-timeline: scroll()) {
+  .reading-progress {
+    display: block;
+    position: fixed;
+    inset: 0 0 auto 0;
+    height: 4px;
+    transform-origin: left;
+    animation: grow-progress linear;
+    animation-timeline: scroll();
+  }
+}
+</style>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „Scroll-getriebene Animationen“</p>
+  <h1>Lesefortschritt mit animation-timeline: scroll()</h1>
+  <p>Scrollen: Der orange Balken oben wächst mit dem Scrollfortschritt.</p>
+  <p class="klein">Scroll-getriebene Animationen: Chrome 115, Safari 26; Firefox fehlt – dort erscheint kein Balken.</p>
+  <p class="klein">Getestet in Chrome 152. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<main class="beispiel-buehne">
+<div class="reading-progress"></div>
+<div class="fuell"><p>Fülltext 1: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 2: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 3: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 4: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 5: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 6: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 7: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 8: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 9: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 10: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 11: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 12: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p><p>Fülltext 1: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 2: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 3: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 4: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 5: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 6: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 7: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 8: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 9: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 10: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 11: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p>
+<p>Fülltext 12: Dieser Absatz ist nur da, damit die Seite lang genug zum Scrollen ist. Er hat mit dem Beispiel selbst nichts zu tun.</p></div>
+</main>
+</body>
+</html>

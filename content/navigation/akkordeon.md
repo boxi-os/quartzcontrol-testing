@@ -66,6 +66,8 @@ Stand 2026-09-12. **In Chrome 152 (macOS), 2026-09-13 getestet:** Bei mehreren `
    }
    ```
 
+   <a href="beispiele/akkordeon-01-eigener-marker.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
+
    `list-style: none` und der `-webkit-`-Pseudoselektor sind nicht aus den ausgewerteten Quellen, sondern verbreitete Praxis, um den Standardpfeil zu entfernen. `::marker` ist laut `web-features` 3.38.0 *limited* (Chrome 86, Firefox 68, Safari fehlt) – das spricht dafür, den Pfeil wie oben durch ein eigenes `::after` zu ersetzen, statt `::marker` zu stylen. Ob der WebKit-Selektor noch nötig ist, ist nicht geprüft.
 
 5. **Inhalt stylen** über `::details-content`:[^mdn-content]
@@ -75,6 +77,8 @@ Stand 2026-09-12. **In Chrome 152 (macOS), 2026-09-13 getestet:** Bei mehreren `
      padding-inline: 1rem;
    }
    ```
+
+   <a href="beispiele/akkordeon-02-inhalt-stylen.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
 6. **Ein- und Ausblenden animieren** – Deckkraft plus `content-visibility` mit `allow-discrete`, nach MDN:[^mdn-content]
 
@@ -91,6 +95,8 @@ Stand 2026-09-12. **In Chrome 152 (macOS), 2026-09-13 getestet:** Bei mehreren `
      }
    }
    ```
+
+   <a href="beispiele/akkordeon-03-einblenden.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
 7. **Optional: Höhe mitanimieren** – nur Chromium:
 
@@ -115,6 +121,8 @@ Stand 2026-09-12. **In Chrome 152 (macOS), 2026-09-13 getestet:** Bei mehreren `
      }
    }
    ```
+
+   <a href="beispiele/akkordeon-04-hoehe.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
    Dem Chrome-Artikel zu `height: auto` zufolge braucht es für beide Richtungen die Kombination aus `interpolate-size` und `::details-content`; den genauen Code dafür enthält der ausgewertete Text nicht.[^height-auto] Das Beispiel ist eigene Konstruktion und in Chrome 152 getestet.
 

@@ -6,6 +6,48 @@
       "resolved": "/Users/boxi/Documents/QuartzProjekte/gui-test/.quartz-gui/authored-frames/frame-1787519243386",
       "commit": "local",
       "installedAt": "2026-08-23T21:09:20.726Z"
+    },
+    "frame-drawing": {
+      "source": "/Users/boxi/Documents/QuartzProjekte/gui-test/.quartz-gui/authored-frames/frame-drawing",
+      "resolved": "/Users/boxi/Documents/QuartzProjekte/gui-test/.quartz-gui/authored-frames/frame-drawing",
+      "commit": "local",
+      "installedAt": "2026-09-12T22:34:41.833Z"
+    },
+    "frame-editorial": {
+      "source": "/Users/boxi/Documents/QuartzProjekte/gui-test/.quartz-gui/authored-frames/frame-editorial",
+      "resolved": "/Users/boxi/Documents/QuartzProjekte/gui-test/.quartz-gui/authored-frames/frame-editorial",
+      "commit": "local",
+      "installedAt": "2026-09-12T22:34:42.385Z"
+    },
+    "frame-focus": {
+      "source": "/Users/boxi/Documents/QuartzProjekte/gui-test/.quartz-gui/authored-frames/frame-focus",
+      "resolved": "/Users/boxi/Documents/QuartzProjekte/gui-test/.quartz-gui/authored-frames/frame-focus",
+      "commit": "local",
+      "installedAt": "2026-09-12T22:34:42.946Z"
+    },
+    "frame-index": {
+      "source": "/Users/boxi/Documents/QuartzProjekte/gui-test/.quartz-gui/authored-frames/frame-index",
+      "resolved": "/Users/boxi/Documents/QuartzProjekte/gui-test/.quartz-gui/authored-frames/frame-index",
+      "commit": "local",
+      "installedAt": "2026-09-12T22:34:43.488Z"
+    },
+    "obsidian-plugin-excalidraw": {
+      "source": "github:quartz-community/obsidian-plugin-excalidraw",
+      "resolved": "https://github.com/quartz-community/obsidian-plugin-excalidraw.git",
+      "commit": "997fc5f0bb0695a97c044fcb6838b5fbf0f9b854",
+      "installedAt": "2026-09-16T11:45:39.517Z"
+    },
+    "quartz-layout-box": {
+      "source": "github:boxi-os/quartz-layout-box",
+      "resolved": "https://github.com/boxi-os/quartz-layout-box.git",
+      "commit": "c8801cfdc6bbad66e0347a1408df62fac930eecc",
+      "installedAt": "2026-09-12T22:34:51.797Z"
+    },
+    "quartz-multilanguage": {
+      "source": "github:boxi-os/quartz-multilanguage",
+      "resolved": "https://github.com/boxi-os/quartz-multilanguage.git",
+      "commit": "7da4665515fc80dbd0d3c99653f0b44efc19dd2c",
+      "installedAt": "2026-09-16T11:45:50.117Z"
     }
   }
 }

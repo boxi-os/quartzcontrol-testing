@@ -69,6 +69,8 @@ Das ist der Fall, für den `calc()` heute vor allem gebraucht wird. Ein Wert wir
 .progress  { animation-duration: var(--time); }
 ```
 
+<a href="beispiele/calc-01-custom-properties.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
+
 Der Slideshow-Fall zeigt den Nutzen am deutlichsten: Zwei Animationen mit unterschiedlicher Dauer bleiben zwangsläufig synchron, weil beide auf derselben Variablen sitzen.
 
 ### Einheiten anhängen
@@ -81,6 +83,8 @@ Custom Properties können einheitslose Zahlen tragen; die Einheit kommt per Mult
   animation-duration: calc(var(--duration) * 1s);
 }
 ```
+
+<a href="beispiele/calc-02-einheit-anhaengen.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
 `var(--scale) + 'px'` funktioniert nicht — CSS kennt keine Stringkonkatenation für Werte.
 
@@ -101,6 +105,8 @@ Wird `calc()` für Textgrößen verwendet, muss mindestens ein Operand eine rela
 h1 { font-size: calc(1.5rem + 3vw); }
 ```
 
+<a href="beispiele/calc-03-fluide-schrift.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
+
 Für Schriftgrößen ist `clamp()` allerdings meist die bessere Wahl, weil es Minimum und Maximum gleich mitbringt.
 
 ## Beispiele
@@ -113,6 +119,8 @@ Inhalt neben fester Spalte:
 .sidebar { width: 135px; }
 ```
 
+<a href="beispiele/calc-04-inhalt-sidebar.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
+
 Raster, dessen Spaltenzahl nur über die Division wechselt:
 
 ```css
@@ -121,6 +129,8 @@ Raster, dessen Spaltenzahl nur über die Division wechselt:
 @media (min-width: 800px)  { .col { width: calc(100% / 8);  } }
 @media (min-width: 1000px) { .col { width: calc(100% / 12); } }
 ```
+
+<a href="beispiele/calc-05-spalten.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
 Zentrieren ohne bekannte Containerbreite:
 
@@ -132,6 +142,8 @@ figcaption {
   right: calc(50% - 150px);
 }
 ```
+
+<a href="beispiele/calc-06-zentrierte-bildunterschrift.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
 ## Eigene Notizen / Einordnung
 

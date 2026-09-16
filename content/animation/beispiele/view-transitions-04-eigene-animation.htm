@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: Eigene Animation beim Seitenwechsel – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+[data-seite=a] .seite-b, [data-seite=b] .seite-a { display: none; }
+@view-transition { navigation: auto; }
+@keyframes move-out { from { transform: translateY(0%); } to { transform: translateY(-100%); } }
+@keyframes move-in { from { transform: translateY(100%); } to { transform: translateY(0%); } }
+</style>
+<style data-beispiel>
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) {
+    animation: 0.4s ease-in both move-out;
+  }
+  ::view-transition-new(root) {
+    animation: 0.4s ease-in both move-in;
+  }
+}
+</style>
+<script>
+// Rahmen-Skript: zeigt Seite A oder B je nach ?seite= – der Wechsel ist eine echte Navigation
+document.documentElement.dataset.seite = new URLSearchParams(location.search).get("seite") === "b" ? "b" : "a";
+</script>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „View Transitions“</p>
+  <h1>Eigene Animation beim Seitenwechsel</h1>
+  <p>Link klicken: Die alte Seite schiebt sich nach oben hinaus, die neue von unten herein.</p>
+  <p class="klein">Übergänge zwischen Seiten funktionieren nur über http(s), nicht beim direkten Öffnen der Datei. Firefox navigiert ohne Übergang. Bei „Bewegung reduzieren“ entfällt die eigene Animation bewusst.</p>
+  <p class="klein">Getestet in Chrome 152. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<div class="beispiel-buehne"><div class="seite-a"><h2>Seite A</h2><p><a href="?seite=b">Zu Seite B</a></p><p>Inhalt der ersten Seite.</p></div><div class="seite-b"><h2>Seite B</h2><p><a href="?seite=a">Zu Seite A</a></p><p>Die zweite Seite hat anderen Inhalt.</p><p>Und einen Absatz mehr.</p></div></div>
+</body>
+</html>

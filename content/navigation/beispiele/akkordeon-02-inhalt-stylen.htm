@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: Inhalt über ::details-content stylen – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+.accordion { max-width: 32rem; border: 1px solid #d0d7de; border-radius: .5rem; }
+.accordion summary { padding: .75rem 0; cursor: pointer; }
+</style>
+<style data-beispiel>
+.accordion details::details-content {
+  padding-inline: 1rem;
+}
+</style>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „Akkordeon mit details bauen“</p>
+  <h1>Inhalt über ::details-content stylen</h1>
+  <p>Einen Eintrag öffnen: Der aufgeklappte Inhalt hat seitlichen Innenabstand über <code>::details-content</code>.</p>
+  <p class="klein">Getestet in Chrome 152. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<main class="beispiel-buehne">
+<div class="accordion">
+  <details name="faq">
+    <summary>Wie lange dauert die Lieferung?</summary>
+    <p>In der Regel zwei bis drei Werktage.</p>
+  </details>
+  <details name="faq">
+    <summary>Kann ich zurückgeben?</summary>
+    <p>Innerhalb von 30 Tagen.</p>
+  </details>
+  <details name="faq">
+    <summary>Welche Zahlungsarten gibt es?</summary>
+    <p>Rechnung, Karte, Überweisung.</p>
+  </details>
+</div>
+</main>
+</body>
+</html>

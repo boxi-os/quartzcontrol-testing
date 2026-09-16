@@ -23,6 +23,8 @@ description: "Bewegung auf Websites so einsetzen, dass sie niemandem schadet: pr
 }
 ```
 
+<a href="beispiele/barrierearm-01-statisch-zuerst.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
+
 Dazu drei Regeln:
 
 1. **Automatisch startende Bewegung, die länger als fünf Sekunden läuft, braucht einen Pause- oder Stopp-Mechanismus** – unabhängig von der Systemeinstellung.[^wcag-222]

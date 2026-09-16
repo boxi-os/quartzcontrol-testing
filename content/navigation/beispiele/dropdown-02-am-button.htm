@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: Untermenü per Anchor Positioning am Button – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+.site-header { height: 4rem; display: flex; align-items: center; padding: 0 1rem; background: #eef2ff; }
+.nav-list { display: flex; align-items: center; gap: 1.5rem; list-style: none; margin: 0; padding: 0; }
+.submenu { list-style: none; padding: .75rem 1rem; background: #fff; border: 1px solid #d0d7de; box-sizing: border-box; }
+</style>
+<style data-beispiel>
+@supports (position-area: bottom) {
+  .submenu {
+    inset: auto;
+    margin: 0;
+    width: auto;
+    position-area: bottom span-right;
+  }
+}
+</style>
+</head>
+<body>
+<header class="site-header"><nav aria-label="Hauptmenü">
+  <ul class="nav-list">
+    <li><a href="/">Start</a></li>
+    <li>
+      <button type="button" popovertarget="sub-leistungen">Leistungen</button>
+      <ul id="sub-leistungen" popover class="submenu">
+        <li><a href="/leistungen/beratung/">Beratung</a></li>
+        <li><a href="/leistungen/umsetzung/">Umsetzung</a></li>
+      </ul>
+    </li>
+    <li><a href="/kontakt/">Kontakt</a></li>
+  </ul>
+</nav></header>
+<header class="beispiel-kopf unten">
+  <p class="klein">Beispiel zur Notiz „Dropdown-Navigation mit Disclosure-Buttons bauen“</p>
+  <h1>Untermenü per Anchor Positioning am Button</h1>
+  <p>„Leistungen“ klicken: Das Untermenü sitzt direkt unter dem Button.</p>
+  <p class="klein">Anchor Positioning: Chrome 129, Firefox 147, Safari 26. Ohne Unterstützung erscheint das Untermenü mittig.</p>
+  <p class="klein">Getestet in Chrome 152. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+</body>
+</html>

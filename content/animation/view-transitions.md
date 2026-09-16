@@ -20,6 +20,8 @@ Zwischen zwei Seiten derselben Website genügt CSS auf **beiden** Seiten:[^mdn]
 }
 ```
 
+<a href="beispiele/view-transitions-01-zwischen-seiten.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
+
 Innerhalb einer Seite startet JavaScript den Übergang:[^mdn]
 
 ```js
@@ -79,6 +81,8 @@ Dauer an der Gruppe setzen, damit `old` und `new` sie erben:[^mdn]
 }
 ```
 
+<a href="beispiele/view-transitions-02-dauer.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
+
 Eigene Animationen gehören an `::view-transition-old()` und `::view-transition-new()`. Bei Cross-Document gehört das CSS ins Zieldokument, für beide Richtungen also in beide Seiten.[^mdn]
 
 ## Beispiele
@@ -95,6 +99,8 @@ Header beim Seitenwechsel ruhig stehen lassen, nur der Inhalt blendet über – 
 }
 ```
 
+<a href="beispiele/view-transitions-03-header-bleibt.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
+
 Der Header bekommt eine eigene Gruppe. Steht er auf beiden Seiten an derselben Stelle, gibt es für ihn nichts zu bewegen, während der Rest der Seite in der Gruppe `root` überblendet.[^mdn] Das Beispiel ist eigene Konstruktion; beim Seitenwechsel in Chrome 152 geprüft.
 
 Eigene Animationen nur ohne reduzierte Bewegung:
@@ -109,6 +115,8 @@ Eigene Animationen nur ohne reduzierte Bewegung:
   }
 }
 ```
+
+<a href="beispiele/view-transitions-04-eigene-animation.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
 Die Keyframes `move-out`/`move-in` (nach oben herausschieben, von unten hereinschieben) stammen aus dem MDN-Beispiel.[^mdn] Auch `@view-transition` selbst lässt sich in `@media (prefers-reduced-motion: no-preference)` legen: In Chrome 152 lief der Übergang damit (`pagereveal` meldet eine View Transition). Den `reduce`-Fall konnte ich nicht prüfen. In den Quellen ist das nicht belegt.
 

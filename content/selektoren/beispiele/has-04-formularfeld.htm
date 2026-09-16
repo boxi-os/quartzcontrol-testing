@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: Formularfeld abhängig vom Input-Zustand – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+:root { --brand: #2563eb; }
+.field { display: flex; gap: .5rem; align-items: center; border: 2px solid #d0d7de; padding: .5rem .75rem; border-radius: .5rem; margin-bottom: .75rem; max-width: 22rem; }
+</style>
+<style data-beispiel>
+.field:has(input:invalid)   { border-color: crimson; }
+.field:has(input:focus)     { outline: 2px solid var(--brand); }
+.field:has(input:checked) .label { font-weight: 600; }
+</style>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „CSS-Pseudoklasse has()“</p>
+  <h1>Formularfeld abhängig vom Input-Zustand</h1>
+  <p>Das leere Pflichtfeld ist ungültig (roter Rahmen). Beim Fokussieren erscheint der Umriss, das Häkchen macht die Beschriftung fett.</p>
+  <p class="klein">Getestet in Chrome 152. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<main class="beispiel-buehne">
+<label class="field"><span class="label">E-Mail</span><input type="email" required></label>
+<label class="field"><input type="checkbox"> <span class="label">Newsletter</span></label>
+</main>
+</body>
+</html>

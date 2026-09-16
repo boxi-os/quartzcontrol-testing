@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: Klassische Variante mit aria-expanded – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+.site-header { height: 4rem; display: flex; align-items: center; padding: 0 1rem; background: #eef2ff; }
+.nav-list { display: flex; align-items: center; gap: 1.5rem; list-style: none; margin: 0; padding: 0; }
+.submenu { list-style: none; padding: .75rem 1rem; background: #fff; border: 1px solid #d0d7de; box-sizing: border-box; }
+.submenu { position: absolute; top: 3.5rem; }
+button[aria-expanded]::after { content: "▾"; display: inline-block; margin-left: .25rem; }
+</style>
+<style data-beispiel>
+button[aria-expanded="true"]::after { rotate: 180deg; }
+</style>
+</head>
+<body>
+<header class="site-header"><nav aria-label="Hauptmenü"><ul class="nav-list">
+<li><a href="#">Start</a></li>
+<li>
+  <button type="button" aria-expanded="false" aria-controls="sub-leistungen">Leistungen</button>
+  <ul id="sub-leistungen" class="submenu" hidden>
+    <li><a href="#">Beratung</a></li>
+    <li><a href="#">Umsetzung</a></li>
+  </ul>
+</li>
+<li><a href="#">Kontakt</a></li>
+</ul></nav></header>
+<header class="beispiel-kopf unten">
+  <p class="klein">Beispiel zur Notiz „Dropdown-Navigation mit Disclosure-Buttons bauen“</p>
+  <h1>Klassische Variante mit aria-expanded</h1>
+  <p>„Leistungen“ klicken: Der Pfeil dreht sich, weil sein Stil an <code>aria-expanded="true"</code> hängt. <code>Esc</code> schließt, Wegtabben auch.</p>
+  <p class="klein">Getestet in Chrome 152. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<script>
+// Rahmen-Skript: Zustand, Esc und Wegtabben – nicht Teil der Notiz
+const knopf = document.querySelector('[aria-controls="sub-leistungen"]');
+const liste = document.getElementById("sub-leistungen");
+const setzen = (offen) => { knopf.setAttribute("aria-expanded", String(offen)); liste.hidden = !offen; };
+knopf.addEventListener("click", () => setzen(knopf.getAttribute("aria-expanded") !== "true"));
+document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !liste.hidden) { setzen(false); knopf.focus(); } });
+knopf.closest("nav").addEventListener("focusout", (e) => { if (!e.currentTarget.contains(e.relatedTarget)) setzen(false); });
+</script>
+</body>
+</html>

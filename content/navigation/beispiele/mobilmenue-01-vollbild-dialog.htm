@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: Vollbild-Menü als modaler Dialog – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+.menu-dialog nav ul { list-style: none; padding: 0; font-size: 1.5rem; }
+.menu-dialog nav li { margin: .5rem 0; }
+</style>
+<style data-beispiel>
+.menu-dialog {
+  margin: 0;
+  width: 100%;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  border: 0;
+  box-sizing: border-box;
+}
+</style>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „Mobile-Menü ohne Checkbox-Hack bauen“</p>
+  <h1>Vollbild-Menü als modaler Dialog</h1>
+  <p>„Menü“ klicken: Das Menü füllt den Bildschirm, der Fokus liegt auf „Schließen“, <code>Esc</code> schließt.</p>
+  <p class="klein">Invoker Commands mit Polyfill aus der Notiz für ältere Browser.</p>
+  <p class="klein">Getestet in Chrome 152. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<main class="beispiel-buehne">
+<button type="button" class="menu-button" commandfor="site-menu" command="show-modal">
+  Menü
+</button>
+
+<dialog id="site-menu" class="menu-dialog" aria-label="Menü">
+  <button type="button" class="menu-close" commandfor="site-menu" command="close" autofocus>
+    Schließen
+  </button>
+  <nav aria-label="Hauptmenü">
+    <ul>
+      <li><a href="/" aria-current="page">Start</a></li>
+      <li><a href="/leistungen/">Leistungen</a></li>
+      <li><a href="/kontakt/">Kontakt</a></li>
+    </ul>
+  </nav>
+</dialog>
+</main>
+<script data-beispiel-js>
+if (!("command" in HTMLButtonElement.prototype)) {
+  document.addEventListener("click", (event) => {
+    const button = event.target.closest("button[commandfor]");
+    if (!button) return;
+    const dialog = document.getElementById(button.getAttribute("commandfor"));
+    if (!(dialog instanceof HTMLDialogElement)) return;
+    const command = button.getAttribute("command");
+    if (command === "show-modal" && !dialog.open) dialog.showModal();
+    if (command === "close" && dialog.open) dialog.close();
+  });
+}
+</script>
+</body>
+</html>
