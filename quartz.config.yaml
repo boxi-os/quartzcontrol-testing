@@ -12,12 +12,12 @@ configuration:
     - templates
     - .obsidian
   theme:
-    fontOrigin: googleFonts
+    fontOrigin: local
     cdnCaching: false
     typography:
-      header: Instrument Sans
-      body: Inter
-      code: JetBrains Mono
+      header: Just Another Hand
+      body: Open Sans
+      code: Roboto Mono
     colors:
       lightMode:
         light: "#FCFCFA"
