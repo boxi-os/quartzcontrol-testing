@@ -4,6 +4,9 @@ status: active
 publish: true
 title: "Sticky-Header einrichten"
 description: "Einen Header mit position: sticky oben halten, Sprungziele darunter sichtbar machen und typische Fallen umgehen."
+applies_to:
+  - "Baseline-Angaben nach web-features 3.38.0, Stand 2026-09-12"
+  - "Beispiele getestet in Chrome 152"
 ---
 
 # Sticky-Header einrichten

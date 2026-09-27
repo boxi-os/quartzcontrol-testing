@@ -4,6 +4,8 @@ status: active
 publish: true
 title: "CSS calc()"
 description: "Rechnen mit gemischten Einheiten in CSS: Syntax, Fallstricke, das Zusammenspiel mit Custom Properties und wo modernere Werkzeuge besser passen."
+applies_to:
+  - "Baseline-Angaben nach web-features 3.36.0, Stand 2026-09-03"
 ---
 
 # CSS calc()

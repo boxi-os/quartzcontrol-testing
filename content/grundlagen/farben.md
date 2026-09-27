@@ -4,6 +4,8 @@ status: active
 publish: true
 title: "Farben in CSS"
 description: "Farbnotationen von Hex bis oklch(), Mischen mit color-mix(), relative Farbangaben und die Frage, welches Modell wofür taugt."
+applies_to:
+  - "Baseline-Angaben nach web-features 3.36.0, Stand 2026-09-03"
 ---
 
 # Farben in CSS

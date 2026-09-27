@@ -4,6 +4,10 @@ status: active
 publish: true
 title: "Akkordeon mit details bauen"
 description: "Ein Akkordeon ohne JavaScript aus details und summary bauen, exklusiv per name-Attribut, gestylt und animiert über ::details-content."
+applies_to:
+  - "Baseline-Angaben nach web-features 3.38.0, Stand 2026-09-12"
+  - "Beispiele getestet in Chrome 152"
+  - "Test-Hinweise nach jsdom 25.0.1"
 ---
 # Akkordeon mit details bauen
 
@@ -141,6 +145,10 @@ Stand 2026-09-12. **In Chrome 152 (macOS), 2026-09-13 getestet:** Bei mehreren `
 - **Höhe nur in Chromium:** Andere Browser springen. Durch `@supports` bleibt das ohne Nebenwirkung.
 - **Ältere Browser ohne `name`:** Chrome beschreibt ein Polyfill über das `toggle`-Event; Browser ohne `toggle` bleiben ein normales Akkordeon.[^chrome]
 - **Mehrfach-Toggles:** Das `toggle`-Event kann bei schnellen Wechseln zusammengefasst werden – relevant nur für eigenes JavaScript.[^mdn-details]
+- **Gemerkten Zustand per Skript wiederherstellen:** Die Exklusivität gilt nicht nur für Klicks. Wird `open` an einem `details` mit `name` gesetzt – auch per Skript –, entfernt der Browser `open` beim bisher offenen Element der Gruppe.[^whatwg-details] Stellt ein Skript nach dem Rendern gemerkte offene Abschnitte wieder her, schließt es damit womöglich genau den Abschnitt, den der Server absichtlich geöffnet hat, etwa den mit der aktuellen Seite. Regel aus einem eigenen Quartz-Plugin: Gemerkten Zustand in einer Gruppe nur anwenden, wenn dort noch nichts absichtlich geöffnet ist.
+- **Keine Öffnungsanimation beim Laden:** Öffnet ein Skript Abschnitte nach dem Rendern, kann die Transition aus Schritt 6 und 7 sichtbar anlaufen, obwohl niemand geklickt hat. Abhilfe aus demselben Plugin: Die Animation an ein Attribut wie `data-animate` binden, das erst bei der ersten Nutzerinteraktion gesetzt wird (`details[data-animate][open]::details-content …`). Nicht separat im Browser nachgetestet.
+- **`toggle` feuert auch für von Anfang an offene `details`:** Laut HTML-Standard laufen die Attributänderungs-Schritte auch, wenn der Parser das Element mit `open` einfügt; dabei wird ein `toggle`-Event eingereiht.[^whatwg-details] jsdom 25.0.1 macht das genauso: Es reiht `toggle` per `setTimeout` ein, sobald `open` gesetzt wird, auch beim Parsen.[^jsdom] Ein `toggle`-Listener, der Zustand speichert, läuft also schon beim Laden – in Tests wie im Browser. Das Browserverhalten ist aus dem Standard abgeleitet, nicht getestet.
+- **Exklusivität in jsdom-Tests:** jsdom 25.0.1 wertet das `name`-Attribut von `details` nicht aus.[^jsdom] Ein Fehler wie beim Wiederherstellen oben lässt sich dort nicht nachstellen, sondern nur im echten Browser.
 
 ### Browsersupport
 
@@ -166,10 +174,14 @@ Quelle: `web-features` 3.38.0 (Baseline-Daten der W3C WebDX Community Group), lo
 - [[quellen/artikel/details-content-mdn|details-content Pseudo-Element (MDN)]] — Styling und Transition des Inhalts
 - [[quellen/artikel/exclusive-accordion-chrome|Exclusive Accordion (Chrome for Developers)]] — exklusive Gruppen, Polyfill
 - [[quellen/artikel/height-auto-chrome|Animate to height auto (Chrome for Developers)]] — `interpolate-size`, `details`-Animation
+- HTML Living Standard, Abschnitt zum `details`-Element (siehe Fußnote) — Exklusivität bei gesetztem `open`, `toggle` beim Parsen
+- jsdom 25.0.1, Quelltext `HTMLDetailsElement-impl.js` (siehe Fußnote) — `toggle` in Tests, fehlende Exklusivität
 
-Nicht aus den Quellen: das Marker-Styling mit `list-style` und `::-webkit-details-marker`, das Höhenbeispiel in Schritt 7 und die Fallstricke zu Namen und Exklusivität. Das APG-Muster „Accordion“ wurde nicht ausgewertet.
+Nicht aus den Quellen: das Marker-Styling mit `list-style` und `::-webkit-details-marker`, das Höhenbeispiel in Schritt 7 und die Fallstricke zu Namen und Exklusivität. Das APG-Muster „Accordion“ wurde nicht ausgewertet. Die Fallstricke zum Wiederherstellen und zu `data-animate` stammen aus einem eigenen Quartz-Plugin; der Mechanismus dahinter ist am HTML-Standard belegt.
 
 [^mdn-details]: [[quellen/artikel/details-element-mdn|details-Element (MDN)]].
 [^mdn-content]: [[quellen/artikel/details-content-mdn|details-content Pseudo-Element (MDN)]], Abschnitt „Transition example“.
 [^chrome]: [[quellen/artikel/exclusive-accordion-chrome|Exclusive Accordion (Chrome for Developers)]].
 [^height-auto]: [[quellen/artikel/height-auto-chrome|Animate to height auto (Chrome for Developers)]], Abschnitt „Animate the details element“.
+[^whatwg-details]: WHATWG, HTML Living Standard, Abschnitt „The details element“: Attributänderungs-Schritte („ensure details exclusivity by closing other elements if needed“) und Hinweis „these attribute change and insertion steps also run when an attribute or element is inserted via the parser“, <https://html.spec.whatwg.org/multipage/interactive-elements.html#the-details-element>. Abgerufen 2026-09-25.
+[^jsdom]: jsdom 25.0.1, `lib/jsdom/living/nodes/HTMLDetailsElement-impl.js` (behandelt nur `open`, nicht `name`) und `lib/jsdom/browser/parser/html.js` (setzt Attribute beim Parsen über dieselbe Änderungslogik). Lokal gelesen am 2026-09-25.

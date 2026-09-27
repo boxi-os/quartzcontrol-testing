@@ -4,6 +4,9 @@ status: active
 publish: true
 title: "View Transitions"
 description: "Übergänge zwischen Zuständen und Seiten mit der View Transition API: Ablauf, view-transition-name, Anpassung und Browserstand."
+applies_to:
+  - "Baseline-Angaben nach web-features 3.38.0, Stand 2026-09-12"
+  - "Beispiele getestet in Chrome 152"
 ---
 
 # View Transitions

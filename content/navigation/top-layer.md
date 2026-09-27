@@ -4,13 +4,16 @@ status: active
 publish: true
 title: "Top Layer mit popover und dialog"
 description: "Wann popover, wann dialog: was beide gemeinsam haben, was der Browser jeweils selbst übernimmt und was nicht."
+applies_to:
+  - "Baseline-Angaben nach web-features 3.38.0, Stand 2026-09-12"
+  - "Beispiele getestet in Chrome 152"
 ---
 
 # Top Layer mit popover und dialog
 
 ## Kurz erklärt
 
-`popover` und `dialog` zeigen Inhalte **über allem anderen Seiteninhalt** an, im sogenannten Top Layer.[^mdn-popover] Praktische Folge: `z-index`-Kämpfe und abschneidendes `overflow` eines Vorfahren spielen dort keine Rolle mehr – das ist eigene Ableitung, nicht wörtlich belegt.
+`popover` und `dialog` zeigen Inhalte **über allem anderen Seiteninhalt** an, im sogenannten Top Layer.[^mdn-popover] Praktische Folge: `z-index`-Kämpfe und abschneidendes `overflow` eines Vorfahren spielen dort keine Rolle mehr – das ist eigene Ableitung, nicht wörtlich belegt. Nachtrag: Der Entwurf von CSS Positioned Layout Level 4 sagt es inzwischen ausdrücklich – Elemente im Top Layer erzeugen ihre Boxen wie Geschwister des Wurzelelements und können von nichts im Dokument abgeschnitten werden.[^css-position-4]
 
 Der Unterschied liegt im Verhalten:
 
@@ -130,6 +133,17 @@ Die implizite Ankerbeziehung beschreiben beide MDN-Leitfäden ([[quellen/artikel
 
 Ebenfalls in Chrome 152 getestet: Beim Wegtabben aus einem offenen `auto`-Popover bleibt es offen; nach `Esc` liegt der Fokus wieder auf dem Button, nach Klick daneben nicht.
 
+### Praxisfall: Panel aus einer scrollenden, maskierten Sidebar
+
+In einem eigenen Quartz-Plugin öffnen Navigationsordner als Dropdown-Panels. Liegt die Navigation in einer Sidebar mit `overflow: auto` und einer Ausblend-Maske per `mask-image`, werden die Panels abgeschnitten bzw. mit ausgeblendet. Warum `position: fixed` hier nicht reicht, erklären die Spezifikationen – und zwar für beide Ursachen verschieden:
+
+- **`overflow`:** Der Überlauf einer Box umfasst nur Nachfahren, deren Containing-Block-Kette durch diese Box läuft.[^css-overflow-3] Ein `position: fixed`-Panel hat normalerweise den Viewport als Containing Block und entkommt dem Abschneiden damit. Das gilt nicht mehr, sobald ein Vorfahr selbst Containing Block für `fixed` wird, etwa durch `transform`, `filter`, `backdrop-filter`, `will-change` oder `contain: layout`/`paint`.[^mdn-containing-block]
+- **`mask-image`:** Eine Maske erzeugt einen Stacking Context wie `opacity`, und **alle** Nachfahren werden als Gruppe gerendert und gemeinsam maskiert.[^css-masking] Ausnahmen für `position: fixed` nennt die Spezifikation nicht – die Maske trifft das Panel also weiter.
+
+Nur der Top Layer entkommt beidem.[^css-position-4] Das Plugin hebt das Panel deshalb beim Öffnen per `popover="manual"` und `showPopover()` dort hinein, setzt `top`/`left` per Skript an die Zeile des Ordners und schließt das Panel beim Scrollen. Ohne Popover-Unterstützung fällt es auf `position: fixed` zurück – laut Quelltextkommentar des Plugins in dem Wissen, dass das zwar `overflow` entkommt, nicht aber einer Maske. Die Positionierung per Skript passt zum Test oben: Ohne `source` entsteht beim `showPopover()` keine implizite Ankerbeziehung.
+
+Widerspruch zur ursprünglichen Projektdokumentation: Dort hieß es, auch mit `position: fixed` wirkten „Maske und Clipping weiter“. Nach den Spezifikationen stimmt das für die Maske, für `overflow` nur, wenn ein Vorfahr den Containing Block für `fixed` stellt. Ob das in der betroffenen Sidebar so war, ist nicht geprüft. Das Plugin behandelt vorsichtshalber auch `clip-path` und `contain` als abschneidende Vorfahren.
+
 ### Browsersupport
 
 | Feature | Stand |
@@ -158,9 +172,14 @@ Quelle: `web-features` 3.38.0 (Baseline-Daten der W3C WebDX Community Group), lo
 - [[quellen/artikel/dialog-element-mdn|dialog-Element (MDN)]] — modal/nicht modal, `closedby`, Fokus, `aria-modal`
 - [[quellen/artikel/popover-accessibility-devries|On popover accessibility – what the browser does and doesn't do]] — was Browser bei `popover` ergänzen und was nicht
 - [[quellen/artikel/invoker-commands-mdn|Invoker Commands API (MDN)]] — `command` und `commandfor`
+- CSS Positioned Layout Level 4, CSS Overflow Level 3 und CSS Masking Level 1 (Editor's Drafts) sowie MDN „Containing block“ (siehe Fußnoten) — Praxisfall mit Sidebar
 
 Die Auswahlregel, das Diagramm und die Zuordnung zu Navigationsmustern sind eigene Einordnung. Die CSS-Beispiele sind in Chrome 152 (macOS), 2026-09-13 geprüft, nicht in Firefox und Safari.
 
 [^mdn-dialog]: [[quellen/artikel/dialog-element-mdn|dialog-Element (MDN)]], abgerufen 2026-09-12.
 [^mdn-popover]: [[quellen/artikel/popover-api-mdn|Using the Popover API (MDN)]], abgerufen 2026-09-12.
 [^hidde]: [[quellen/artikel/popover-accessibility-devries|On popover accessibility – what the browser does and doesn't do]], Abschnitte „What browsers do“ und „What browsers don’t do“.
+[^css-position-4]: CSS Positioned Layout Module Level 4, Editor's Draft, Abschnitt 3 „Top Layer“ samt Hinweis „elements in the top layer cannot be clipped by anything in the document“, <https://drafts.csswg.org/css-position-4/#top-layer>. Abgerufen 2026-09-25.
+[^css-overflow-3]: CSS Overflow Module Level 3, Editor's Draft, Abschnitt 2 „Overflow Concepts and Terminology“: „A box’s overflow is computed based on the layout and styling of the box itself and of all descendants whose containing block chain includes the box“, <https://drafts.csswg.org/css-overflow-3/>. Abgerufen 2026-09-25.
+[^mdn-containing-block]: MDN, „Layout and the containing block“, Abschnitt „Identifying the containing block“, <https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Display/Containing_block>. Abgerufen 2026-09-25.
+[^css-masking]: CSS Masking Module Level 1, Editor's Draft, Abschnitt 7.10 „The Mask Image Rendering Model“: „all the element’s descendants are rendered together as a group with the masking applied to the group as a whole“, <https://drafts.fxtf.org/css-masking-1/>. Abgerufen 2026-09-25.

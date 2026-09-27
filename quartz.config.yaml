@@ -442,7 +442,7 @@ plugins:
       priority: 10
       group: brand
   - source: github:boxi-os/quartz-multilanguage
-    enabled: true
+    enabled: false
     order: 65
     options:
       languages:

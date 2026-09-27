@@ -4,6 +4,9 @@ status: active
 publish: true
 title: "Ein- und Ausblenden mit CSS animieren"
 description: "Elemente aus display: none heraus und wieder hinein animieren – Popover, Dialog, Menüs – mit @starting-style, allow-discrete und den Grenzen je Browser."
+applies_to:
+  - "Baseline-Angaben nach web-features 3.38.0, Stand 2026-09-12"
+  - "Beispiele getestet in Chrome 152"
 ---
 
 # Ein- und Ausblenden mit CSS animieren

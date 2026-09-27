@@ -4,6 +4,9 @@ status: active
 publish: true
 title: "CSS-Transitions und Keyframe-Animationen"
 description: "Die zwei Animationsmechanismen von CSS: wann Transition, wann Keyframes, welche Eigenschaften günstig sind und was Easing mit linear() kann."
+applies_to:
+  - "Baseline-Angaben nach web-features 3.38.0, Stand 2026-09-12"
+  - "Beispiele getestet in Chrome 152"
 ---
 
 # CSS-Transitions und Keyframe-Animationen

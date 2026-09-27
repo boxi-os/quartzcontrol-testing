@@ -4,6 +4,9 @@ status: active
 publish: true
 title: "Dropdown-Navigation mit Disclosure-Buttons bauen"
 description: "Untermenüs einer Navigation über Buttons statt Hover öffnen – klassisch mit aria-expanded oder mit der Popover-API."
+applies_to:
+  - "Baseline-Angaben nach web-features 3.38.0, Stand 2026-09-12"
+  - "Beispiele getestet in Chrome 152"
 ---
 
 # Dropdown-Navigation mit Disclosure-Buttons bauen

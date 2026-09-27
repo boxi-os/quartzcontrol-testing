@@ -4,6 +4,8 @@ status: active
 publish: true
 title: "CSS-Pseudoklasse has()"
 description: "Elemente abhängig von ihrem Inhalt oder ihrer Nachbarschaft auswählen — und warum der Parent-Selector sparsam eingesetzt gehört."
+applies_to:
+  - "Baseline-Angaben nach web-features 3.36.0, Stand 2026-09-03"
 ---
 
 # CSS-Pseudoklasse has()

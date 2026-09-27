@@ -4,6 +4,9 @@ status: active
 publish: true
 title: "Mobile-Menü ohne Checkbox-Hack bauen"
 description: "Ein Hamburger- bzw. Off-Canvas-Menü mit dialog oder popover bauen statt mit dem Checkbox-Hack – mit Entscheidungshilfe."
+applies_to:
+  - "Baseline-Angaben nach web-features 3.38.0, Stand 2026-09-12"
+  - "Beispiele getestet in Chrome 152"
 ---
 
 # Mobile-Menü ohne Checkbox-Hack bauen
@@ -193,6 +196,8 @@ Beim Checkbox-Hack steuert ein verstecktes `<input type="checkbox">` mit `<label
 - `Esc`, Fokusrückgabe, Fokusfang und Klick daneben fehlen und müssten ohnehin per Skript nachgebaut werden.
 - Seit `popover` und `dialog` deklarativ steuerbar sind, entfällt das Hauptargument „ohne JavaScript“.
 
+**Gegenbeispiel aus der Praxis:** Ein eigenes Quartz-Plugin baut sein Off-Canvas-Menü noch mit der Checkbox – und zeigt, was dafür nachgerüstet werden muss. Die Checkbox trägt `aria-controls` und ein `aria-expanded`, das ein Skript bei jeder Änderung nachführt; die Labels für Burger-Icon und Hintergrund sind per `aria-hidden` versteckt. Das Skript schließt außerdem bei `Esc` und vor einer Seitennavigation, gibt den Fokus an die Checkbox zurück, wenn er im Panel lag, und sperrt das Scrollen der Seite über eine Klasse am Wurzelelement. Einen Fokusfang oder einen inerten Hintergrund gibt es dort nicht. Das relativiert den ersten Punkt oben: Ein `aria-expanded` lässt sich nachrüsten, nur eben per Skript. Ob Screenreader `aria-expanded` an einer Checkbox sinnvoll ansagen, ist nicht geprüft. Kandidat für eine spätere Umstellung auf Variante A.
+
 ## Fallstricke
 
 - **WebKit-Fokusring:** Nach `showModal()` bzw. Invoker Commands zeigt WebKit laut David Bushell den `:focus-visible`-Stil am ersten Button auch bei Mausbedienung.[^bushell] Einen Workaround beschreibt er selbst als ungetestet. Nicht in Safari nachgeprüft.
@@ -236,7 +241,7 @@ Quelle: `web-features` 3.38.0 (Baseline-Daten der W3C WebDX Community Group), lo
 - [[quellen/artikel/details-element-mdn|details-Element (MDN)]] — Variante C
 - [[quellen/artikel/viewport-einheiten-webdev|The large, small, and dynamic viewport units (web.dev)]] — `dvh`
 
-Eigene Einordnung bzw. eigener Code: Entscheidungsdiagramm, alle HTML-, CSS- und JavaScript-Beispiele (Animation nach dem MDN-Muster), Variante C als Menü, Breakpoint-Umschaltung, die Kritik am Checkbox-Hack und der Hinweis zu `body:has(dialog[open])`.
+Eigene Einordnung bzw. eigener Code: Entscheidungsdiagramm, alle HTML-, CSS- und JavaScript-Beispiele (Animation nach dem MDN-Muster), Variante C als Menü, Breakpoint-Umschaltung, die Kritik am Checkbox-Hack und der Hinweis zu `body:has(dialog[open])`. Das Gegenbeispiel stammt aus dem Quelltext eines eigenen Quartz-Plugins (Stand 2026-09-25), nicht aus einer externen Quelle.
 
 [^bushell]: David Bushell, „Declarative Dialog Menu with Invoker Commands“, dbushell.com, 12.02.2026, <https://dbushell.com/2026/02/12/declarative-dialog-menu-invoker-commands/>. Abgerufen 2026-09-12; die Website steht unter „All Rights Reserved“, daher hier nur sinngemäß und ohne Code.
 [^mdn-invoker]: [[quellen/artikel/invoker-commands-mdn|Invoker Commands API (MDN)]].

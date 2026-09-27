@@ -4,6 +4,8 @@ status: active
 publish: true
 title: "CSS-Nesting"
 description: "Native Verschachtelung in CSS ohne Präprozessor: der &-Selektor, die Spezifitätsfalle und wie flach man verschachteln sollte."
+applies_to:
+  - "Baseline-Angaben nach web-features 3.36.0, Stand 2026-09-03"
 ---
 # CSS-Nesting
 

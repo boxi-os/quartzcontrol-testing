@@ -4,6 +4,9 @@ status: active
 publish: true
 title: "Scroll-getriebene Animationen"
 description: "CSS-Animationen, die dem Scrollen statt der Zeit folgen: scroll() und view(), animation-range, Einsatz nur als Zusatz, weil Firefox fehlt."
+applies_to:
+  - "Baseline-Angaben nach web-features 3.38.0, Stand 2026-09-12"
+  - "Beispiele getestet in Chrome 152"
 ---
 
 # Scroll-getriebene Animationen

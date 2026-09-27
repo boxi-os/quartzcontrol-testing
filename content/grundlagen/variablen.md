@@ -4,6 +4,8 @@ status: active
 publish: true
 title: "CSS Custom Properties"
 description: "CSS-Variablen von der Vererbung bis @property: Auflösungszeitpunkt, Typisierung, Animierbarkeit und die häufigsten Missverständnisse."
+applies_to:
+  - "Baseline-Angaben nach web-features 3.36.0, Stand 2026-09-03"
 ---
 
 # CSS Custom Properties
