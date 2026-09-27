@@ -48,6 +48,12 @@
       "resolved": "https://github.com/boxi-os/quartz-multilanguage.git",
       "commit": "2b46409708d561011e76ba81d5d0ce26db411059",
       "installedAt": "2026-09-27T18:07:47.276Z"
+    },
+    "quartz-navigations": {
+      "source": "github:boxi-os/quartz-navigations",
+      "resolved": "https://github.com/boxi-os/quartz-navigations.git",
+      "commit": "885ebc373441e886f929637437bbd30d7a839a36",
+      "installedAt": "2026-09-27T18:19:28.600Z"
     }
   }
 }

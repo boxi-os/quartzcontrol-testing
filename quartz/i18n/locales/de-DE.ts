@@ -3,7 +3,7 @@ import { Translation } from "./definition"
 export default {
   propertyDefaults: {
     title: "Unbenannt",
-    description: "Keine Beschreibung angegeben",
+    description: "Ohne Beschreibung",
   },
   components: {
     callout: {
@@ -22,36 +22,36 @@ export default {
       quote: "Zitat",
     },
     backlinks: {
-      title: "Backlinks",
-      noBacklinksFound: "Keine Backlinks gefunden",
+      title: "Verweise hierher",
+      noBacklinksFound: "Noch verweist nichts hierher",
     },
     themeToggle: {
-      lightMode: "Heller Modus",
-      darkMode: "Dunkler Modus",
+      lightMode: "Helles Farbschema",
+      darkMode: "Dunkles Farbschema",
     },
     readerMode: {
-      title: "Lesemodus",
+      title: "Nur der Text",
     },
     explorer: {
-      title: "Explorer",
+      title: "Inhalt",
     },
     footer: {
       createdWith: "Erstellt mit",
     },
     graph: {
-      title: "Graphansicht",
+      title: "Umgebung",
     },
     recentNotes: {
-      title: "Zuletzt bearbeitete Seiten",
+      title: "Zuletzt geändert",
       seeRemainingMore: ({ remaining }) => `${remaining} weitere ansehen →`,
     },
     transcludes: {
       transcludeOf: ({ targetSlug }) => `Transklusion von ${targetSlug}`,
-      linkToOriginal: "Link zum Original",
+      linkToOriginal: "Zur vollständigen Seite",
     },
     search: {
       title: "Suche",
-      searchBarPlaceholder: "Suche nach etwas",
+      searchBarPlaceholder: "Suchen …",
     },
     tableOfContents: {
       title: "Inhaltsverzeichnis",

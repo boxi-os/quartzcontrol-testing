@@ -15,9 +15,9 @@ configuration:
     fontOrigin: local
     cdnCaching: false
     typography:
-      header: Just Another Hand
-      body: Open Sans
-      code: Roboto Mono
+      header: Noto Sans
+      body: Noto Sans
+      code: Noto Sans Mono
     colors:
       lightMode:
         light: "#FCFCFA"
@@ -117,16 +117,9 @@ plugins:
   - source: "@quartz-themes/core"
     enabled: false
     options:
-      theme: ultra-lobster
+      theme: minimal
       mode: both
-      styleSettings:
-        o-theme-settings@@o-header-line-h1: true
-        o-theme-settings@@o-red: true
-        cupertino@@secondary: "#ff0000"
-        cupertino@@material-color: true
-        ITS@@file-explorer-boldless: true
-        ITS@@secondary: "#ff0000"
-        ulu-theme-settings@@ulu-obsidianplus-cool-l: true
+      themeFonts: false
     order: 140
   - source: "@quartz-community/remove-draft"
     enabled: true
@@ -147,7 +140,7 @@ plugins:
     enabled: false
     layout:
       position: afterBody
-      priority: 20
+      priority: 50
       display: all
   - source: "@quartz-community/alias-redirects"
     enabled: true
@@ -171,7 +164,7 @@ plugins:
   - source: "@quartz-community/tag-page"
     enabled: true
   - source: "@quartz-community/explorer"
-    enabled: true
+    enabled: false
     layout:
       position: left
       priority: 30
@@ -180,7 +173,7 @@ plugins:
       folderClickBehavior: link
       useSavedState: true
   - source: "@quartz-community/graph"
-    enabled: true
+    enabled: false
     layout:
       position: right
       priority: 20
@@ -215,7 +208,7 @@ plugins:
       position: beforeBody
       priority: 40
   - source: "@quartz-community/tag-list"
-    enabled: true
+    enabled: false
     layout:
       position: beforeBody
       priority: 20
@@ -256,14 +249,12 @@ plugins:
     options:
       links:
         Quartz: https://quartz.jzhao.xyz/
-        QuartzControl: https://github.com/boxi-os/QuartzControl
-        Layout Box: https://github.com/boxi-os/quartz-layout-box
-        Multilanguage: https://github.com/boxi-os/quartz-multilanguage
+        QuartzControl: https://boxi-os.github.io/QuartzControl/
     layout:
       position: footer
       priority: 20
   - source: "@quartz-community/recent-notes"
-    enabled: true
+    enabled: false
     options:
       limit: 5
       hideFolderPages: true
@@ -282,7 +273,7 @@ plugins:
     order: 25
     layout:
       position: left
-      priority: 10
+      priority: 25
       display: mobile-only
   - source: "@quartz-community/bases-page"
     enabled: true
@@ -296,18 +287,8 @@ plugins:
         - description
         - tags
         - section
-        - zahl
-        - wahr
-        - falsch
-        - liste
-        - leer
-        - number
-        - truthy
-        - falsy
-        - list
-        - empty
       excludedProperties: []
-      hidePropertiesView: false
+      hidePropertiesView: true
       delimiters: ---
       language: yaml
     order: 5
@@ -352,88 +333,10 @@ plugins:
     enabled: true
     order: 500
     options:
-      html: <a class="site-mark" href="{{root}}/"><svg class="img-light" role="img"
-        aria-label="" width="26" height="26" viewBox="0 0 1024 1024"
-        xmlns="http://www.w3.org/2000/svg"
-        style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g
-        transform="matrix(4.291667,0,0,4.291667,135.99405,59.880111)"><path
-        d="M183,37.2L183,170.8C183,186.9 169.9,200 153.8,200L20.2,200C4.1,200
-        -9,186.9 -9,170.8L-9,37.2C-9,21.1 4.1,8 20.2,8L153.8,8C169.9,8 183,21.1
-        183,37.2Z" style="fill:url(#qcMarkLight);"/></g><g
-        transform="matrix(3.531863,-1.321928,1.321928,3.531863,36.484281,260.806286)"><g
-        transform="matrix(0.395064,0,0,0.395064,-19.743282,-1.657683)"><path
-        d="M171.1,120.5C169.1,100.3 158.7,81.6 163.6,72.6C169.5,61.9 209.9,46.7
-        215.5,45.3C231.7,41.5 242,71.7 254.6,83.4C260.1,88.5 302,84.8
-        304.4,84.2C318.8,80.4 328.1,41.2 344.5,40.4C350.1,40.1 384.7,53.9
-        387.3,55C409.6,64.7 402.5,71.6 397.2,105.5C395.6,115.9 394.9,117.9
-        420.6,141.4C439.5,158.5 444.8,148.7 478.4,141.3C479.3,141.1 481.9,140.5
-        488.4,145.7C495.3,151.2 511.2,190.5 512,193.6C517.2,213.3 480.3,223.4
-        472.8,236.7C468.4,244.3 472.3,277.9 473.1,283.6C474.9,295 507.3,305.1
-        514.1,315.7C520.8,326.1 499.7,371.3 496,376.1C485.8,389.2 447.1,369.6
-        437.7,376.8C432.8,380.6 404.9,408.3 405.1,412.5C406.4,440.2 419.5,452.2
-        410.2,467.3C405.9,474.2 363.7,489.7 360.5,490.7C342.5,495.9 331,455
-        317.6,450.3C311.8,448.2 279.5,451 277.5,451.3C256.9,454.5 255.4,486.9
-        237.4,495.3C234,496.9 232.2,497.7 192.4,481.7C167.1,471.5 176.4,463.2
-        181.1,431.4C182.4,422.3 184.9,416.9 148.3,387.7C136.7,378.5 104.1,399.8
-        90.8,392.1C84.3,388.4 68.4,349.5 68,348.3C59.2,325.8 72.8,327
-        99.4,305.4C106.8,299.3 107.3,298 105.7,266.5C104.4,240.4 95.8,244.4
-        73.2,228.9C55.5,216.9 59.1,212.6 66.6,192.5C79.7,157.1 82.1,154.5
-        96.5,156.2C127.8,160 131.1,167.8 146.4,153.4C170.4,130.8 170.8,123.8
-        171.1,120.5ZM401.6,268.6C398.4,166.7 294.1,129.3 227.1,173C172.2,208.9
-        162.9,278.3 190.6,324.5C247.6,419.9 395.5,390.4 401.6,268.6Z"
-        style="fill:rgb(235,235,235);"/></g></g><g
-        transform="matrix(0.709114,-0.702696,1.144732,1.155188,-408.945935,351.542948)"><path
-        d="M612,470.5L612,717.5C612,725.5 601.4,732
-        588.4,732L501.6,732C488.6,732 478,725.5 478,717.5L478,470.5C478,462.5
-        488.6,456 501.6,456L588.4,456C601.4,456 612,462.5 612,470.5Z"
-        style="fill:rgb(235,235,235);"/></g><defs><linearGradient
-        id="qcMarkLight" x1="0" y1="0" x2="1" y2="0"
-        gradientUnits="userSpaceOnUse"
-        gradientTransform="matrix(0,192,-192,0,76.43904,7.99904)"><stop
-        offset="0" style="stop-color:rgb(69,91,155);stop-opacity:1"/><stop
-        offset="1"
-        style="stop-color:rgb(221,120,127);stop-opacity:1"/></linearGradient></defs></svg><svg
-        class="img-dark" role="img" aria-label="" width="26" height="26"
-        viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"
-        style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g
-        transform="matrix(4.291667,0,0,4.291667,135.99405,59.880111)"><path
-        d="M183,37.2L183,170.8C183,186.9 169.9,200 153.8,200L20.2,200C4.1,200
-        -9,186.9 -9,170.8L-9,37.2C-9,21.1 4.1,8 20.2,8L153.8,8C169.9,8 183,21.1
-        183,37.2Z" style="fill:url(#qcMarkDark);"/></g><g
-        transform="matrix(3.531863,-1.321928,1.321928,3.531863,36.484281,260.806286)"><g
-        transform="matrix(0.395064,0,0,0.395064,-19.743282,-1.657683)"><path
-        d="M171.1,120.5C169.1,100.3 158.7,81.6 163.6,72.6C169.5,61.9 209.9,46.7
-        215.5,45.3C231.7,41.5 242,71.7 254.6,83.4C260.1,88.5 302,84.8
-        304.4,84.2C318.8,80.4 328.1,41.2 344.5,40.4C350.1,40.1 384.7,53.9
-        387.3,55C409.6,64.7 402.5,71.6 397.2,105.5C395.6,115.9 394.9,117.9
-        420.6,141.4C439.5,158.5 444.8,148.7 478.4,141.3C479.3,141.1 481.9,140.5
-        488.4,145.7C495.3,151.2 511.2,190.5 512,193.6C517.2,213.3 480.3,223.4
-        472.8,236.7C468.4,244.3 472.3,277.9 473.1,283.6C474.9,295 507.3,305.1
-        514.1,315.7C520.8,326.1 499.7,371.3 496,376.1C485.8,389.2 447.1,369.6
-        437.7,376.8C432.8,380.6 404.9,408.3 405.1,412.5C406.4,440.2 419.5,452.2
-        410.2,467.3C405.9,474.2 363.7,489.7 360.5,490.7C342.5,495.9 331,455
-        317.6,450.3C311.8,448.2 279.5,451 277.5,451.3C256.9,454.5 255.4,486.9
-        237.4,495.3C234,496.9 232.2,497.7 192.4,481.7C167.1,471.5 176.4,463.2
-        181.1,431.4C182.4,422.3 184.9,416.9 148.3,387.7C136.7,378.5 104.1,399.8
-        90.8,392.1C84.3,388.4 68.4,349.5 68,348.3C59.2,325.8 72.8,327
-        99.4,305.4C106.8,299.3 107.3,298 105.7,266.5C104.4,240.4 95.8,244.4
-        73.2,228.9C55.5,216.9 59.1,212.6 66.6,192.5C79.7,157.1 82.1,154.5
-        96.5,156.2C127.8,160 131.1,167.8 146.4,153.4C170.4,130.8 170.8,123.8
-        171.1,120.5ZM401.6,268.6C398.4,166.7 294.1,129.3 227.1,173C172.2,208.9
-        162.9,278.3 190.6,324.5C247.6,419.9 395.5,390.4 401.6,268.6Z"
-        style="fill:rgb(235,235,235);"/></g></g><g
-        transform="matrix(0.709114,-0.702696,1.144732,1.155188,-408.945935,351.542948)"><path
-        d="M612,470.5L612,717.5C612,725.5 601.4,732
-        588.4,732L501.6,732C488.6,732 478,725.5 478,717.5L478,470.5C478,462.5
-        488.6,456 501.6,456L588.4,456C601.4,456 612,462.5 612,470.5Z"
-        style="fill:rgb(235,235,235);"/></g><defs><linearGradient
-        id="qcMarkDark" x1="0" y1="0" x2="1" y2="0"
-        gradientUnits="userSpaceOnUse"
-        gradientTransform="matrix(0,192,-192,0,76.43904,7.99904)"><stop
-        offset="0" style="stop-color:rgb(59,77,132);stop-opacity:1"/><stop
-        offset="1"
-        style="stop-color:rgb(188,102,108);stop-opacity:1"/></linearGradient></defs></svg><span
-        class="site-mark-text">{{siteTitle}}</span></a>
+      html: <a class="site-mark" href="{{root}}/"><img class="img-light"
+        src="{{root}}/static/icon.png" width="26" height="26" alt=""><img
+        class="img-dark" src="{{root}}/static/icon-dark.png" width="26"
+        height="26" alt=""><span class="site-mark-text">{{siteTitle}}</span></a>
       className: layout-box-mark
       placeholders: true
       frontmatterKey: layoutBoxMark
@@ -488,20 +391,28 @@ plugins:
     layout:
       position: header
       group: toolbar
-      priority: 60
+      priority: 70
   - source: github:boxi-os/quartz-layout-box
     enabled: true
-    order: 505
+    order: 510
     options:
-      html: <span class="bar-page-name" aria-hidden="true"
-        data-section="{{frontmatter.section}}"></span>
-      className: layout-box-page-name
-      placeholders: true
-      frontmatterKey: layoutBoxPageName
+      title: Über diese Website
+      html: <p>Dieser Kasten steht auf jeder Seite in der linken Spalte. Was darin
+        steht, änderst du in der Konfiguration unter <em>Plugins</em> — oder du
+        schaltest ihn dort ab.</p>
+      collapsed: false
+      className: layout-box-note
+      frontmatterKey: layoutBoxNote
+      byLang:
+        en:
+          title: About this site
+          html: <p>This box sits in the left column of every page. What it says is set
+            under <em>Plugins</em> in the configuration — or you switch it off
+            there.</p>
     layout:
-      position: header
-      priority: 30
-      group: brand
+      position: left
+      priority: 40
+      display: desktop-only
   - source: github:boxi-os/quartz-layout-box
     enabled: true
     order: 510
@@ -581,6 +492,24 @@ plugins:
     layout:
       position: footer
       priority: 20
+  - source: github:boxi-os/quartz-navigations
+    enabled: true
+    order: 600
+    options:
+      variant: accordion
+      showHome: true
+      folderClick: toggle
+      indexEntry: first
+      exclusive: true
+      mobile: offcanvas
+      id: menue
+      className: nav-menue
+      breakpoints:
+        mobile: 900px
+        desktop: 1200px
+    layout:
+      position: left
+      priority: 30
 layout:
   groups:
     brand:
@@ -595,7 +524,7 @@ layout:
       gap: 0.5rem
     custom-8:
       priority: 40
-      direction: column
+      direction: row
       wrap: wrap
       gap: 1.5rem
   byPageType:

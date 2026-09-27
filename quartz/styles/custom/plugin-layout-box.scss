@@ -133,6 +133,24 @@ details.layout-box > summary.layout-box-title {
     border-radius: var(--tpl-radius-sm);
   }
 
+  // Dasselbe für ein Bild. Seit dem 2026-09-24 ist die Marke in allen Vorlagen das Projektbild
+  // (`quartz/static/icon.png`, `icon-dark.png`), das die App unter „Konfiguration → Projektbild“
+  // ersetzt; bis dahin stand sie im Example als Inline-SVG in der Konfiguration. Die Regel für das
+  // SVG oben bleibt für jeden, der seine Marke so einsetzt, und ist sonst wirkungslos statt falsch.
+  //
+  // `display` steht auch hier nicht: Der Umschalter des Plugins hängt an den Klassen
+  // `.img-light`/`.img-dark` und nicht am Element, er trägt ein `<img>` also genauso wie ein
+  // `<svg>`. Eine Wiederholung hier schaltete beide ein, gemessen am 2026-09-05 für das SVG.
+  //
+  // `margin: 0`, weil Quartz' base.scss jedem `<img>` der Website `margin: 1rem 0` gibt - richtig im
+  // Artikel, im Kopf aber machte es aus der 26-px-Marke einen 58 px hohen Kasten und den Kopf 32 px
+  // höher als mit dem Inline-SVG (gemessen am 2026-09-24, dem Tag, an dem die Marke ein Bild wurde).
+  img {
+    flex: 0 0 auto;
+    margin: 0;
+    border-radius: var(--tpl-radius-sm);
+  }
+
   // The link's accessible name. page-title already prints the site title right next to this, so
   // showing it again would say everything twice - but `display: none` was the wrong way to stop
   // that: the anchor contains nothing else but an SVG with an empty alt, so hiding this span left

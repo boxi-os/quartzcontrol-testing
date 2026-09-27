@@ -1,1 +1,2 @@
 * text=auto eol=lf
+quartz/i18n/locales/*.ts merge=ours
