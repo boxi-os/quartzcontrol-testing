@@ -40,20 +40,20 @@
     "quartz-layout-box": {
       "source": "github:boxi-os/quartz-layout-box",
       "resolved": "https://github.com/boxi-os/quartz-layout-box.git",
-      "commit": "66ecf3ac3098455cc30ad9cd79d1befcb2cd2718",
-      "installedAt": "2026-09-27T18:07:45.522Z"
+      "commit": "5a21a5b2ed85a1480823f5fc237fc6de36a55f7b",
+      "installedAt": "2026-10-09T10:59:35.704Z"
     },
     "quartz-multilanguage": {
       "source": "github:boxi-os/quartz-multilanguage",
       "resolved": "https://github.com/boxi-os/quartz-multilanguage.git",
-      "commit": "2b46409708d561011e76ba81d5d0ce26db411059",
-      "installedAt": "2026-09-27T18:07:47.276Z"
+      "commit": "85428bf8d7a0fb2dbc1771c1047cf9e1414460fc",
+      "installedAt": "2026-10-08T12:26:06.001Z"
     },
     "quartz-navigations": {
       "source": "github:boxi-os/quartz-navigations",
       "resolved": "https://github.com/boxi-os/quartz-navigations.git",
-      "commit": "885ebc373441e886f929637437bbd30d7a839a36",
-      "installedAt": "2026-09-27T18:19:28.600Z"
+      "commit": "f7cd142d19d16ef745aebf22634807dc6ff025bd",
+      "installedAt": "2026-10-08T12:26:08.899Z"
     }
   }
 }
