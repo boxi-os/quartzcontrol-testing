@@ -37,11 +37,17 @@
       "commit": "997fc5f0bb0695a97c044fcb6838b5fbf0f9b854",
       "installedAt": "2026-09-16T11:45:39.517Z"
     },
+    "quartz-betterbases": {
+      "source": "github:boxi-os/quartz-betterbases",
+      "resolved": "https://github.com/boxi-os/quartz-betterbases.git",
+      "commit": "742a3fd1ef34d73616c6e2aac40bf13b9b907f4d",
+      "installedAt": "2026-10-15T12:49:40.448Z"
+    },
     "quartz-layout-box": {
       "source": "github:boxi-os/quartz-layout-box",
       "resolved": "https://github.com/boxi-os/quartz-layout-box.git",
-      "commit": "5a21a5b2ed85a1480823f5fc237fc6de36a55f7b",
-      "installedAt": "2026-10-09T10:59:35.704Z"
+      "commit": "a5a32b28cad89a85015fed05c303d32e94816e60",
+      "installedAt": "2026-10-15T20:36:54.982Z"
     },
     "quartz-multilanguage": {
       "source": "github:boxi-os/quartz-multilanguage",
@@ -52,8 +58,8 @@
     "quartz-navigations": {
       "source": "github:boxi-os/quartz-navigations",
       "resolved": "https://github.com/boxi-os/quartz-navigations.git",
-      "commit": "f7cd142d19d16ef745aebf22634807dc6ff025bd",
-      "installedAt": "2026-10-08T12:26:08.899Z"
+      "commit": "53980939cd012026ba7f61c78cadef29f77231ed",
+      "installedAt": "2026-10-15T20:36:59.145Z"
     }
   }
 }

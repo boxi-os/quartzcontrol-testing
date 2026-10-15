@@ -1,0 +1,94 @@
+filters:
+  and:
+    - file.inFolder("bases-beispiele/buecher")
+formulas:
+  sterne: 'if(bewertung, "★".repeat(bewertung), "")'
+  alter: 'today().year - jahr'
+  gelesen: 'if(gelesen_am, date(gelesen_am).format("MMMM YYYY"), "")'
+properties:
+  file.name:
+    displayName: Titel
+  note.autor:
+    displayName: Autor
+  note.jahr:
+    displayName: Jahr
+  note.seiten:
+    displayName: Seiten
+  note.status:
+    displayName: Status
+  formula.sterne:
+    displayName: Bewertung
+  formula.alter:
+    displayName: Alter (Jahre)
+  formula.gelesen:
+    displayName: Gelesen im
+views:
+  - type: table
+    name: Alle Bücher
+    order:
+      - file.name
+      - autor
+      - jahr
+      - seiten
+      - status
+      - formula.sterne
+      - formula.alter
+    sort:
+      - property: jahr
+        direction: ASC
+    summaries:
+      seiten: Sum
+      formula.alter: Average
+  - type: table
+    name: Nach Status
+    groupBy:
+      property: status
+      direction: ASC
+    order:
+      - file.name
+      - autor
+      - seiten
+    summaries:
+      seiten: Sum
+  - type: cards
+    name: Regal
+    image: note.farbe
+    imageAspectRatio: 1.4
+    order:
+      - file.name
+      - autor
+      - jahr
+      - formula.sterne
+  - type: board
+    name: Lesefortschritt
+    groupBy:
+      property: status
+      direction: ASC
+    order:
+      - autor
+      - seiten
+  - type: list
+    name: Kurzliste
+    order:
+      - file.name
+      - autor
+      - jahr
+  - type: gallery
+    name: Galerie
+    image: note.farbe
+    order:
+      - file.name
+  - type: table
+    name: Gelesen seit 2024
+    filters:
+      and:
+        - status == "gelesen"
+        - date(gelesen_am) >= date("2024-01-01")
+    order:
+      - file.name
+      - autor
+      - formula.gelesen
+      - formula.sterne
+    sort:
+      - property: gelesen_am
+        direction: DESC

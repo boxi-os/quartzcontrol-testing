@@ -14,6 +14,8 @@ list_notes: true
 
 Notizen zu modernem CSS aus meinem persönlichen Wissensarchiv: Farben und Farbmodelle, `calc()`, Custom Properties, natives Nesting und die Pseudoklasse `:has()`, dazu Navigationsmuster – Hauptnavigation, Dropdown, Mobilmenü, Sticky-Header, Akkordeon – und CSS-Animation von Transitions bis View Transitions. Die Site ist **nur für den lokalen Gebrauch** gedacht und nicht zur Veröffentlichung im Netz.
 
+
+
 Jede Notiz nennt die Quellen, auf denen sie beruht, und benennt, wo diese Quellen sich widersprechen oder irren. Angaben zum Browsersupport sind gegen die Baseline-Daten der WebDX Community Group geprüft und mit Datum versehen — sie altern also nachvollziehbar. Die Codebeispiele zu Navigation und Animation sind in Chrome getestet, nicht in Firefox und Safari; wo die Browser auseinanderlaufen, steht es in der jeweiligen Notiz.
 
 ## Veroeffentlichte Themen
