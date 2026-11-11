@@ -12,7 +12,7 @@ Dieser Codeblock steht in jeder Autorennotiz gleich; `this` ist die Notiz, in de
 filters:
   and:
     - file.inFolder("bases-beispiele/buecher")
-    - 'autor == this.file.asLink()'
+    - 'list(autor).contains(this.file.asLink())'
 formulas:
   sterne: 'if(bewertung, "★".repeat(bewertung), "")'
 properties:

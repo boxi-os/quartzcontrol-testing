@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: Zweifarbiger Fokusring – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+.label { font-size: .8rem; color: #57606a; margin: 0 0 .25rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.reihe { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-start; }
+.flaeche { padding: 2rem; border: 1px solid #d0d7de; } button { font: inherit; padding: .4rem .8rem; }
+</style>
+<style data-beispiel>
+:focus-visible {
+  outline: 3px solid black;
+  box-shadow: 0 0 0 6px white;
+}
+</style>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „Sichtbare Fokusstile“</p>
+  <h1>Zweifarbiger Fokusring</h1>
+  <p>Mit Tab durch die Buttons gehen. Der Ring aus schwarzer <code>outline</code> und weißem <code>box-shadow</code> ist auf hellem und dunklem Hintergrund gleich gut zu sehen. Im Forced-Colors-Modus bleibt die <code>outline</code> erhalten.</p>
+  <p class="klein">Getestet in Chrome 155. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<main class="beispiel-buehne">
+<div class="reihe">
+  <div class="flaeche" style="background:#fff"><button type="button">Auf Weiß</button></div>
+  <div class="flaeche" style="background:#1e3a8a"><button type="button">Auf Dunkelblau</button></div>
+  <div class="flaeche" style="background:#000"><button type="button">Auf Schwarz</button></div>
+  <div class="flaeche" style="background:#fde047"><button type="button">Auf Gelb</button></div>
+</div>
+</main>
+</body>
+</html>

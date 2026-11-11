@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: Quantity Queries: Raster nach Anzahl – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+.label { font-size: .8rem; color: #57606a; margin: 0 0 .25rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.reihe { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-start; }
+.galerie > div { background: #dbeafe; padding: 1rem; text-align: center; }
+</style>
+<style data-beispiel>
+.galerie {
+  --spalte: 300px;
+  display: grid;
+  gap: .5rem;
+  grid-template-columns: repeat(auto-fill, minmax(var(--spalte), 1fr));
+}
+.galerie:has(> :nth-last-child(n + 5)) { --spalte: 200px; }
+.galerie:has(> :nth-last-child(n + 9)) { --spalte: 130px; }
+</style>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „Elemente anhand ihres Inhalts auswählen“</p>
+  <h1>Quantity Queries: Raster nach Anzahl</h1>
+  <p>Mit den Buttons Einträge hinzufügen oder entfernen. Ab 5 Einträgen werden die Spalten schmaler, ab 9 noch schmaler. Das CSS zählt selbst, das Skript fügt nur Kacheln hinzu.</p>
+  <p class="klein">Getestet in Chrome 155. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<main class="beispiel-buehne">
+<p><button id="plus" type="button">+ Eintrag</button> <button id="minus" type="button">− Eintrag</button> <span id="anzahl" class="label"></span></p>
+<div class="galerie" id="galerie"><div>1</div><div>2</div><div>3</div></div>
+</main>
+<script>
+// Rahmen-Skript: nur für die Bedienung der Beispielseite
+const g = document.getElementById("galerie"), z = document.getElementById("anzahl");
+const zeigen = () => z.textContent = g.children.length + " Einträge";
+document.getElementById("plus").onclick = () => { const d = document.createElement("div"); d.textContent = g.children.length + 1; g.append(d); zeigen(); };
+document.getElementById("minus").onclick = () => { g.lastElementChild?.remove(); zeigen(); };
+zeigen();
+</script>
+</body>
+</html>

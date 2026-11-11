@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: Die Nachfahren-Falle bei :not() – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+.label { font-size: .8rem; color: #57606a; margin: 0 0 .25rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.reihe { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-start; }
+
+</style>
+<style data-beispiel>
+.falsch :not(table) a { color: crimson; font-weight: 700; }
+.richtig a:not(table a) { color: green; font-weight: 700; }
+</style>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „CSS-Pseudoklassen not(), is() und where()“</p>
+  <h1>Die Nachfahren-Falle bei :not()</h1>
+  <p>Links: <code>body :not(table) a</code> trifft auch den Link in der Tabelle (rot), weil <code>td</code> und <code>tr</code> „kein table“ sind. Rechts: <code>body a:not(table a)</code> lässt ihn wirklich aus (grün nur außerhalb).</p>
+  <p class="klein">Im Beispiel steht statt <code>body</code> ein Container, damit beide Varianten auf eine Seite passen.</p>
+  <p class="klein">Getestet in Chrome 155. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<main class="beispiel-buehne">
+<div class="reihe">
+  <div class="falsch"><p class="label">.falsch :not(table) a</p>
+    <p><a href="#">Link im Absatz</a></p>
+    <table><tr><td><a href="#">Link in der Tabelle</a></td></tr></table>
+  </div>
+  <div class="richtig"><p class="label">.richtig a:not(table a)</p>
+    <p><a href="#">Link im Absatz</a></p>
+    <table><tr><td><a href="#">Link in der Tabelle</a></td></tr></table>
+  </div>
+</div>
+</main>
+</body>
+</html>

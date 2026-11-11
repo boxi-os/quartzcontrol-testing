@@ -13,7 +13,7 @@ applies_to:
 
 ## Ziel
 
-Ein Akkordeon – mehrere auf- und zuklappbare Abschnitte –, das ohne JavaScript funktioniert. Optional **exklusiv** (immer nur ein Abschnitt offen) und mit weichem Auf- und Zuklappen.
+Ein Akkordeon, also mehrere Abschnitte zum Auf- und Zuklappen, das ganz ohne JavaScript funktioniert. Auf Wunsch **exklusiv** (immer nur ein Abschnitt offen) und mit weichem Auf- und Zuklappen.
 
 ## Voraussetzungen
 
@@ -23,7 +23,7 @@ Ein Akkordeon – mehrere auf- und zuklappbare Abschnitte –, das ohne JavaScri
 
 ## Getestet mit / Stand
 
-Stand 2026-09-12. **In Chrome 152 (macOS), 2026-09-13 getestet:** Bei mehreren `open` in einer Gruppe ist nur das erste offen, `name` schließt den vorigen Abschnitt, `Enter` auf `summary` öffnet per Tastatur, die Höhe klappt in beide Richtungen animiert, der eigene Marker ersetzt den Standardpfeil. **Nicht getestet:** Firefox, Safari, Screenreader. Grundlage sind die MDN-Referenzen und ein Chrome-Artikel. Die Animation des Inhalts funktioniert laut `web-features` 3.38.0 nicht in Firefox, die Höhenanimation nur in Chromium.
+Stand 2026-09-12. **Am 2026-09-13 in Chrome 152 (macOS) getestet:** Bei mehreren `open` in einer Gruppe ist nur das erste offen, `name` schließt den vorigen Abschnitt, `Enter` auf `summary` öffnet per Tastatur, die Höhe klappt in beide Richtungen animiert, und der eigene Marker ersetzt den Standardpfeil. **Am 2026-10-18 in Chrome 155 ergänzt:** `toggle` beim Laden und die Gruppenbildung über verschiedene Elternelemente (siehe Fallstricke). **Nicht getestet:** Firefox, Safari, Screenreader. Grundlage sind die MDN-Referenzen und ein Chrome-Artikel. Die Animation des Inhalts funktioniert laut `web-features` 3.38.0 nicht in Firefox, die Höhenanimation nur in Chromium.
 
 ## Vorgehen
 
@@ -46,11 +46,11 @@ Stand 2026-09-12. **In Chrome 152 (macOS), 2026-09-13 getestet:** Bei mehreren `
    </div>
    ```
 
-2. **Exklusiv machen mit gleichem `name`.** Öffnen eines Abschnitts schließt den zuvor offenen.[^mdn-details][^chrome] Ohne `name` können beliebig viele gleichzeitig offen sein.
+2. **Mit gleichem `name` exklusiv machen.** Öffnet man einen Abschnitt, schließt sich der zuvor offene.[^mdn-details][^chrome] Ohne `name` können beliebig viele gleichzeitig offen sein.
 
-3. **Einen Abschnitt vorab öffnen** mit `open`. Haben in einer Gruppe mehrere `open`, ist nur der erste in der Quelltext-Reihenfolge offen.[^mdn-details]
+3. **Einen Abschnitt von Anfang an öffnen** mit `open`. Haben in einer Gruppe mehrere Abschnitte `open`, ist nur der erste im Quelltext offen.[^mdn-details]
 
-4. **Marker gestalten.** `summary` hat `display: list-item`; der Pfeil lässt sich über `::marker` oder durch eigenes Styling ersetzen.[^mdn-details]
+4. **Marker gestalten.** `summary` hat `display: list-item`. Den Pfeil kann man über `::marker` gestalten oder durch eigenes Styling ersetzen.[^mdn-details]
 
    ```css
    .accordion summary {
@@ -72,7 +72,7 @@ Stand 2026-09-12. **In Chrome 152 (macOS), 2026-09-13 getestet:** Bei mehreren `
 
    <a href="beispiele/akkordeon-01-eigener-marker.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
-   `list-style: none` und der `-webkit-`-Pseudoselektor sind nicht aus den ausgewerteten Quellen, sondern verbreitete Praxis, um den Standardpfeil zu entfernen. `::marker` ist laut `web-features` 3.38.0 *limited* (Chrome 86, Firefox 68, Safari fehlt) – das spricht dafür, den Pfeil wie oben durch ein eigenes `::after` zu ersetzen, statt `::marker` zu stylen. Ob der WebKit-Selektor noch nötig ist, ist nicht geprüft.
+   `list-style: none` und der `-webkit-`-Pseudoselektor stammen nicht aus den ausgewerteten Quellen, sondern sind der übliche Weg, den Standardpfeil zu entfernen. `::marker` ist laut `web-features` 3.38.0 *limited* (Chrome 86, Firefox 68, Safari fehlt). Deshalb ersetzt man den Pfeil besser wie oben durch ein eigenes `::after`, statt `::marker` zu stylen. Ob der WebKit-Selektor noch nötig ist, habe ich nicht geprüft.
 
 5. **Inhalt stylen** über `::details-content`:[^mdn-content]
 
@@ -84,7 +84,7 @@ Stand 2026-09-12. **In Chrome 152 (macOS), 2026-09-13 getestet:** Bei mehreren `
 
    <a href="beispiele/akkordeon-02-inhalt-stylen.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
-6. **Ein- und Ausblenden animieren** – Deckkraft plus `content-visibility` mit `allow-discrete`, nach MDN:[^mdn-content]
+6. **Ein- und Ausblenden animieren**: Deckkraft plus `content-visibility` mit `allow-discrete`, nach MDN:[^mdn-content]
 
    ```css
    @media (prefers-reduced-motion: no-preference) {
@@ -102,7 +102,7 @@ Stand 2026-09-12. **In Chrome 152 (macOS), 2026-09-13 getestet:** Bei mehreren `
 
    <a href="beispiele/akkordeon-03-einblenden.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
-7. **Optional: Höhe mitanimieren** – nur Chromium:
+7. **Optional die Höhe mitanimieren** (nur Chromium):
 
    ```css
    @supports (interpolate-size: allow-keywords) {
@@ -128,27 +128,27 @@ Stand 2026-09-12. **In Chrome 152 (macOS), 2026-09-13 getestet:** Bei mehreren `
 
    <a href="beispiele/akkordeon-04-hoehe.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
-   Dem Chrome-Artikel zu `height: auto` zufolge braucht es für beide Richtungen die Kombination aus `interpolate-size` und `::details-content`; den genauen Code dafür enthält der ausgewertete Text nicht.[^height-auto] Das Beispiel ist eigene Konstruktion und in Chrome 152 getestet.
+   Laut dem Chrome-Artikel zu `height: auto` braucht man für beide Richtungen `interpolate-size` und `::details-content` zusammen. Den genauen Code dafür enthält der ausgewertete Text nicht.[^height-auto] Das Beispiel habe ich selbst gebaut und in Chrome 152 getestet.
 
 ## Warum funktioniert das?
 
-- `details` ist ein natives Disclosure-Widget: Zustand, Tastaturbedienung und Ansage bringt das Element mit.[^mdn-details] Dass `summary` per Tastatur bedienbar ist und als aufklappbar angesagt wird, steht in den ausgewerteten Abschnitten nicht ausdrücklich. Die Tastaturbedienung ist in Chrome 152 bestätigt (`Enter` öffnet), die Ansage im Screenreader nicht geprüft.
-- `name` bildet eine semantische Gruppe. Die Elemente müssen dafür keine Geschwister sein; allein der gleiche Wert zählt.[^chrome]
-- Beim Auf- und Zuklappen schaltet der Browser `content-visibility` des Inhalts zwischen `hidden` und `visible`. Mit `allow-discrete` wartet dieser Wechsel beim Schließen das Ende der Transition ab, sodass das Ausblenden sichtbar bleibt.[^mdn-content]
-- `interpolate-size: allow-keywords` erlaubt die Interpolation von `0` zu `auto` und wird vererbt.[^height-auto]
+- `details` ist ein natives Disclosure-Widget: Zustand, Tastaturbedienung und Ansage bringt das Element selbst mit.[^mdn-details] Dass `summary` per Tastatur bedienbar ist und als aufklappbar angesagt wird, steht in den ausgewerteten Abschnitten nicht ausdrücklich. Die Tastaturbedienung ist in Chrome 152 bestätigt (`Enter` öffnet), die Ansage im Screenreader habe ich nicht geprüft.
+- `name` bildet eine Gruppe. Die Elemente müssen dafür keine Geschwister sein, es zählt nur der gleiche Wert.[^chrome]
+- Beim Auf- und Zuklappen schaltet der Browser `content-visibility` des Inhalts zwischen `hidden` und `visible` um. Mit `allow-discrete` wartet diese Umschaltung beim Schließen, bis die Transition fertig ist. So sieht man das Ausblenden.[^mdn-content]
+- `interpolate-size: allow-keywords` erlaubt Übergänge von `0` zu `auto` und wird vererbt.[^height-auto]
 
 ## Fallstricke
 
-- **Gleicher `name` an anderer Stelle:** Da verstreute `details` mit gleichem Namen eine Gruppe bilden, schließt ein FAQ-Abschnitt womöglich einen gleichnamigen Abschnitt in einer anderen Komponente. Namen eindeutig wählen – abgeleitet, nicht getestet.
-- **Exklusiv ist nicht immer besser:** Wer zwei Antworten vergleichen will, kann es nicht. `name` nur setzen, wenn gleichzeitiges Öffnen keinen Sinn hat – eigene Einschätzung.
-- **Firefox:** `content-visibility` lässt sich dort laut Baseline-Daten nicht per Transition verzögern. Abschnitte klappen sofort zu; das Einblenden kann ebenfalls fehlen. Funktion und Inhalt bleiben unberührt.
-- **Höhe nur in Chromium:** Andere Browser springen. Durch `@supports` bleibt das ohne Nebenwirkung.
-- **Ältere Browser ohne `name`:** Chrome beschreibt ein Polyfill über das `toggle`-Event; Browser ohne `toggle` bleiben ein normales Akkordeon.[^chrome]
-- **Mehrfach-Toggles:** Das `toggle`-Event kann bei schnellen Wechseln zusammengefasst werden – relevant nur für eigenes JavaScript.[^mdn-details]
-- **Gemerkten Zustand per Skript wiederherstellen:** Die Exklusivität gilt nicht nur für Klicks. Wird `open` an einem `details` mit `name` gesetzt – auch per Skript –, entfernt der Browser `open` beim bisher offenen Element der Gruppe.[^whatwg-details] Stellt ein Skript nach dem Rendern gemerkte offene Abschnitte wieder her, schließt es damit womöglich genau den Abschnitt, den der Server absichtlich geöffnet hat, etwa den mit der aktuellen Seite. Regel aus einem eigenen Quartz-Plugin: Gemerkten Zustand in einer Gruppe nur anwenden, wenn dort noch nichts absichtlich geöffnet ist.
-- **Keine Öffnungsanimation beim Laden:** Öffnet ein Skript Abschnitte nach dem Rendern, kann die Transition aus Schritt 6 und 7 sichtbar anlaufen, obwohl niemand geklickt hat. Abhilfe aus demselben Plugin: Die Animation an ein Attribut wie `data-animate` binden, das erst bei der ersten Nutzerinteraktion gesetzt wird (`details[data-animate][open]::details-content …`). Nicht separat im Browser nachgetestet.
-- **`toggle` feuert auch für von Anfang an offene `details`:** Laut HTML-Standard laufen die Attributänderungs-Schritte auch, wenn der Parser das Element mit `open` einfügt; dabei wird ein `toggle`-Event eingereiht.[^whatwg-details] jsdom 25.0.1 macht das genauso: Es reiht `toggle` per `setTimeout` ein, sobald `open` gesetzt wird, auch beim Parsen.[^jsdom] Ein `toggle`-Listener, der Zustand speichert, läuft also schon beim Laden – in Tests wie im Browser. Das Browserverhalten ist aus dem Standard abgeleitet, nicht getestet.
-- **Exklusivität in jsdom-Tests:** jsdom 25.0.1 wertet das `name`-Attribut von `details` nicht aus.[^jsdom] Ein Fehler wie beim Wiederherstellen oben lässt sich dort nicht nachstellen, sondern nur im echten Browser.
+- **Gleicher `name` an anderer Stelle:** Weil `details` mit gleichem Namen überall auf der Seite eine Gruppe bilden, schließt ein FAQ-Abschnitt womöglich einen gleichnamigen Abschnitt in einer ganz anderen Komponente. Deshalb eindeutige Namen wählen. In Chrome 155 bestätigt: Ein `details` in einer `section` und eines in einem `aside` mit gleichem `name` schließen sich gegenseitig.
+- **Exklusiv ist nicht immer besser:** Wer zwei Antworten vergleichen will, kann das dann nicht. `name` nur setzen, wenn es keinen Sinn hat, mehrere gleichzeitig zu öffnen (eigene Einschätzung).
+- **Firefox:** Dort lässt sich `content-visibility` laut Baseline-Daten nicht per Transition verzögern. Die Abschnitte klappen sofort zu, und auch das Einblenden kann fehlen. Funktion und Inhalt bleiben aber erhalten.
+- **Höhe nur in Chromium:** Andere Browser springen. Dank `@supports` hat das keine Nebenwirkungen.
+- **Ältere Browser ohne `name`:** Chrome beschreibt ein Polyfill über das `toggle`-Event. In Browsern ohne `toggle` bleibt es ein normales Akkordeon.[^chrome]
+- **Mehrfache Toggles:** Bei schnellem Wechsel kann der Browser mehrere `toggle`-Events zu einem zusammenfassen. Das ist nur für eigenes JavaScript wichtig.[^mdn-details]
+- **Gemerkten Zustand per Skript wiederherstellen:** Die Exklusivität gilt nicht nur für Klicks. Wird `open` an einem `details` mit `name` gesetzt, auch per Skript, entfernt der Browser `open` beim bisher offenen Element der Gruppe.[^whatwg-details] Stellt ein Skript nach dem Rendern gemerkte offene Abschnitte wieder her, schließt es damit womöglich genau den Abschnitt, den der Server absichtlich geöffnet hat, etwa den mit der aktuellen Seite. Regel aus einem eigenen Quartz-Plugin: Gemerkten Zustand in einer Gruppe nur anwenden, wenn dort noch nichts absichtlich geöffnet ist.
+- **Keine Animation beim Laden:** Öffnet ein Skript Abschnitte nach dem Rendern, kann die Transition aus Schritt 6 und 7 sichtbar ablaufen, obwohl niemand geklickt hat. Abhilfe aus demselben Plugin: Die Animation an ein Attribut wie `data-animate` binden, das erst bei der ersten Nutzerinteraktion gesetzt wird (`details[data-animate][open]::details-content …`). Nicht eigens im Browser nachgetestet.
+- **`toggle` feuert auch für `details`, die von Anfang an offen sind:** Laut HTML-Standard laufen die Schritte für Attributänderungen auch dann, wenn der Parser das Element mit `open` einfügt. Dabei wird ein `toggle`-Event eingereiht.[^whatwg-details] jsdom 25.0.1 macht das genauso: Es reiht `toggle` per `setTimeout` ein, sobald `open` gesetzt wird, auch beim Parsen.[^jsdom] Ein `toggle`-Listener, der Zustand speichert, läuft also schon beim Laden, in Tests wie im Browser. In Chrome 155 bestätigt: Für ein `details` mit `open` im HTML kam beim Laden ein `toggle` mit `newState: "open"`.
+- **Exklusivität in jsdom-Tests:** jsdom 25.0.1 wertet das `name`-Attribut von `details` nicht aus.[^jsdom] Ein Fehler wie beim Wiederherstellen oben lässt sich dort nicht nachstellen, nur im echten Browser.
 
 ### Browsersupport
 
@@ -177,7 +177,7 @@ Quelle: `web-features` 3.38.0 (Baseline-Daten der W3C WebDX Community Group), lo
 - HTML Living Standard, Abschnitt zum `details`-Element (siehe Fußnote) — Exklusivität bei gesetztem `open`, `toggle` beim Parsen
 - jsdom 25.0.1, Quelltext `HTMLDetailsElement-impl.js` (siehe Fußnote) — `toggle` in Tests, fehlende Exklusivität
 
-Nicht aus den Quellen: das Marker-Styling mit `list-style` und `::-webkit-details-marker`, das Höhenbeispiel in Schritt 7 und die Fallstricke zu Namen und Exklusivität. Das APG-Muster „Accordion“ wurde nicht ausgewertet. Die Fallstricke zum Wiederherstellen und zu `data-animate` stammen aus einem eigenen Quartz-Plugin; der Mechanismus dahinter ist am HTML-Standard belegt.
+Nicht aus den Quellen: das Marker-Styling mit `list-style` und `::-webkit-details-marker`, das Höhenbeispiel in Schritt 7 und die Fallstricke zu Namen und Exklusivität. Das APG-Muster „Accordion“ habe ich nicht ausgewertet. Die Fallstricke zum Wiederherstellen und zu `data-animate` stammen aus einem eigenen Quartz-Plugin, der Mechanismus dahinter ist durch den HTML-Standard belegt.
 
 [^mdn-details]: [[quellen/artikel/details-element-mdn|details-Element (MDN)]].
 [^mdn-content]: [[quellen/artikel/details-content-mdn|details-content Pseudo-Element (MDN)]], Abschnitt „Transition example“.

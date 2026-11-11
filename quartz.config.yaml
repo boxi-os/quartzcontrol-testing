@@ -6,7 +6,7 @@ configuration:
   enablePopovers: true
   analytics: null
   locale: de-DE
-  baseUrl: boxi-os.github.io/quartzcontrol-testing
+  baseUrl: quartzmac.borkel.net
   ignorePatterns:
     - private
     - templates
@@ -39,6 +39,11 @@ configuration:
         tertiary: "#2CAFAD"
         highlight: rgba(140, 184, 218, 0.12)
         textHighlight: rgba(140, 184, 218, 0.30)
+  links:
+    markdownLinkResolution: shortest
+  contentIndex:
+    enableSiteMap: true
+    enableRSS: true
 plugins:
   - source: "@quartz-community/created-modified-date"
     enabled: true
@@ -71,10 +76,10 @@ plugins:
       parseBlockReferences: true
       enableYouTubeEmbed: true
       enableVideoEmbed: true
-    order: 30
+    order: 40
   - source: "@quartz-community/github-flavored-markdown"
     enabled: true
-    order: 40
+    order: 30
   - source: "@quartz-community/table-of-contents"
     enabled: true
     order: 50
@@ -87,11 +92,6 @@ plugins:
       minEntries: 1
       showByDefault: true
       collapseByDefault: false
-  - source: "@quartz-community/crawl-links"
-    enabled: true
-    options:
-      markdownLinkResolution: shortest
-    order: 60
   - source: "@quartz-community/description"
     enabled: true
     order: 70
@@ -121,8 +121,6 @@ plugins:
       mode: both
       themeFonts: false
     order: 140
-  - source: "@quartz-community/remove-draft"
-    enabled: true
   - source: "@quartz-community/explicit-publish"
     enabled: false
   - source: "@quartz-community/unlisted-pages"
@@ -146,11 +144,6 @@ plugins:
     enabled: true
   - source: "@quartz-community/favicon"
     enabled: true
-  - source: "@quartz-community/content-index"
-    enabled: true
-    options:
-      enableSiteMap: true
-      enableRSS: true
   - source: "@quartz-community/og-image"
     enabled: true
   - source: "@quartz-community/cname"
@@ -276,7 +269,7 @@ plugins:
       priority: 25
       display: mobile-only
   - source: "@quartz-community/bases-page"
-    enabled: false
+    enabled: true
     options: {}
     order: 50
   - source: "@quartz-community/note-properties"
@@ -289,8 +282,6 @@ plugins:
         - section
       excludedProperties: []
       hidePropertiesView: true
-      delimiters: ---
-      language: yaml
     order: 5
     layout:
       position: afterBody
@@ -321,13 +312,6 @@ plugins:
   - source: /Users/boxi/Documents/QuartzProjekte/gui-test/.quartz-gui/authored-frames/frame-index
     enabled: true
     options: {}
-    order: 50
-  - source: github:quartz-community/obsidian-plugin-excalidraw
-    enabled: true
-    options:
-      enableInteraction: true
-      darkMode: auto
-      exportPadding: 20
     order: 50
   - source: github:boxi-os/quartz-layout-box
     enabled: true
@@ -501,12 +485,6 @@ plugins:
     layout:
       position: left
       priority: 30
-  - source: github:boxi-os/quartz-betterbases
-    enabled: true
-    options:
-      defaultViewType: table
-      linkResolution: shortest
-    order: 50
   - source: github:boxi-os/quartz-navigations
     enabled: true
     order: 600
@@ -524,6 +502,85 @@ plugins:
       depth: 1
     layout:
       position: right
+      priority: 20
+  - source: /Users/boxi/Development/quartz-forms
+    enabled: true
+    options:
+      forms:
+        kontakt:
+          template: contact
+          recipient: TestKontakt
+          encryption:
+            mode: required
+        umfrage-anonym:
+          template: survey
+          recipient: TestKontakt
+      transport:
+        kind: relay
+        url: https://quartzmac.borkel.net/forms/send.php
+      keys:
+        boxi-test:
+          armored: |-
+            -----BEGIN PGP PUBLIC KEY BLOCK-----
+
+            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
+            =3CUf
+            -----END PGP PUBLIC KEY BLOCK-----
+      spam:
+        honeypot: true
+        minSeconds: 3
+        pow: false
+        powDifficulty: 16
+        captcha: hcaptcha
+        captchaSiteKey: bb7caaec-fffa-4906-8394-d3c2eba8d050
+        rateLimitPerHour: 60
+        maxFieldLength: 2000
+        maxTextareaLength: 20000
+        maxKeyLength: 16384
+        maxBytes: 65536
+      frontmatterKey: form
+      codeBlockLang: quartz-form
+      layoutForm: ""
+      language: auto
+      texts: {}
+    order: 70
+    layout:
+      position: afterBody
       priority: 20
 layout:
   groups:

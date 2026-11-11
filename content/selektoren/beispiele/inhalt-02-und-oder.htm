@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: UND und ODER mit :has() – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+.label { font-size: .8rem; color: #57606a; margin: 0 0 .25rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.reihe { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-start; }
+.regal { display: flex; gap: 4px; align-items: end; padding: .5rem; border: 1px solid #d0d7de; min-width: 8rem; }
+.regal .label { margin: 0 0 0 .5rem; }
+.buch { width: 14px; height: 48px; display: block; }
+.lila { background: rebeccapurple; } .gelb { background: gold; } .blau { background: steelblue; }
+</style>
+<style data-beispiel>
+.regal:has(.lila, .gelb)       { outline: 3px solid gold; }
+.regal:has(.lila):has(.gelb)   { border-left: 8px solid green; }
+</style>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „Elemente anhand ihres Inhalts auswählen“</p>
+  <h1>UND und ODER mit :has()</h1>
+  <p>Gelber Rahmen: Regal enthält lila <em>oder</em> gelb. Dicker grüner Rand: Regal enthält lila <em>und</em> gelb.</p>
+  <p class="klein">Getestet in Chrome 155. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<main class="beispiel-buehne">
+<div class="reihe">
+  <div class="regal"><span class="buch lila"></span><span class="buch gelb"></span><p class="label">lila + gelb</p></div>
+  <div class="regal"><span class="buch lila"></span><p class="label">nur lila</p></div>
+  <div class="regal"><span class="buch blau"></span><p class="label">nur blau</p></div>
+</div>
+</main>
+</body>
+</html>

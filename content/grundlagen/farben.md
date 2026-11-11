@@ -12,20 +12,20 @@ applies_to:
 
 ## Kurz erklärt
 
-CSS kennt mehrere Schreibweisen für denselben Zweck: eine Farbe angeben. Sie unterscheiden sich nicht in dem, was sie können, sondern darin, **wie gut sich Farben in ihnen verändern lassen**. Für einzelne feste Werte ist die Wahl gleichgültig — für Farbsysteme, Themes und Zustände (Hover, Disabled) entscheidet sie über den Aufwand.
+In CSS gibt es mehrere Schreibweisen für Farben. Der wichtigste Unterschied zwischen ihnen ist, **wie gut man Farben damit verändern kann**. Für einzelne feste Werte ist es egal, welche man nimmt. Bei Farbsystemen, Themes und Zuständen wie Hover oder Disabled entscheidet die Wahl aber darüber, wie viel Arbeit man hat.
 
 Grobe Einteilung:
 
-- **Gerätebezogen, nicht wahrnehmungsgleich:** Farbnamen, Hex, `rgb()`, `hsl()`
-- **Wahrnehmungsbasiert:** `lab()`, `lch()`, `oklab()`, `oklch()`
+- **Am Bildschirm orientiert, nicht an der Wahrnehmung:** Farbnamen, Hex, `rgb()`, `hsl()`
+- **An der Wahrnehmung orientiert:** `lab()`, `lch()`, `oklab()`, `oklch()`
 
 ## Hintergrund
 
-Der praktische Unterschied lässt sich an `hsl()` zeigen. Dort sollte die Lightness gleiche Helligkeit bedeuten — tut sie aber nicht: `hsl(60, 100%, 50%)` (Gelb) wirkt deutlich heller als `hsl(240, 100%, 50%)` (Blau), obwohl beide `L: 50%` haben. Wer damit eine Farbpalette baut, muss jeden Farbton von Hand nachjustieren.
+Was das in der Praxis heißt, sieht man an `hsl()`. Dort sollte gleiche Lightness eigentlich gleiche Helligkeit bedeuten, tut sie aber nicht: `hsl(60, 100%, 50%)` (Gelb) wirkt deutlich heller als `hsl(240, 100%, 50%)` (Blau), obwohl beide `L: 50%` haben. Wer damit eine Farbpalette baut, muss jeden Farbton von Hand nachjustieren.
 
-Genau das lösen die wahrnehmungsbasierten Modelle: Bei gleichem Lightness-Wert erscheinen Farben unabhängig vom Farbton gleich hell. Damit werden Abstufungen (`--brand-500`, `--brand-600` …) und Kontrastentscheidungen rechenbar statt geschmacksabhängig.
+Genau dieses Problem lösen die Modelle, die sich an der Wahrnehmung orientieren: Bei gleicher Lightness wirken Farben gleich hell, egal welcher Farbton. Abstufungen (`--brand-500`, `--brand-600` usw.) und Kontraste lassen sich dann ausrechnen, statt sie nach Gefühl festzulegen.
 
-OKLCH ist die praxistauglichste dieser Notationen, weil sie die Nachteile von LCH bei stark gesättigten Farben korrigiert und Parameter hat, die man direkt versteht: Helligkeit, Buntheit, Farbton.
+Am praktischsten ist OKLCH. Es behebt die Schwächen von LCH bei stark gesättigten Farben, und seine Werte versteht man sofort: Helligkeit, Buntheit, Farbton.
 
 ## Wichtige Aspekte
 
@@ -40,15 +40,28 @@ OKLCH ist die praxistauglichste dieser Notationen, weil sie die Nachteile von LC
 | `lch()` | L, C, H | `0%`–`100%`, `0`–ca. `130`, `0`–`360` |
 | `oklch()` | L, C, H | `0`–`1`, `0`–ca. `0.4`, `0`–`360` |
 
-Der Hue-Winkel ist bei HSL, LCH und OKLCH gleich belegt: 0 Rot, 60 Gelb, 120 Grün, 180 Cyan, 240 Blau, 300 Magenta. Das Gradzeichen wird weggelassen.
+Bei HSL ist der Hue-Winkel so belegt: 0 Rot, 60 Gelb, 120 Grün, 180 Cyan, 240 Blau, 300 Magenta. Das Gradzeichen lässt man weg.
+
+**In OKLCH und LCH liegen die Farbtöne woanders.** In Chrome 155 nachgemessen (2026-10-18):
+
+| Farbe | HSL | OKLCH | LCH |
+| --- | --- | --- | --- |
+| Rot (`red`) | 0 | 29 | 41 |
+| Gelb (`yellow`) | 60 | 110 | 100 |
+| Grün (`lime`) | 120 | 142 | 134 |
+| Cyan (`cyan`) | 180 | 195 | 196 |
+| Blau (`blue`) | 240 | 264 | 301 |
+| Magenta (`magenta`) | 300 | 328 | 327 |
+
+Wer Hue-Werte aus HSL in `oklch()` übernimmt, bekommt also einen anderen Farbton. Die Palettenbeispiele unten nutzen deshalb 25, 145 und 250.
 
 ### Alphakanal
 
-Jede Notation kennt Transparenz: als viertes Hex-Paar (`#FF000080`), über `rgba()`/`hsla()` oder — moderner und einheitlich — über die Slash-Syntax `oklch(0.7 0.2 240 / 50%)`. `rgba()` und `hsla()` sind heute nur noch Aliase; `rgb()` und `hsl()` nehmen den Alphawert selbst entgegen.
+Jede Notation kann Transparenz: als viertes Hex-Paar (`#FF000080`), über `rgba()`/`hsla()` oder, moderner und überall gleich, mit Schrägstrich: `oklch(0.7 0.2 240 / 50%)`. `rgba()` und `hsla()` sind heute nur noch andere Namen für `rgb()` und `hsl()`, die den Alphawert selbst annehmen.
 
 ### Gamut
 
-Hohe Chroma-Werte liegen außerhalb von sRGB und sind nur in erweiterten Farbräumen wie Display P3 darstellbar. Browser bilden sie auf einen darstellbaren Wert ab. Für verlässliche Ergebnisse auf allen Geräten lohnt es sich, im sRGB-Bereich zu bleiben oder gezielt mit `@media (color-gamut: p3)` zu arbeiten.
+Hohe Chroma-Werte liegen außerhalb von sRGB und lassen sich nur in größeren Farbräumen wie Display P3 darstellen. Kann ein Bildschirm die Farbe nicht zeigen, nimmt der Browser die nächstliegende, die er zeigen kann. Wer auf allen Geräten verlässliche Ergebnisse will, bleibt im sRGB-Bereich oder arbeitet gezielt mit `@media (color-gamut: p3)`.
 
 ```mermaid
 flowchart LR
@@ -62,11 +75,11 @@ flowchart LR
     OK -- "Wert ausserhalb des Geraete-Gamut" --> M["Browser bildet auf<br/>darstellbaren Wert ab"]
 ```
 
-Der Unterschied ist nicht die Syntax, sondern der Umfang: `hsl()` **kann** keine Farbe außerhalb von sRGB benennen, `oklch()` schon. Ob sie ankommt, entscheidet das Ausgabegerät.
+Der Unterschied liegt nicht in der Syntax, sondern im Umfang: Mit `hsl()` **kann** man keine Farbe außerhalb von sRGB angeben, mit `oklch()` schon. Ob sie auch so ankommt, hängt vom Bildschirm ab.
 
 ### Mischen mit `color-mix()`
 
-`color-mix()` mischt zwei Farben **zur Laufzeit im Browser**:
+`color-mix()` mischt zwei Farben **erst im Browser**, also zur Laufzeit:
 
 ```css
 :root { --brand: oklch(0.55 0.14 210); }
@@ -80,14 +93,14 @@ Der Unterschied ist nicht die Syntax, sondern der Umfang: `hsl()` **kann** keine
 
 Zwei Dinge sind daran wichtig:
 
-1. Der Farbraum ist Pflicht (`in oklab`, `in srgb` …). Ohne `in …` ist der Ausdruck ungültig.
-2. Es funktioniert mit CSS-Variablen. Damit ersetzt es Präprozessor-Funktionen wie `mix()` in Sass nicht nur, sondern kann etwas, das diese prinzipiell nicht können: Es reagiert auf zur Laufzeit gesetzte Werte, also auf Themes, Dark Mode und Nutzereinstellungen.
+1. Den Farbraum gibt man mit `in oklab`, `in srgb` usw. an. Ursprünglich war das Pflicht. In Chrome 155 ist `color-mix(red, blue)` auch ohne `in` gültig und mischt dann in Oklab (am 2026-10-18 nachgeprüft). Ältere Browser verwerfen den Ausdruck ohne `in`, deshalb schreibt man den Farbraum besser immer dazu.
+2. Es funktioniert mit CSS-Variablen. Damit ersetzt es nicht nur Funktionen wie `mix()` aus Sass, sondern kann etwas, das die grundsätzlich nicht können: Es reagiert auf Werte, die erst im Browser gesetzt werden, also auf Themes, Dark Mode und Nutzereinstellungen.
 
-Der gewählte Mischfarbraum bestimmt das Ergebnis: `in oklab` liefert gleichmäßigere Verläufe als `in srgb`, das bei komplementären Farben durch matschiges Grau geht.
+Der Farbraum, in dem gemischt wird, bestimmt das Ergebnis: `in oklab` ergibt gleichmäßigere Übergänge als `in srgb`, das bei Komplementärfarben durch ein matschiges Grau läuft.
 
 ### Ableiten mit relativen Farbangaben
 
-`color-mix()` mischt zwei fertige Farben. Die **relative Farbsyntax** aus CSS Color Level 5 geht einen Schritt weiter: Sie zerlegt eine Bezugsfarbe in ihre Kanäle und setzt sie neu zusammen. Eingeleitet wird das mit dem Schlüsselwort `from`:
+`color-mix()` mischt zwei fertige Farben. Die **relative Farbsyntax** aus CSS Color Level 5 geht einen Schritt weiter: Sie zerlegt eine Ausgangsfarbe in ihre Kanäle und setzt sie neu zusammen. Das Schlüsselwort dafür ist `from`:
 
 ```css
 :root { --bg-color: blue; }
@@ -96,7 +109,7 @@ Der gewählte Mischfarbraum bestimmt das Ergebnis: `in oklab` liefert gleichmä�
 
 <a href="beispiele/farben-02-relative-farbe.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
-Die Kanäle werden durch die Buchstaben des jeweiligen Farbmodells benannt (`r g b`, `l c h`, `l a b`), die Deckkraft über `alpha`. Ein Kanal, der unverändert bleiben soll, wird einfach als Buchstabe notiert; ein Kanal, der sich ändern soll, wird gerechnet — siehe [[grundlagen/berechnungen|CSS calc()]]:
+Die Kanäle heißen wie die Buchstaben des jeweiligen Farbmodells (`r g b`, `l c h`, `l a b`), die Deckkraft heißt `alpha`. Soll ein Kanal bleiben, wie er ist, schreibt man einfach seinen Buchstaben hin. Soll er sich ändern, rechnet man mit ihm, siehe [[grundlagen/berechnungen|CSS calc()]]:
 
 ```css
 :root {
@@ -115,18 +128,18 @@ Die Kanäle werden durch die Buchstaben des jeweiligen Farbmodells benannt (`r g
 
 <a href="beispiele/farben-03-farbfamilie.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
-Damit verschwindet die häufigste Sorte **Magic Number** aus dem Stylesheet: Statt `#3a7bd5` und daneben `#2a6bb8` ohne erkennbaren Zusammenhang steht die Herleitung im Code.
+Damit verschwindet die häufigste Sorte **Magic Number** aus dem Stylesheet: Statt `#3a7bd5` und daneben `#2a6bb8` ohne erkennbaren Zusammenhang sieht man im Code, wie die eine Farbe aus der anderen entsteht.
 
-Zwei Dinge sind zu beachten:
+Zwei Dinge muss man dabei beachten:
 
-1. **Wertebereiche gehören zum Farbmodell.** In OKLCH liegt L zwischen 0 und 1, also `calc(l + 0.25)`. In LCH ist L eine Prozentangabe von 0 bis 100 — dort wäre `calc(l + 25)` richtig. Wer Beispiele zwischen den Modellen kopiert, klemmt die Farbe auf Weiß oder Schwarz.
-2. **Die Bezugsfarbe darf in einem beliebigen Modell stehen**, CSS rechnet um. Bei der Umrechnung einer Farbe außerhalb von sRGB in `rgb()` entsteht dabei eine Ersatzfarbe.
+1. **Jedes Farbmodell hat eigene Wertebereiche.** In OKLCH liegt L zwischen 0 und 1, also `calc(l + 0.25)`. In LCH ist L ein Prozentwert von 0 bis 100, dort wäre `calc(l + 25)` richtig. Wer Beispiele von einem Modell ins andere kopiert, landet schnell bei reinem Weiß oder Schwarz.
+2. **Die Ausgangsfarbe darf in jedem beliebigen Modell angegeben sein**, CSS rechnet um. Rechnet man eine Farbe außerhalb von sRGB in `rgb()` um, kommt dabei eine Ersatzfarbe heraus.
 
-Für Schriftfarben auf berechneten Hintergründen gibt es zusätzlich `contrast-color(var(--tone))`: Der Browser wählt selbst die kontrastreichste Farbe. **Das ist noch nichts für den Produktiveinsatz:** `contrast-color()` ist erst seit 2026-04-10 Baseline *newly available* (Chrome/Edge 147, Firefox 146, Safari 26) und damit rund fünf Monate alt. Bis auf Weiteres bleibt die berechnete Variante mit anschließendem Kontrasttest der sichere Weg.
+Für Schriftfarben auf berechneten Hintergründen gibt es außerdem `contrast-color(var(--tone))`: Der Browser sucht selbst die Farbe mit dem besten Kontrast aus. **Für den Produktiveinsatz ist das noch zu früh:** `contrast-color()` ist erst seit 2026-04-10 Baseline *newly available* (Chrome/Edge 147, Firefox 146, Safari 26), also gerade ein halbes Jahr alt. Bis auf Weiteres ist es sicherer, die Farbe selbst zu berechnen und den Kontrast zu prüfen.
 
 ### Farbinterpolation
 
-Sobald CSS zwischen zwei Farben *übergeht*, stellt sich die Frage nach dem Farbraum. Das betrifft `transition` und `animation`, Verläufe, Filter und `color-mix()` gleichermaßen. Die Angabe wird mit `in` eingeleitet:
+Sobald CSS von einer Farbe zur anderen *übergeht*, stellt sich die Frage nach dem Farbraum. Das gilt für `transition` und `animation`, Verläufe, Filter und `color-mix()` gleichermaßen. Angegeben wird er mit `in`:
 
 ```
 in <system> [ <richtung> hue ]
@@ -134,25 +147,25 @@ in <system> [ <richtung> hue ]
 
 | System | Verhalten |
 | --- | --- |
-| `srgb` | technisch einfach, aber nicht auf gleichmäßige Wahrnehmung ausgelegt — Verläufe wirken oft zu dunkel oder grau |
-| `srgb-linear`, `xyz`, `xyz-d50`, `xyz-d65` | lineare Lichtintensität, entspricht der Mischung farbigen Lichts |
-| `lab`, `oklab` | wahrnehmungsnäher, gleichmäßiger Übergang |
-| `hsl`, `hwb` | polar; der Übergang läuft über die Farbtöne und wird bei Rot → Blau eher ein Spektrum als ein Übergang |
-| `lch`, `oklch` | polar und wahrnehmungsgleichförmig, vermeidet das „Ausgrauen" |
+| `srgb` | technisch einfach, aber nicht an der Wahrnehmung ausgerichtet. Verläufe wirken oft zu dunkel oder grau |
+| `srgb-linear`, `xyz`, `xyz-d50`, `xyz-d65` | lineare Lichtstärke, wie wenn man farbiges Licht mischt |
+| `lab`, `oklab` | näher an der Wahrnehmung, gleichmäßiger Übergang |
+| `hsl`, `hwb` | über den Farbkreis. Von Rot nach Blau ergibt das eher einen Regenbogen als einen Übergang |
+| `lch`, `oklch` | über den Farbkreis und an der Wahrnehmung ausgerichtet, ohne das „Ausgrauen“ |
 
-Bei polaren Systemen kommt die **Drehrichtung** dazu: `shorter` (Standard, kleinerer Winkel), `longer` (größerer Winkel), `increasing` und `decreasing` (auf- bzw. absteigende Winkelwerte, unabhängig von der Länge). `color-mix(in oklch longer hue, …)` läuft also bewusst den langen Weg um den Farbkreis.
+Bei den Systemen mit Farbkreis kommt die **Drehrichtung** dazu: `shorter` (Standard, der kürzere Weg), `longer` (der längere Weg), `increasing` und `decreasing` (Winkel immer größer bzw. immer kleiner werdend, egal wie lang der Weg ist). `color-mix(in oklch longer hue, …)` nimmt also absichtlich den langen Weg um den Farbkreis.
 
 ### HSL ist nicht HSB/HSV
 
-Eine Falle beim Übergang aus der Bildbearbeitung ins CSS: Das W3C hat sich für **HSL** entschieden, Photoshop und viele Color Picker (auch der von macOS) arbeiten mit **HSB**, das auch HSV genannt wird. Beide teilen sich den Farbton, aber nicht Sättigung und Helligkeit.
+Eine Falle, wenn man Farben aus der Bildbearbeitung ins CSS holt: Das W3C hat sich für **HSL** entschieden, Photoshop und viele Color Picker (auch der von macOS) arbeiten dagegen mit **HSB**, auch HSV genannt. Der Farbton ist bei beiden gleich, Sättigung und Helligkeit sind es nicht.
 
-HSB (300, 18 %, 78 %) entspricht HSL (300, 24 %, 71 %) — wer die Zahlen unverändert überträgt, bekommt den richtigen Farbton bei falscher Sättigung und falscher Helligkeit, und sucht den Fehler lange an der falschen Stelle.
+HSB (300, 18 %, 78 %) entspricht HSL (300, 24 %, 71 %). Wer die Zahlen unverändert überträgt, bekommt den richtigen Farbton mit falscher Sättigung und falscher Helligkeit und sucht den Fehler dann lange an der falschen Stelle.
 
-**Arbeitsregel: Aus einem Bildbearbeitungsprogramm nie HSB-Zahlen übernehmen.** Hex oder RGB nehmen — oder die Farbe gleich in OKLCH bestimmen.
+**Faustregel: Aus einem Bildbearbeitungsprogramm nie HSB-Zahlen übernehmen.** Lieber Hex oder RGB nehmen oder die Farbe gleich in OKLCH bestimmen.
 
 ## Beispiele
 
-Eine Palette mit konstanter Helligkeitsstufung — in OKLCH trivial, in HSL Handarbeit:
+Eine Palette, in der alle Farben gleich hell wirken. In OKLCH ist das ein Kinderspiel, in HSL Handarbeit:
 
 ```css
 :root {
@@ -179,11 +192,11 @@ Abstufungen desselben Farbtons über die Lightness:
 
 ## Eigene Notizen / Einordnung
 
-Arbeitsregel für neue Projekte: **OKLCH als Definitionsformat, `color-mix(in oklab, …)` für Ableitungen, Hex nur noch dort, wo ein Wert von außen kommt** (Corporate Design, Design-Token-Export, Drittanbieter-Snippet).
+Faustregel für neue Projekte: **Farben in OKLCH festlegen, mit `color-mix(in oklab, …)` ableiten und Hex nur noch dort verwenden, wo ein Wert von außen kommt** (Corporate Design, exportierte Design-Tokens, Snippets von Drittanbietern).
 
-Ergänzung nach den SELFHTML-Quellen (2026-09-03): Für Paletten ist die relative Syntax `oklch(from …)` der `color-mix()`-Variante vorzuziehen, weil sie sagt, **welcher Kanal** sich ändert. `color-mix()` bleibt für Zustände (Hover, Disabled) und als Fallback in älteren Browsern richtig. Ideal ist eine einzige gepflegte Grundfarbe `--base`, aus der Stufen, Akzente und Kontraste abgeleitet werden — dann ändert ein Theme genau einen Wert.
+Ergänzung nach den SELFHTML-Quellen (2026-09-03): Für Paletten ist die relative Syntax `oklch(from …)` besser als `color-mix()`, weil man daran sieht, **welcher Kanal** sich ändert. `color-mix()` bleibt für Zustände (Hover, Disabled) und als Fallback für ältere Browser die richtige Wahl. Am besten pflegt man eine einzige Grundfarbe `--base` und leitet Stufen, Akzente und Kontraste daraus ab. Dann ändert ein Theme genau einen Wert.
 
-`hsl()` bleibt für schnelle Handarbeit brauchbar, weil man den Farbton im Kopf hat. Sobald aber mehrere Farben systematisch zusammenpassen sollen, ist es die falsche Grundlage.
+`hsl()` taugt weiter für schnelle Handarbeit, weil man den Farbton im Kopf hat. Sobald aber mehrere Farben systematisch zusammenpassen sollen, ist es die falsche Grundlage.
 
 ### Browsersupport
 
@@ -195,7 +208,7 @@ Ergänzung nach den SELFHTML-Quellen (2026-09-03): Für Paletten ist die relativ
 | `contrast-color()` | newly available | 2026-04-10 | Chrome 147, Firefox 146, Safari 26 |
 | `color-mix()` mit drei oder mehr Farben | **nicht Baseline** | – | bisher nur Firefox 150 |
 
-Für den Alltag heißt das: OKLCH und zweifarbiges `color-mix()` sind unbedenklich. Relative Farbangaben und `contrast-color()` brauchen einen Fallback, und die variadische Form von `color-mix()` ist derzeit unbenutzbar — drei Farben mischt man geschachtelt.
+Für den Alltag heißt das: OKLCH und `color-mix()` mit zwei Farben kann man bedenkenlos einsetzen. Relative Farbangaben und `contrast-color()` brauchen einen Fallback. `color-mix()` mit mehr als zwei Farben ist derzeit nicht brauchbar, drei Farben mischt man verschachtelt.
 
 Quelle: `web-features` 3.36.0 (Baseline-Daten der W3C WebDX Community Group), lokal abgefragt am 2026-09-03.
 
@@ -212,4 +225,4 @@ Quelle: `web-features` 3.36.0 (Baseline-Daten der W3C WebDX Community Group), lo
 - [[quellen/artikel/relative-farbangaben|Relative Farbangaben (SELFHTML)]] — `from`-Syntax, abgeleitete Paletten, Farbinterpolation und Drehrichtung
 - [[quellen/artikel/farbrechner|Farbrechner – OKLCH, HSL, HSV, RGB und Hex umrechnen]] — HSL vs. HSB/HSV, OKLCH-Farbrad, Light-/Dark-Paletten
 
-Die Kritik an HSL, die Empfehlung zum Mischfarbraum und die Arbeitsregel oben stammen nicht aus den Quellen, sondern sind eigene Einordnung. Ebenfalls eigene Ergänzung: der Hinweis auf die unterschiedlichen L-Wertebereiche von OKLCH und LCH — die SELFHTML-Quelle enthält an einer Stelle ein Beispiel, das diese Bereiche verwechselt.
+Die Kritik an HSL, die Empfehlung zum Mischfarbraum und die Faustregel oben stammen nicht aus den Quellen, sondern sind eigene Einordnung. Ebenfalls eigene Ergänzung ist der Hinweis auf die unterschiedlichen L-Wertebereiche von OKLCH und LCH. Die SELFHTML-Quelle enthält an einer Stelle ein Beispiel, das diese Bereiche verwechselt.

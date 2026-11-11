@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: Vorherige Geschwister auswählen – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+.label { font-size: .8rem; color: #57606a; margin: 0 0 .25rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.reihe { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-start; }
+.box, .kreis { width: 3rem; height: 3rem; background: #e5e7eb; display: block; } .kreis { border-radius: 50%; background: #fca5a5; } .untertitel { color: #57606a; margin-top: 0; }
+</style>
+<style data-beispiel>
+.box:has(+ .kreis:hover)     { background: #1d4ed8; }
+.box:has(+ * + .kreis:hover) { background: #93c5fd; }
+h2:has(+ .untertitel)        { margin-block-end: .25rem; }
+</style>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „Elemente anhand ihres Inhalts auswählen“</p>
+  <h1>Vorherige Geschwister auswählen</h1>
+  <p>Mit der Maus über einen Kreis fahren: Die Box direkt davor wird dunkelblau, die zwei Plätze davor hellblau. Darunter bekommt eine Überschrift weniger Abstand, wenn ein Untertitel folgt.</p>
+  <p class="klein">Getestet in Chrome 155. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<main class="beispiel-buehne">
+<div class="reihe" style="gap:.5rem">
+  <span class="box"></span><span class="box"></span><span class="box"></span><span class="kreis"></span>
+  <span class="box"></span><span class="box"></span><span class="kreis"></span>
+</div>
+<h2>Überschrift mit Untertitel</h2><p class="untertitel">Untertitel direkt darunter</p>
+<h2>Überschrift ohne Untertitel</h2><p>Normaler Absatz mit normalem Abstand.</p>
+</main>
+</body>
+</html>

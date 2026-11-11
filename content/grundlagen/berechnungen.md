@@ -12,53 +12,53 @@ applies_to:
 
 ## Kurz erklärt
 
-`calc()` rechnet direkt im Stylesheet und steht überall dort, wo sonst ein Zahlenwert stünde. Der eigentliche Grund für die Funktion ist nicht die Rechnung selbst, sondern dass sie **Einheiten mischen kann**: `100% - 150px` kennt weder ein Präprozessor noch eine statische Angabe, weil erst der Browser weiß, wie viel 100 % gerade sind.
+`calc()` rechnet direkt im Stylesheet und kann überall stehen, wo sonst ein Zahlenwert stünde. Das Besondere ist dabei nicht das Rechnen an sich, sondern dass sich **Einheiten mischen lassen**: `100% - 150px` kann kein Präprozessor ausrechnen, weil erst der Browser weiß, wie viel 100 % gerade sind.
 
-Zwei Konsequenzen daraus:
+Daraus folgt zweierlei:
 
 - `calc()` wird **zur Laufzeit** ausgewertet, nicht zur Buildzeit. Es reagiert auf Fenstergröße, Schriftgröße und Custom Properties.
-- Es ersetzt in vielen Fällen JavaScript, das sonst bei jedem Resize nachrechnen müsste.
+- Oft spart man sich damit JavaScript, das sonst bei jeder Größenänderung neu rechnen müsste.
 
 ## Hintergrund
 
 ### Die Leerzeichenregel und ihr Grund
 
-Bei `+` und `-` müssen beide Seiten von Leerzeichen umgeben sein. Das ist keine Stilfrage, sondern Parsing:
+Um `+` und `-` muss auf beiden Seiten ein Leerzeichen stehen. Das ist keine Geschmacksfrage, sonst kann der Browser den Ausdruck nicht richtig lesen:
 
 ```css
 width: calc(50% -8px);   /* ungültig: Prozentwert, dann negative Länge — zwei Werte */
 width: calc(50% - 8px);  /* gültig: Prozentwert, Minusoperator, Länge */
 ```
 
-`-8px` ist eine gültige Längenangabe, deshalb kann der Parser das Minus nicht als Operator erkennen. Bei `*` und `/` besteht diese Mehrdeutigkeit nicht; Leerzeichen sind dort optional, der Konsistenz halber aber sinnvoll.
+`-8px` ist für sich schon eine gültige Länge. Ohne Leerzeichen erkennt der Parser das Minus deshalb nicht als Rechenzeichen. Bei `*` und `/` gibt es dieses Problem nicht. Dort sind Leerzeichen freiwillig, man setzt sie aber besser einheitlich.
 
 ### Was herauskommen darf
 
-Der Ausdruck muss einen für den Kontext gültigen Typ ergeben — `<length>`, `<percentage>`, `<angle>`, `<time>`, `<number>`, `<integer>`, `<frequency>`, `<flex>`, `<resolution>` oder einen Mischtyp wie `<length-percentage>`.
+Das Ergebnis muss zu der Eigenschaft passen, in der es steht: eine Länge, ein Prozentwert, ein Winkel, eine Zeit, eine Zahl und so weiter. Formal heißen diese Typen `<length>`, `<percentage>`, `<angle>`, `<time>`, `<number>`, `<integer>`, `<frequency>`, `<flex>` und `<resolution>`, dazu kommen Mischtypen wie `<length-percentage>`.
 
 ```css
 margin: calc(1px + 2px);  /* gültig */
 margin: calc(1 + 2);      /* ungültig — entspräche margin: 3 */
 ```
 
-`calc()` ersetzt immer den **ganzen** Wert, nie nur die Zahl davor: `calc(100 / 4)%` ist ungültig, `calc(100% / 4)` richtig.
+`calc()` steht immer für den **ganzen** Wert, nicht nur für die Zahl davor: `calc(100 / 4)%` ist ungültig, `calc(100% / 4)` ist richtig.
 
 ### Einheiten bei Multiplikation und Division
 
-- **Multiplikation:** höchstens ein Operand mit Einheit. `200px * 4px` wäre px² und ergibt in CSS keinen Sinn.
-- **Division:** Einheiten auf beiden Seiten sind erlaubt, wenn sie vom selben Typ sind — `200px / 4px` ergibt `50`, `100vw / 1px` einen einheitslosen Wert. Dieser Quotient lässt sich dann weiterverwenden, wo eine `<number>` erwartet wird.
+- **Multiplikation:** Nur einer der beiden Werte darf eine Einheit haben. `200px * 4px` wäre px², und damit kann CSS nichts anfangen.
+- **Division:** Hier dürfen beide Seiten eine Einheit haben, solange es dieselbe Art von Einheit ist. `200px / 4px` ergibt `50`, `100vw / 1px` eine Zahl ohne Einheit. Diese Zahl kann man überall weiterverwenden, wo eine `<number>` erwartet wird.
 
 ### Grenzen
 
-- Keine Rechnung auf intrinsischen Größen (`auto`, `fit-content`). Dafür ist `calc-size()` gedacht.
-- Verschachtelte `calc()` sind erlaubt und verhalten sich exakt wie Klammern.
-- Wird ein `<integer>` erwartet, wird gerundet — bei genau `.5` Richtung positiv unendlich: `calc(1.5)` → `2`, `calc(-1.5)` → `-1`.
+- Mit Größen wie `auto` oder `fit-content` kann `calc()` nicht rechnen. Dafür ist `calc-size()` gedacht.
+- `calc()` darf in `calc()` stehen und wirkt dann genau wie eine Klammer.
+- Wird eine ganze Zahl (`<integer>`) erwartet, rundet der Browser. Bei genau `.5` rundet er nach oben: `calc(1.5)` → `2`, `calc(-1.5)` → `-1`.
 
 ## Wichtige Aspekte
 
 ### Zusammenspiel mit Custom Properties
 
-Das ist der Fall, für den `calc()` heute vor allem gebraucht wird. Ein Wert wird einmal gesetzt, alles andere leitet sich ab:
+Dafür braucht man `calc()` heute am häufigsten. Man setzt einen Wert einmal und leitet alles andere davon ab:
 
 ```css
 :root {
@@ -73,11 +73,11 @@ Das ist der Fall, für den `calc()` heute vor allem gebraucht wird. Ein Wert wir
 
 <a href="beispiele/calc-01-custom-properties.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
-Der Slideshow-Fall zeigt den Nutzen am deutlichsten: Zwei Animationen mit unterschiedlicher Dauer bleiben zwangsläufig synchron, weil beide auf derselben Variablen sitzen.
+Am deutlichsten wird der Nutzen bei der Slideshow: Die beiden Animationen dauern unterschiedlich lang, bleiben aber immer im Takt, weil beide an derselben Variablen hängen.
 
 ### Einheiten anhängen
 
-Custom Properties können einheitslose Zahlen tragen; die Einheit kommt per Multiplikation dazu. Das ist der Standardtrick, wenn ein Wert aus dem HTML oder aus JavaScript kommt:
+Eine Custom Property kann auch eine nackte Zahl enthalten. Die Einheit kommt dann durch eine Multiplikation dazu. So macht man das üblicherweise, wenn der Wert aus dem HTML oder aus JavaScript kommt:
 
 ```css
 .time-bar { --duration: 9; }              /* auch als style="--duration: 9" im HTML */
@@ -88,11 +88,11 @@ Custom Properties können einheitslose Zahlen tragen; die Einheit kommt per Mult
 
 <a href="beispiele/calc-02-einheit-anhaengen.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
-`var(--scale) + 'px'` funktioniert nicht — CSS kennt keine Stringkonkatenation für Werte.
+`var(--scale) + 'px'` funktioniert nicht, weil CSS Werte nicht wie Strings aneinanderhängen kann.
 
 ### Auf Farbkanälen
 
-In der relativen Farbsyntax rechnet `calc()` direkt auf den Kanal-Schlüsselwörtern. Das ist die Grundlage abgeleiteter Paletten (siehe [[grundlagen/farben|Farben in CSS]]):
+In der relativen Farbsyntax kann `calc()` direkt mit den einzelnen Farbkanälen rechnen. Darauf bauen abgeleitete Farbpaletten auf (siehe [[grundlagen/farben|Farben in CSS]]):
 
 ```css
 --accent-complement: oklch(from var(--base) l c calc(h + 180));
@@ -101,7 +101,7 @@ In der relativen Farbsyntax rechnet `calc()` direkt auf den Kanal-Schlüsselwör
 
 ### Barrierefreiheit
 
-Wird `calc()` für Textgrößen verwendet, muss mindestens ein Operand eine relative Einheit sein, sonst skaliert der Text beim Zoomen nicht mit:
+Wenn man mit `calc()` Schriftgrößen berechnet, muss mindestens ein Wert eine relative Einheit wie `rem` haben. Sonst wächst der Text beim Zoomen nicht mit:
 
 ```css
 h1 { font-size: calc(1.5rem + 3vw); }
@@ -109,7 +109,7 @@ h1 { font-size: calc(1.5rem + 3vw); }
 
 <a href="beispiele/calc-03-fluide-schrift.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
-Für Schriftgrößen ist `clamp()` allerdings meist die bessere Wahl, weil es Minimum und Maximum gleich mitbringt.
+Für Schriftgrößen ist `clamp()` aber meist besser, weil man damit gleich Minimum und Maximum festlegt.
 
 ## Beispiele
 
@@ -123,7 +123,7 @@ Inhalt neben fester Spalte:
 
 <a href="beispiele/calc-04-inhalt-sidebar.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
-Raster, dessen Spaltenzahl nur über die Division wechselt:
+Raster, bei dem sich je nach Breite nur der Teiler ändert:
 
 ```css
 .col { width: calc(100% / 3); }
@@ -134,7 +134,7 @@ Raster, dessen Spaltenzahl nur über die Division wechselt:
 
 <a href="beispiele/calc-05-spalten.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
-Zentrieren ohne bekannte Containerbreite:
+Zentrieren, ohne die Breite des Containers zu kennen:
 
 ```css
 figcaption {
@@ -149,14 +149,14 @@ figcaption {
 
 ## Eigene Notizen / Einordnung
 
-Arbeitsregel: **`calc()` dort einsetzen, wo die Rechenvorschrift die Absicht ausdrückt** — `calc(100% / 3)` sagt „ein Drittel", `33.3333%` sagt nichts. Der Support ist seit Jahren lückenlos, es gibt also keinen Grund, aus Vorsicht auf ausgerechnete Werte zurückzufallen.
+Faustregel: **`calc()` immer dann, wenn man der Rechnung ansieht, was gemeint ist.** `calc(100% / 3)` sagt „ein Drittel“, `33.3333%` sagt gar nichts. Alle Browser können `calc()` seit Jahren, aus Vorsicht muss man also keine Werte mehr vorher ausrechnen.
 
 Wo `calc()` heute *nicht* mehr die erste Wahl ist:
 
-- **Spaltenraster.** Das Beispiel oben stammt aus der Float-Ära. `grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))` kommt ohne Media Queries aus. `calc()` bleibt im Vorteil, wenn die Teilung fest vorgegeben ist statt vom Platz abzuhängen.
-- **Fluide Schriftgrößen.** `clamp(1.4rem, 3vw, 2rem)` ist ausdrucksstärker als eine `calc()`-Konstruktion mit separaten Min/Max-Regeln.
+- **Spaltenraster.** Das Beispiel oben stammt noch aus der Zeit der Float-Layouts. `grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))` kommt ganz ohne Media Queries aus. `calc()` lohnt sich nur noch, wenn die Spaltenzahl fest vorgegeben ist und nicht vom Platz abhängt.
+- **Fluide Schriftgrößen.** `clamp(1.4rem, 3vw, 2rem)` ist kürzer und klarer als eine `calc()`-Rechnung mit eigenen Regeln für Minimum und Maximum.
 
-Der eigentliche Dauerbrenner ist die Kombination mit Custom Properties: ein Basiswert, alles andere abgeleitet. Das gilt für Abstände genauso wie für Zeiten und Farben.
+Wirklich unverzichtbar bleibt `calc()` zusammen mit Custom Properties: ein Grundwert, und alles andere wird davon abgeleitet. Das klappt bei Abständen genauso wie bei Zeiten und Farben.
 
 ### Browsersupport
 
@@ -166,9 +166,9 @@ Der eigentliche Dauerbrenner ist die Kombination mit Custom Properties: ein Basi
 | Schlüsselwörter in `calc()` (`pi`, `e`, `infinity`) | widely available | 2025-12-06 (newly: 2023-06-06) | Chrome 110, Firefox 114, Safari 16 |
 | `calc-size()` | **nicht Baseline** | – | bisher nur Chrome/Edge 129 |
 
-`calc-size()` ist damit kein Werkzeug für Produktivcode, sondern etwas zum Beobachten. Die MDN-Angabe zu Juli 2015 meint das Datum, an dem alle damaligen Browser den Kern unterstützten, nicht die 30 Monate später erreichte breite Verfügbarkeit.
+`calc-size()` gehört damit noch nicht in Produktivcode, man sollte es aber im Auge behalten. Wenn MDN „Juli 2015“ angibt, ist der Tag gemeint, ab dem alle damaligen Browser `calc()` konnten. Breit verfügbar im Sinne von Baseline war es erst 30 Monate später.
 
-Die typisierte Arithmetik mit Einheiten auf beiden Seiten der Division führen die Baseline-Daten nicht als eigenes Feature; dazu ist hier keine belastbare Aussage möglich.
+Für die Division mit Einheiten auf beiden Seiten (typed arithmetic) gibt es in den Baseline-Daten keinen eigenen Eintrag. Ob sie überall funktioniert, lässt sich daraus also nicht ablesen.
 
 Quelle: `web-features` 3.36.0 (Baseline-Daten der W3C WebDX Community Group), lokal abgefragt am 2026-09-03.
 
@@ -179,9 +179,9 @@ Quelle: `web-features` 3.36.0 (Baseline-Daten der W3C WebDX Community Group), lo
 
 ## Quellen
 
-- [[quellen/artikel/calc-mdn|calc() CSS-Funktion (MDN)]] — formale Referenz: Typen, Rundung, typisierte Arithmetik, Grammatik
+- [[quellen/artikel/calc-mdn|calc() CSS-Funktion (MDN)]] — formale Referenz: Typen, Rundung, typed arithmetic, Grammatik
 - [[quellen/artikel/calc-mediaevent|CSS calc – Rechnen mit gemischten CSS-Einheiten]] — Begründung der Leerzeichenregel, Zeit- und Variablenbeispiele
 - [[quellen/artikel/calc-kulturbanause|Die CSS calc()-Funktion – Berechnungen mit CSS]] — Layoutbeispiele (Sidebar, Spaltenraster)
 - [[quellen/artikel/custom-properties-selfhtml|CSS Custom properties (CSS-Variablen) (SELFHTML)]] — Einheit anhängen, Countdown-Beispiel
 
-Eigene Ergänzung, nicht aus den Quellen: die Einordnung, wo Grid und `clamp()` heute die bessere Wahl sind, sowie die Arbeitsregel zur Lesbarkeit. Die MediaEvent-Quelle behauptet, `calc()` sei in `:root` nicht verwendbar — das ist so nicht richtig und in [[quellen/artikel/calc-mediaevent|CSS calc – Rechnen mit gemischten CSS-Einheiten]] richtiggestellt.
+Nicht aus den Quellen, sondern eigene Ergänzung: wo Grid und `clamp()` heute besser passen und die Faustregel zur Lesbarkeit. Die MediaEvent-Quelle behauptet, `calc()` lasse sich in `:root` nicht verwenden. Das stimmt so nicht und ist in [[quellen/artikel/calc-mediaevent|CSS calc – Rechnen mit gemischten CSS-Einheiten]] richtiggestellt.

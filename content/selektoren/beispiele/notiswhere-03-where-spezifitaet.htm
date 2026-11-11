@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: :where() zählt nicht, :is() schon – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+.label { font-size: .8rem; color: #57606a; margin: 0 0 .25rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.reihe { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-start; }
+
+</style>
+<style data-beispiel>
+:where(.inhalt-a) a { color: darkorange; }
+:is(.inhalt-b) a     { color: darkorange; }
+footer a             { color: blue; }
+</style>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „CSS-Pseudoklassen not(), is() und where()“</p>
+  <h1>:where() zählt nicht, :is() schon</h1>
+  <p>Beide Bereiche haben dieselben Regeln, nur einmal mit <code>:where()</code> und einmal mit <code>:is()</code>. Danach kommt <code>footer a { color: blue }</code>. Mit <code>:where()</code> gewinnt Blau, mit <code>:is()</code> bleibt es orange.</p>
+  <p class="klein">Getestet in Chrome 155. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<main class="beispiel-buehne">
+<div class="reihe">
+  <div class="inhalt-a"><p class="label">:where(.inhalt-a) a</p><footer><a href="#">Link im Footer</a></footer></div>
+  <div class="inhalt-b"><p class="label">:is(.inhalt-b) a</p><footer><a href="#">Link im Footer</a></footer></div>
+</div>
+</main>
+</body>
+</html>

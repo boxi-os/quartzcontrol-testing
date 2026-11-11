@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: Scoping Proximity: das nähere Theme gewinnt – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+.label { font-size: .8rem; color: #57606a; margin: 0 0 .25rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.reihe { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-start; }
+.hell { background: #e5e7eb; padding: .5rem 1rem; } .dunkel { background: #374151; padding: .5rem 1rem; } .ohne, .mit { width: 16rem; }
+</style>
+<style data-beispiel>
+.ohne .hell p   { color: black; }
+.ohne .dunkel p { color: white; }
+
+@scope (.mit .hell)   { p { color: black; } }
+@scope (.mit .dunkel) { p { color: white; } }
+</style>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „CSS @scope“</p>
+  <h1>Scoping Proximity: das nähere Theme gewinnt</h1>
+  <p>Links ohne <code>@scope</code>: Der innerste Absatz wird weiß, weil <code>.dunkel p</code> später im Stylesheet steht. Rechts mit <code>@scope</code>: Er wird schwarz, weil das helle Theme näher liegt.</p>
+  <p class="klein">Getestet in Chrome 155. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<main class="beispiel-buehne">
+<div class="reihe">
+  <div class="ohne"><p class="label">ohne @scope</p><div class="hell"><p>Hell</p><div class="dunkel"><p>Dunkel</p><div class="hell"><p>Hell (innen)</p></div></div></div></div>
+  <div class="mit"><p class="label">mit @scope</p><div class="hell"><p>Hell</p><div class="dunkel"><p>Dunkel</p><div class="hell"><p>Hell (innen)</p></div></div></div></div>
+</div>
+</main>
+</body>
+</html>

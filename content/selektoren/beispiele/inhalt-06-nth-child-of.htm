@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: Zebrastreifen mit :nth-child(… of S) – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+.label { font-size: .8rem; color: #57606a; margin: 0 0 .25rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.reihe { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-start; }
+table { border-collapse: collapse; width: 12rem; } td { padding: .35rem .75rem; border-bottom: 1px solid #d0d7de; }
+</style>
+<style data-beispiel>
+.ohne tbody tr:nth-child(even)                 { background: #e5e7eb; }
+.mit  tbody tr:nth-child(even of :not([hidden])) { background: #e5e7eb; }
+</style>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „Elemente anhand ihres Inhalts auswählen“</p>
+  <h1>Zebrastreifen mit :nth-child(… of S)</h1>
+  <p>Links zählt <code>:nth-child(even)</code> auch versteckte Zeilen mit, rechts zählt <code>:nth-child(even of :not([hidden]))</code> nur die sichtbaren. Mit dem Button die dritte Zeile ein- und ausblenden.</p>
+  <p class="klein">Getestet in Chrome 155. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<main class="beispiel-buehne">
+<p><button id="umschalten" type="button">Zeile 3 aus-/einblenden</button></p>
+<div class="reihe">
+  <table class="ohne"><caption class="label">:nth-child(even)</caption><tbody><tr><td>Zeile 1</td></tr><tr><td>Zeile 2</td></tr><tr class="z3" hidden><td>Zeile 3</td></tr><tr><td>Zeile 4</td></tr><tr><td>Zeile 5</td></tr><tr><td>Zeile 6</td></tr></tbody></table>
+  <table class="mit"><caption class="label">:nth-child(even of :not([hidden]))</caption><tbody><tr><td>Zeile 1</td></tr><tr><td>Zeile 2</td></tr><tr class="z3" hidden><td>Zeile 3</td></tr><tr><td>Zeile 4</td></tr><tr><td>Zeile 5</td></tr><tr><td>Zeile 6</td></tr></tbody></table>
+</div>
+</main>
+<script>
+// Rahmen-Skript: nur für die Bedienung der Beispielseite
+document.getElementById("umschalten").onclick = () => document.querySelectorAll(".z3").forEach(z => z.hidden = !z.hidden);
+</script>
+</body>
+</html>

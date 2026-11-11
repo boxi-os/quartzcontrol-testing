@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: :not(:has()) gegen :has(:not()) – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+.label { font-size: .8rem; color: #57606a; margin: 0 0 .25rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.reihe { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-start; }
+.karte { border: 1px solid #d0d7de; padding: 1rem; width: 14rem; } .karte img { display: block; width: 100%; height: auto; }
+</style>
+<style data-beispiel>
+.oben .karte:not(:has(img)) { background: #bbf7d0; }
+.unten .karte:has(:not(img)) { background: #fecaca; }
+</style>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „Elemente anhand ihres Inhalts auswählen“</p>
+  <h1>:not(:has()) gegen :has(:not())</h1>
+  <p>Oben färbt <code>.karte:not(:has(img))</code> nur die Karte ohne Bild. Unten färbt <code>.karte:has(:not(img))</code> beide Karten, weil jede ein Element enthält, das kein Bild ist.</p>
+  <p class="klein">Getestet in Chrome 155. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<main class="beispiel-buehne">
+<p class="label">.karte:not(:has(img))</p>
+<div class="reihe oben"><div class="karte"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='160'%3E%3Crect width='320' height='160' fill='%2360a5fa'/%3E%3C/svg%3E" alt="" width="320" height="160"><p>Mit Bild</p></div><div class="karte"><p>Ohne Bild</p></div></div>
+<p class="label" style="margin-top:1.5rem">.karte:has(:not(img))</p>
+<div class="reihe unten"><div class="karte"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='160'%3E%3Crect width='320' height='160' fill='%2360a5fa'/%3E%3C/svg%3E" alt="" width="320" height="160"><p>Mit Bild</p></div><div class="karte"><p>Ohne Bild</p></div></div>
+</main>
+</body>
+</html>

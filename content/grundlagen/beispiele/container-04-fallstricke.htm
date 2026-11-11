@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: Fallstricke: size und inhaltsabhängige Breite – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+.label { font-size: .8rem; color: #57606a; margin: 0 0 .25rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.reihe { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-start; }
+.box { background: #dbeafe; border: 1px solid #60a5fa; }
+</style>
+<style data-beispiel>
+.a { container-type: size; }
+.b > div { container-type: inline-size; }
+.c { container-type: inline-size; }
+</style>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „Container Queries“</p>
+  <h1>Fallstricke: size und inhaltsabhängige Breite</h1>
+  <p>Links fällt ein Container mit <code>container-type: size</code> ohne feste Höhe zusammen, der Text läuft heraus. In der Mitte hat ein Flex-Item mit <code>inline-size</code> keine Breite mehr. Rechts der Normalfall: Blockelement mit <code>inline-size</code>.</p>
+  <p class="klein">Getestet in Chrome 155. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<main class="beispiel-buehne">
+<div class="reihe">
+  <div style="width:14rem"><p class="label">container-type: size</p><div class="a box">Dieser Text gehört in den Container, aber der ist 0 hoch.</div></div>
+  <div style="width:14rem"><p class="label">Flex-Item mit inline-size</p><div class="b" style="display:flex"><div class="box">Flex-Item ohne Breite</div></div></div>
+  <div style="width:14rem"><p class="label">Block mit inline-size</p><div class="c box">So soll es sein.</div></div>
+</div>
+</main>
+</body>
+</html>

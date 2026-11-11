@@ -15,8 +15,8 @@ applies_to:
 
 CSS hat zwei Mechanismen für Bewegung:
 
-- **Transition:** Eine Eigenschaft ändert sich – durch `:hover`, eine Klasse, ein Attribut –, und der Browser lässt die Änderung über eine Zeitspanne ablaufen. Die Zwischenwerte rechnet er selbst aus.[^mdn-transitions]
-- **Keyframe-Animation:** Ein Ablauf mit Start, Ende und beliebigen Zwischenständen, definiert in `@keyframes` und über `animation` an ein Element gehängt. Sie kann ohne Zustandswechsel starten, sich wiederholen und rückwärts laufen.[^mdn-animations]
+- **Transition:** Eine Eigenschaft ändert sich, etwa durch `:hover`, eine Klasse oder ein Attribut, und der Browser lässt die Änderung über eine gewisse Zeit ablaufen. Die Zwischenwerte rechnet er selbst aus.[^mdn-transitions]
+- **Keyframe-Animation:** Ein Ablauf mit Anfang, Ende und beliebig vielen Zwischenschritten. Man beschreibt ihn in `@keyframes` und hängt ihn mit `animation` an ein Element. Sie kann ohne Zustandswechsel starten, sich wiederholen und rückwärts laufen.[^mdn-animations]
 
 ```css
 /* Transition: reagiert auf eine Zustandsänderung */
@@ -40,9 +40,9 @@ CSS hat zwei Mechanismen für Bewegung:
 
 ## Hintergrund
 
-Transitions heißen auch „implizite“ Übergänge, weil nur Anfang und Ende feststehen.[^mdn-transitions] Keyframes machen den Ablauf explizit.
+Transitions heißen auch „implizite“ Übergänge, weil man nur Anfang und Ende festlegt.[^mdn-transitions] Bei Keyframes beschreibt man den Ablauf dagegen ausdrücklich.
 
-MDN nennt drei Vorteile gegenüber Animation per JavaScript: wenige Zeilen ohne Skript, stabiles Verhalten auch unter Last (die Engine kann Frames auslassen) und Optimierungen wie seltenere Aktualisierung in nicht sichtbaren Tabs.[^mdn-animations]
+MDN nennt drei Vorteile gegenüber Animationen per JavaScript: Es sind nur wenige Zeilen ohne Skript nötig, die Animation läuft auch unter Last stabil (der Browser kann Frames auslassen), und der Browser kann optimieren, etwa indem er unsichtbare Tabs seltener aktualisiert.[^mdn-animations]
 
 ## Wichtige Aspekte
 
@@ -55,33 +55,33 @@ MDN nennt drei Vorteile gegenüber Animation per JavaScript: wenige Zeilen ohne 
 | Wiederholen, hin und her? | nein | `animation-iteration-count`, `animation-direction` |
 | Endzustand halten | ergibt sich aus dem Zielzustand | `animation-fill-mode: forwards` |
 
-Die Tabelle ist eigene Zusammenfassung der beiden MDN-Leitfäden.
+Die Tabelle fasst die beiden MDN-Leitfäden zusammen.
 
 ### Teileigenschaften
 
-- **Transition:** `transition-property`, `transition-duration`, `transition-timing-function`, `transition-delay`; MDN empfiehlt die Kurzschreibweise `transition`, damit die Werte nicht auseinanderlaufen. Dazu seit 2024 `transition-behavior`, siehe [[animation/ein-und-ausblenden|Ein- und Ausblenden mit CSS animieren]].[^mdn-transitions]
-- **Animation:** `animation-name`, `-duration`, `-timing-function`, `-delay`, `-iteration-count`, `-direction`, `-fill-mode`, `-play-state`, `-timeline` und `animation-composition` (nicht in der Kurzschreibweise).[^mdn-animations]
+- **Transition:** `transition-property`, `transition-duration`, `transition-timing-function`, `transition-delay`. MDN empfiehlt die Kurzform `transition`, damit die Werte nicht durcheinandergeraten. Seit 2024 kommt `transition-behavior` dazu, siehe [[animation/ein-und-ausblenden|Ein- und Ausblenden mit CSS animieren]].[^mdn-transitions]
+- **Animation:** `animation-name`, `-duration`, `-timing-function`, `-delay`, `-iteration-count`, `-direction`, `-fill-mode`, `-play-state`, `-timeline` und `animation-composition` (das nicht in der Kurzform).[^mdn-animations]
 
 ### Nicht alles ist animierbar
 
 - Manche Eigenschaften lassen sich gar nicht animieren.[^mdn-transitions]
-- Von oder zu `auto` soll man laut Spezifikation nicht animieren; Browser verhalten sich dabei unterschiedlich.[^mdn-transitions] Gezielt erlaubt `interpolate-size` das – derzeit nur in Chromium.[^height-auto]
-- `display` und `content-visibility` lassen sich in Keyframes und mit `transition-behavior: allow-discrete` animieren – laut `web-features` 3.38.0 aber **nicht in Firefox**.
+- Von oder zu `auto` soll man laut Spezifikation nicht animieren, die Browser verhalten sich dabei unterschiedlich.[^mdn-transitions] Ausdrücklich erlaubt wird es mit `interpolate-size`, das derzeit aber nur Chromium kann.[^height-auto]
+- `display` und `content-visibility` lassen sich in Keyframes und mit `transition-behavior: allow-discrete` animieren, laut `web-features` 3.38.0 aber **nicht in Firefox**.
 
 ### Günstig und teuer
 
-Flüssig bleiben Animationen von **`transform` und `opacity`**. Eigenschaften, die Layout oder Paint auslösen (Breite, Höhe, Position über `top`/`left`, Schatten …), nur animieren, wenn es unbedingt nötig ist.[^webdev]
+Flüssig bleiben Animationen von **`transform` und `opacity`**. Eigenschaften, die Layout oder Paint auslösen (Breite, Höhe, Position über `top`/`left`, Schatten usw.), sollte man nur animieren, wenn es wirklich nicht anders geht.[^webdev]
 
-`will-change` legt ein Element vorab auf eine eigene Ebene – aber nur für Elemente, die sich gleich ändern, nicht pauschal.[^webdev]
+`will-change` legt ein Element vorab auf einen eigenen Layer. Das ist aber nur für Elemente gedacht, die sich gleich ändern werden, nicht für alles auf Verdacht.[^webdev]
 
 ### Einzelne Transform-Eigenschaften
 
-`translate`, `rotate` und `scale` sind eigene Eigenschaften neben `transform`. MDN nutzt `rotate` im Transition-Beispiel direkt.[^mdn-transitions] Vorteil: Eine Hover-Drehung überschreibt nicht versehentlich eine Verschiebung, die an `transform` hängt – eigene Einordnung.
+`translate`, `rotate` und `scale` sind eigene Eigenschaften neben `transform`. MDN benutzt `rotate` im Transition-Beispiel direkt.[^mdn-transitions] Der Vorteil (eigene Einordnung): Eine Drehung beim Hover überschreibt nicht versehentlich eine Verschiebung, die an `transform` hängt.
 
 ### Easing
 
-- Schlüsselwörter (`ease`, `ease-in`, `ease-out`, `ease-in-out`, `linear`) und `cubic-bezier()` beschreiben Kurven über vier Punkte.[^mdn-transitions]
-- **`linear()`** nimmt beliebig viele Stützpunkte und interpoliert dazwischen linear. Mit vielen Punkten lassen sich komplexe Kurven annähern; Werte außerhalb 0–1 sind erlaubt.[^linear]
+- Die Schlüsselwörter (`ease`, `ease-in`, `ease-out`, `ease-in-out`, `linear`) und `cubic-bezier()` beschreiben Kurven mit vier Punkten.[^mdn-transitions]
+- **`linear()`** nimmt beliebig viele Stützpunkte und verbindet sie mit geraden Linien. Mit genug Punkten lassen sich so auch komplizierte Kurven nachbilden. Werte unter 0 und über 1 sind erlaubt.[^linear]
 
 ```css
 .pop {
@@ -91,19 +91,19 @@ Flüssig bleiben Animationen von **`transform` und `opacity`**. Eigenschaften, d
 
 <a href="beispiele/transitions-02-linear-easing.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
-Das Beispiel (kurz überschwingen, zurückfedern) ist eigene Konstruktion aus der Syntax. In Chrome 152 getestet: Bei `scale` von 1 auf 2 erreicht der Wert zwischendurch etwa 2,17 und pendelt dann auf 2 ein.
+Das Beispiel (kurz über das Ziel hinaus, dann zurückfedern) habe ich selbst aus der Syntax gebaut. In Chrome 152 getestet: Bei `scale` von 1 auf 2 erreicht der Wert zwischendurch etwa 2,17 und pendelt sich dann bei 2 ein.
 
 ### Custom Properties animieren
 
-Eine normale Custom Property ist für den Browser nur Text und springt. Mit `@property` und Typangabe wird sie interpolierbar – Details und Beispiel in [[grundlagen/variablen|CSS Custom Properties]].
+Eine normale Custom Property ist für den Browser nur Text, deshalb springt sie von einem Wert zum nächsten. Mit `@property` und einem Typ kann der Browser Zwischenwerte berechnen. Details und Beispiel in [[grundlagen/variablen|CSS Custom Properties]].
 
 ### Nebenwirkung von `forwards`
 
-Mit `animation-fill-mode: forwards` verhalten sich die animierten Eigenschaften wie in `will-change` eingetragen. Ein Stapelkontext, der während der Animation entsteht, bleibt danach bestehen.[^mdn-animations] Das erklärt manche `z-index`-Überraschung nach einer Animation.
+Mit `animation-fill-mode: forwards` verhalten sich die animierten Eigenschaften so, als stünden sie in `will-change`. Ein Stacking Context, der während der Animation entsteht, bleibt danach bestehen.[^mdn-animations] Das erklärt so manche `z-index`-Überraschung nach einer Animation.
 
 ## Beispiele
 
-Karte beim Hover leicht anheben – nur `translate` und Schatten auf einem Pseudoelement per `opacity`, damit kein Schatten animiert werden muss:
+Karte beim Hover leicht anheben. Animiert werden nur `translate` und die `opacity` eines Pseudoelements, das den Schatten trägt. So muss der Schatten selbst nicht animiert werden:
 
 ```css
 .card {
@@ -126,7 +126,7 @@ Karte beim Hover leicht anheben – nur `translate` und Schatten auf einem Pseud
 
 <a href="beispiele/transitions-03-karte-anheben.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
-Das Muster „Schatten per `opacity` einblenden statt `box-shadow` animieren“ folgt der Regel aus web.dev, ist dort aber nicht vorgeführt.
+Das Muster „Schatten per `opacity` einblenden statt `box-shadow` animieren“ folgt der Regel von web.dev, wird dort aber nicht vorgeführt.
 
 Endloser Lade-Spinner:
 
@@ -141,13 +141,13 @@ Endloser Lade-Spinner:
 
 <a href="beispiele/transitions-04-spinner.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
-Beide Beispiele gehören für bewegungsempfindliche Menschen in `@media (prefers-reduced-motion: no-preference)` – siehe [[animation/barrierearme-animationen|Barrierearme Animationen]]. Endlos laufende Bewegung neben anderem Inhalt kann außerdem unter WCAG 2.2.2 fallen, sobald sie länger als fünf Sekunden läuft. Ob und wann Ladeanzeigen als „essenziell“ ausgenommen sind, ist hier nicht ausgewertet.
+Mit Rücksicht auf bewegungsempfindliche Menschen gehören beide Beispiele in `@media (prefers-reduced-motion: no-preference)`, siehe [[animation/barrierearme-animationen|Barrierearme Animationen]]. Endlos laufende Bewegung neben anderem Inhalt kann außerdem unter WCAG 2.2.2 fallen, sobald sie länger als fünf Sekunden läuft. Ob und wann Ladeanzeigen als „essenziell“ davon ausgenommen sind, habe ich nicht ausgewertet.
 
 ## Eigene Notizen / Einordnung
 
 Faustregel: **Zustandswechsel → Transition, eigener Ablauf → Keyframes.** Die meisten UI-Effekte sind Zustandswechsel.
 
-Wer nur `transform`/`opacity` animiert und Bewegung an `prefers-reduced-motion` koppelt, hat die beiden häufigsten Probleme – Ruckeln und Unwohlsein – bereits vermieden.
+Wer nur `transform` und `opacity` animiert und Bewegung an `prefers-reduced-motion` koppelt, hat die beiden häufigsten Probleme schon vermieden: Ruckeln und Unwohlsein.
 
 ### Browsersupport
 
@@ -179,7 +179,7 @@ Quelle: `web-features` 3.38.0 (Baseline-Daten der W3C WebDX Community Group), lo
 - [[quellen/artikel/linear-easing-mdn|linear() CSS-Funktion (MDN)]] — Easing mit Stützpunkten
 - [[quellen/artikel/height-auto-chrome|Animate to height auto (Chrome for Developers)]] — `interpolate-size`
 
-Eigene Einordnung: Vergleichstabelle, Vorteil einzelner Transform-Eigenschaften, alle Codebeispiele. Die Beispiele sind in Chrome 152 (macOS), 2026-09-13 getestet (Karten-Link bleibt klickbar, Spinner dreht, `linear()` schwingt über), nicht in Firefox und Safari.
+Eigene Einordnung: die Vergleichstabelle, der Vorteil der einzelnen Transform-Eigenschaften und alle Codebeispiele. Die Beispiele sind am 2026-09-13 in Chrome 152 (macOS) getestet (der Link in der Karte bleibt klickbar, der Spinner dreht sich, `linear()` schwingt über), nicht in Firefox und Safari.
 
 [^mdn-transitions]: [[quellen/artikel/css-transitions-mdn|Using CSS transitions (MDN)]].
 [^mdn-animations]: [[quellen/artikel/css-animations-mdn|Using CSS animations (MDN)]], Einleitung und „Configuring an animation“.

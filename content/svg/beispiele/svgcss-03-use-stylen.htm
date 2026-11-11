@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: Inhalte von use stylen – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+.label { font-size: .8rem; color: #57606a; margin: 0 0 .25rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.reihe { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-start; }
+.icon { width: 64px; height: 64px; }
+</style>
+<style data-beispiel>
+#stern path { fill: var(--stern-farbe, currentColor); }
+
+.aussen path   { fill: crimson; }       /* wirkt nicht */
+.farbig        { --stern-farbe: gold; }
+.textfarbe     { color: seagreen; }
+
+.duo-a { fill: navy;    color: orange; }
+.duo-b { fill: crimson; color: pink; }
+</style>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „SVG mit CSS gestalten“</p>
+  <h1>Inhalte von use stylen</h1>
+  <p>Alle Sterne sind dasselbe <code>&lt;symbol&gt;</code>. Die Regel <code>.icon path</code> von außen erreicht die Kopie nicht. Vererbung, Custom Property und <code>currentColor</code> dagegen schon. Die letzte Reihe zeigt zwei Farben über <code>fill</code> und <code>color</code>.</p>
+  <p class="klein">Getestet in Chrome 155. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<main class="beispiel-buehne">
+<svg style="display:none">
+  <symbol id="stern" viewBox="0 0 24 24"><path d="M12 2 15 9 22 9.5 16.5 14 18.5 21 12 17 5.5 21 7.5 14 2 9.5 9 9Z"/></symbol>
+  <symbol id="duo" viewBox="0 0 24 24"><circle cx="9" cy="12" r="8"/><circle cx="15" cy="12" r="8" fill="currentColor"/></symbol>
+</svg>
+<div class="reihe">
+  <figure><svg class="icon aussen"><use href="#stern"/></svg><figcaption class="label">.aussen path { fill }</figcaption></figure>
+  <figure><svg class="icon farbig"><use href="#stern"/></svg><figcaption class="label">--stern-farbe: gold</figcaption></figure>
+  <figure><svg class="icon textfarbe"><use href="#stern"/></svg><figcaption class="label">color: seagreen</figcaption></figure>
+</div>
+<div class="reihe">
+  <figure><svg class="icon duo-a"><use href="#duo"/></svg><figcaption class="label">fill: navy; color: orange</figcaption></figure>
+  <figure><svg class="icon duo-b"><use href="#duo"/></svg><figcaption class="label">fill: crimson; color: pink</figcaption></figure>
+</div>
+</main>
+</body>
+</html>

@@ -34,32 +34,32 @@
     "obsidian-plugin-excalidraw": {
       "source": "github:quartz-community/obsidian-plugin-excalidraw",
       "resolved": "https://github.com/quartz-community/obsidian-plugin-excalidraw.git",
-      "commit": "997fc5f0bb0695a97c044fcb6838b5fbf0f9b854",
-      "installedAt": "2026-09-16T11:45:39.517Z"
+      "commit": "56de4bba10e1ce9d30526b382790a6071c69b7ef",
+      "installedAt": "2026-11-11T23:04:45.504Z"
     },
-    "quartz-betterbases": {
-      "source": "github:boxi-os/quartz-betterbases",
-      "resolved": "https://github.com/boxi-os/quartz-betterbases.git",
-      "commit": "742a3fd1ef34d73616c6e2aac40bf13b9b907f4d",
-      "installedAt": "2026-10-15T12:49:40.448Z"
+    "quartz-forms": {
+      "source": "/Users/boxi/Development/quartz-forms",
+      "resolved": "/Users/boxi/Development/quartz-forms",
+      "commit": "local",
+      "installedAt": "2026-10-18T23:37:55.783Z"
     },
     "quartz-layout-box": {
       "source": "github:boxi-os/quartz-layout-box",
       "resolved": "https://github.com/boxi-os/quartz-layout-box.git",
-      "commit": "a5a32b28cad89a85015fed05c303d32e94816e60",
-      "installedAt": "2026-10-15T20:36:54.982Z"
+      "commit": "6fecd5add422820d62f104be7843f46189bce420",
+      "installedAt": "2026-11-04T19:57:57.284Z"
     },
     "quartz-multilanguage": {
       "source": "github:boxi-os/quartz-multilanguage",
       "resolved": "https://github.com/boxi-os/quartz-multilanguage.git",
-      "commit": "85428bf8d7a0fb2dbc1771c1047cf9e1414460fc",
-      "installedAt": "2026-10-08T12:26:06.001Z"
+      "commit": "4d74d9f332075910ce7e12231b4d31da25a37c6d",
+      "installedAt": "2026-11-11T23:04:45.558Z"
     },
     "quartz-navigations": {
       "source": "github:boxi-os/quartz-navigations",
       "resolved": "https://github.com/boxi-os/quartz-navigations.git",
-      "commit": "53980939cd012026ba7f61c78cadef29f77231ed",
-      "installedAt": "2026-10-15T20:36:59.145Z"
+      "commit": "354dd51227269c8a9b91831369f7b43759cf857e",
+      "installedAt": "2026-10-26T00:07:12.161Z"
     }
   }
 }

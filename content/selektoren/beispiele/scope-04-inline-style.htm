@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: @scope direkt im HTML – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+.label { font-size: .8rem; color: #57606a; margin: 0 0 .25rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.reihe { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-start; }
+.box-a, .box-b { padding: .5rem 1rem; border: 1px solid #d0d7de; width: 16rem; }
+</style>
+<style data-beispiel>
+/* Die Regel steht unten im HTML, im <style> der linken Box. */
+</style>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „CSS @scope“</p>
+  <h1>@scope direkt im HTML</h1>
+  <p>Das <code>&lt;style&gt;</code> mit <code>@scope { … }</code> steht in der linken Box und wirkt nur dort. Die Box rechts bleibt unberührt.</p>
+  <p class="klein">Getestet in Chrome 155. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<main class="beispiel-buehne">
+<div class="reihe">
+  <div class="box-a">
+    <style>
+      @scope {
+        :scope { border: 2px solid teal; }
+        p { color: teal; font-weight: 700; }
+      }
+    </style>
+    <p>Absatz in der Box mit eigenem &lt;style&gt;</p>
+  </div>
+  <div class="box-b"><p>Absatz in einer anderen Box</p></div>
+</div>
+</main>
+</body>
+</html>

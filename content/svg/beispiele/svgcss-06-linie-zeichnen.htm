@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: Linie zeichnen mit stroke-dashoffset – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+.label { font-size: .8rem; color: #57606a; margin: 0 0 .25rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.reihe { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-start; }
+
+</style>
+<style data-beispiel>
+@media (prefers-reduced-motion: no-preference) {
+  .zeichnen {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+  .zeichnen.los { animation: zeichnen 1.5s ease-out forwards; }
+}
+@keyframes zeichnen { to { stroke-dashoffset: 0; } }
+</style>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „SVG mit CSS gestalten“</p>
+  <h1>Linie zeichnen mit stroke-dashoffset</h1>
+  <p>Mit dem Button startet die Animation. Dank <code>pathLength="1"</code> muss man die Länge des Pfads nicht kennen. Ohne Bewegungswunsch (reduzierte Bewegung) ist die Linie sofort ganz zu sehen.</p>
+  <p class="klein">Getestet in Chrome 155. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<main class="beispiel-buehne">
+<p><button type="button" id="los">Zeichnen</button></p>
+<svg width="320" height="120" viewBox="0 0 320 120"><path class="zeichnen" pathLength="1" d="M10 100 C 60 10, 110 10, 160 60 S 260 110, 310 20" fill="none" stroke="#1e3a8a" stroke-width="4"/></svg>
+</main>
+<script>
+// Rahmen-Skript: nur für die Bedienung der Beispielseite
+document.getElementById("los").onclick = () => { const p = document.querySelector(".zeichnen"); p.classList.remove("los"); void p.getBoundingClientRect(); p.classList.add("los"); };
+</script>
+</body>
+</html>

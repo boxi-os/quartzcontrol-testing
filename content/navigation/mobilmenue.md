@@ -13,7 +13,7 @@ applies_to:
 
 ## Ziel
 
-Ein aufklappbares Menü für kleine Bildschirme, das Fokus, `Esc`, Screenreader-Zustand und Schließen zuverlässig beherrscht – mit so wenig JavaScript wie möglich.
+Ein aufklappbares Menü für kleine Bildschirme, bei dem Fokus, `Esc`, die Ansage im Screenreader und das Schließen zuverlässig funktionieren, und zwar mit so wenig JavaScript wie möglich.
 
 ## Voraussetzungen
 
@@ -23,7 +23,7 @@ Ein aufklappbares Menü für kleine Bildschirme, das Fokus, `Esc`, Screenreader-
 
 ## Getestet mit / Stand
 
-Stand 2026-09-13. **Variante A in Chrome 152 (macOS) getestet:** Invoker Commands öffnen modal, `autofocus` landet auf „Schließen“, `Esc` schließt und gibt den Fokus an den Menü-Button zurück, Ein- und Ausblenden laufen, das Polyfill schaltet nicht doppelt, wenn der Browser Invoker Commands selbst kann. **Nicht getestet:** Varianten B und C, Firefox, Safari, Mobilgeräte, Screenreader. Die Idee, ein Off-Canvas-Menü als modalen `dialog` mit Invoker Commands zu bauen, stammt aus einem Praxisbericht von David Bushell; die Codebeispiele hier sind eigene, weil seine Website unter „All Rights Reserved“ steht.
+Stand 2026-09-13. **Variante A in Chrome 152 (macOS) getestet:** Invoker Commands öffnen modal, `autofocus` landet auf „Schließen“, `Esc` schließt und gibt den Fokus an den Menü-Button zurück, Ein- und Ausblenden laufen, und das Polyfill schaltet nicht doppelt, wenn der Browser Invoker Commands selbst kann. **Am 2026-10-18 in Chrome 155 ergänzt:** die Standardbegrenzung modaler Dialoge und das Scrollen dahinter (siehe Schritt 4 und Fallstricke). **Nicht getestet:** Varianten B und C, Firefox, Safari, Mobilgeräte, Screenreader. Die Idee, ein Off-Canvas-Menü als modalen `dialog` mit Invoker Commands zu bauen, stammt aus einem Praxisbericht von David Bushell. Die Codebeispiele hier habe ich selbst geschrieben, weil seine Website unter „All Rights Reserved“ steht.
 
 ## Vorgehen
 
@@ -38,7 +38,7 @@ flowchart TD
     Q2 -- "nein, es darf den Inhalt<br/>nach unten schieben" --> C["C: details / summary"]
 ```
 
-Die Entscheidungsregeln sind eigene Einordnung aus den Eigenschaften von `dialog` und `popover`. Variante C ist in keiner der ausgewerteten Quellen als Navigationsmuster beschrieben.
+Die Entscheidungsregeln habe ich aus den Eigenschaften von `dialog` und `popover` abgeleitet. Variante C beschreibt keine der ausgewerteten Quellen als Navigationsmuster.
 
 ### Variante A: Vollbild-Menü als modaler Dialog
 
@@ -81,9 +81,9 @@ Die Entscheidungsregeln sind eigene Einordnung aus den Eigenschaften von `dialog
    }
    ```
 
-   Die Feature-Erkennung prüft die JavaScript-Eigenschaft `command` am Button, die MDN als Gegenstück zum Attribut beschreibt.[^mdn-invoker] Das Skript deckt nur Dialoge und die zwei Befehle ab; für die volle API gibt es das Polyfill von Keith Cirkel.
+   Die Feature-Erkennung prüft die JavaScript-Eigenschaft `command` am Button, die MDN als Gegenstück zum Attribut beschreibt.[^mdn-invoker] Das Skript deckt nur Dialoge und die zwei Befehle ab. Für die volle API gibt es das Polyfill von Keith Cirkel.
 
-3. **Klick auf den Hintergrund schließt** nur mit `closedby="any"` am `dialog`.[^mdn-dialog] Das fehlt laut `web-features` 3.38.0 in Safari – dort bleibt `Esc` bzw. der Schließen-Button. Beim Vollbild-Menü aus Schritt 4 gibt es allerdings keinen sichtbaren Hintergrund zum Anklicken; `closedby` wirkt nur, wenn der Dialog kleiner als der Viewport ist.
+3. **Ein Klick auf den Hintergrund schließt** nur mit `closedby="any"` am `dialog`.[^mdn-dialog] Laut `web-features` 3.38.0 kann Safari das nicht, dort bleiben `Esc` und der Schließen-Button. Beim Vollbild-Menü aus Schritt 4 gibt es allerdings gar keinen sichtbaren Hintergrund zum Anklicken. `closedby` wirkt nur, wenn der Dialog kleiner als der Viewport ist.
 
 4. **Als Vollbild darstellen:**
 
@@ -101,7 +101,7 @@ Die Entscheidungsregeln sind eigene Einordnung aus den Eigenschaften von `dialog
 
    <a href="beispiele/mobilmenue-01-vollbild-dialog.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
-   `dvh` folgt den ein- und ausfahrenden Browserleisten auf Mobilgeräten.[^viewport] Das Zurücksetzen von `max-width` und `max-height` beruht auf der Annahme, dass Browser modale Dialoge standardmäßig begrenzen – nicht an einer Quelle belegt. `box-sizing: border-box` ist nötig, weil `dialog` in Chrome standardmäßig `padding: 16px` hat; ohne diese Zeile war das Menü im Test 17 × 32 Pixel größer als der Viewport.
+   `dvh` passt sich an, wenn auf Mobilgeräten die Browserleisten ein- und ausfahren.[^viewport] `max-width` und `max-height` muss man zurücksetzen, weil Browser modale Dialoge standardmäßig begrenzen. In keiner Quelle belegt, aber in Chrome 155 nachgemessen: Ein modaler Dialog hat dort `max-width` und `max-height` von `calc(100% - 38px)`. `box-sizing: border-box` ist nötig, weil `dialog` in Chrome standardmäßig `padding: 16px` hat. Ohne diese Zeile war das Menü im Test 17 × 32 Pixel größer als der Viewport.
 
 5. **Button nur auf kleinen Bildschirmen zeigen**, sonst die normale Navigation:
 
@@ -116,7 +116,7 @@ Die Entscheidungsregeln sind eigene Einordnung aus den Eigenschaften von `dialog
 
    <a href="beispiele/mobilmenue-02-breakpoint.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
-   Die Links stehen damit zweimal im HTML: sichtbar im Header und im Dialog. Das ist ein bewusster Kompromiss, damit der Dialog nicht per CSS zwangsweise angezeigt werden muss. Alternativ nutzt man das Menü bei allen Breiten – so macht es Bushell.
+   Die Links stehen damit zweimal im HTML: sichtbar im Header und im Dialog. Das ist ein bewusster Kompromiss, damit man den Dialog nicht per CSS dauerhaft anzeigen muss. Alternativ nutzt man das Menü bei allen Breiten, so macht es Bushell.
 
 ### Variante B: Menü als Popover
 
@@ -129,9 +129,9 @@ Die Entscheidungsregeln sind eigene Einordnung aus den Eigenschaften von `dialog
 
 <a href="beispiele/mobilmenue-03-popover.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
-- Klick daneben und `Esc` schließen, `aria-expanded` am Button setzt der Browser, der Fokus springt beim Tabben in das Menü.[^mdn-popover][^hidde]
-- Die Seite dahinter bleibt bedienbar – kein Fokusfang, kein inerter Hintergrund. Für ein Panel, das nur einen Teil der Seite überdeckt, passt das.
-- Position wie in [[navigation/dropdown-navigation|Dropdown-Navigation mit Disclosure-Buttons bauen]] überschreiben, sonst erscheint das Menü mittig.
+- Ein Klick daneben und `Esc` schließen, `aria-expanded` am Button setzt der Browser, und beim Tabben springt der Fokus in das Menü.[^mdn-popover][^hidde]
+- Die Seite dahinter bleibt bedienbar: Der Fokus wird nicht festgehalten, und der Hintergrund ist nicht gesperrt. Für ein Panel, das nur einen Teil der Seite überdeckt, passt das.
+- Die Position wie in [[navigation/dropdown-navigation|Dropdown-Navigation mit Disclosure-Buttons bauen]] überschreiben, sonst erscheint das Menü in der Mitte.
 
 ### Variante C: `details` / `summary`
 
@@ -146,11 +146,11 @@ Die Entscheidungsregeln sind eigene Einordnung aus den Eigenschaften von `dialog
 
 <a href="beispiele/mobilmenue-04-details.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
-Ohne JavaScript und ohne Top Layer: Das Menü schiebt den Inhalt nach unten. `details` ist ein natives Disclosure-Widget.[^mdn-details] Wie Screenreader `summary` als Menüschalter ansagen, ist hier nicht geprüft.
+Ohne JavaScript und ohne Top Layer: Das Menü schiebt den Inhalt nach unten. `details` ist ein natives Disclosure-Widget.[^mdn-details] Wie Screenreader `summary` als Menüschalter ansagen, habe ich nicht geprüft.
 
 ### Ein- und Ausblenden animieren
 
-Das Menü fährt von rechts herein und blendet dabei auf – nach dem Muster aus der MDN-Referenz für `dialog`:[^mdn-dialog]
+Das Menü fährt von rechts herein und blendet dabei ein, nach dem Muster aus der MDN-Referenz für `dialog`:[^mdn-dialog]
 
 ```css
 @media (prefers-reduced-motion: no-preference) {
@@ -184,29 +184,29 @@ Hintergründe und Fallen: [[animation/ein-und-ausblenden|Ein- und Ausblenden mit
 
 ## Warum funktioniert das?
 
-- `showModal()` legt den Dialog in den Top Layer, macht den Rest der Seite inert und fokussiert das erste fokussierbare Element; `Esc` schließt.[^mdn-dialog] Genau das musste man früher für Off-Canvas-Menüs selbst bauen.
+- `showModal()` legt den Dialog in den Top Layer, sperrt den Rest der Seite (inert) und setzt den Fokus auf das erste fokussierbare Element. `Esc` schließt.[^mdn-dialog] Genau das musste man früher für Off-Canvas-Menüs selbst bauen.
 - Invoker Commands verbinden Button und Dialog ohne eigenes Skript.[^mdn-invoker]
-- Beim Popover übernimmt der Browser `aria-expanded`, Tab-Reihenfolge und Light dismiss.[^hidde]
+- Beim Popover übernimmt der Browser `aria-expanded`, die Tab-Reihenfolge und das Schließen per Klick daneben (Light Dismiss).[^hidde]
 
 ### Warum nicht der Checkbox-Hack?
 
-Beim Checkbox-Hack steuert ein verstecktes `<input type="checkbox">` mit `<label>` die Sichtbarkeit per `:checked`. Dagegen spricht – **eigene Einordnung, in keiner der ausgewerteten Quellen belegt**:
+Beim Checkbox-Hack steuert ein verstecktes `<input type="checkbox">` mit `<label>` über `:checked`, ob das Menü sichtbar ist. Dagegen spricht (**eigene Einordnung, in keiner der ausgewerteten Quellen belegt**):
 
-- Assistive Technologien bekommen eine Checkbox angesagt, keinen Schalter für ein Menü; ein `aria-expanded` gibt es nicht.
-- `Esc`, Fokusrückgabe, Fokusfang und Klick daneben fehlen und müssten ohnehin per Skript nachgebaut werden.
-- Seit `popover` und `dialog` deklarativ steuerbar sind, entfällt das Hauptargument „ohne JavaScript“.
+- Assistive Technologien sagen eine Checkbox an, keinen Schalter für ein Menü, und ein `aria-expanded` gibt es nicht.
+- `Esc`, die Rückgabe des Fokus, das Festhalten des Fokus im Menü und das Schließen per Klick daneben fehlen und müssten ohnehin per Skript nachgebaut werden.
+- Seit sich `popover` und `dialog` ohne JavaScript steuern lassen, fällt das Hauptargument „ohne JavaScript“ weg.
 
-**Gegenbeispiel aus der Praxis:** Ein eigenes Quartz-Plugin baut sein Off-Canvas-Menü noch mit der Checkbox – und zeigt, was dafür nachgerüstet werden muss. Die Checkbox trägt `aria-controls` und ein `aria-expanded`, das ein Skript bei jeder Änderung nachführt; die Labels für Burger-Icon und Hintergrund sind per `aria-hidden` versteckt. Das Skript schließt außerdem bei `Esc` und vor einer Seitennavigation, gibt den Fokus an die Checkbox zurück, wenn er im Panel lag, und sperrt das Scrollen der Seite über eine Klasse am Wurzelelement. Einen Fokusfang oder einen inerten Hintergrund gibt es dort nicht. Das relativiert den ersten Punkt oben: Ein `aria-expanded` lässt sich nachrüsten, nur eben per Skript. Ob Screenreader `aria-expanded` an einer Checkbox sinnvoll ansagen, ist nicht geprüft. Kandidat für eine spätere Umstellung auf Variante A.
+**Gegenbeispiel aus der Praxis:** Ein eigenes Quartz-Plugin baut sein Off-Canvas-Menü noch mit der Checkbox und zeigt, was man dafür alles nachrüsten muss. Die Checkbox hat `aria-controls` und ein `aria-expanded`, das ein Skript bei jeder Änderung anpasst. Die Labels für Burger-Icon und Hintergrund sind per `aria-hidden` versteckt. Das Skript schließt außerdem bei `Esc` und vor einem Seitenwechsel, gibt den Fokus an die Checkbox zurück, wenn er im Panel lag, und sperrt das Scrollen der Seite über eine Klasse am Wurzelelement. Den Fokus im Menü festhalten oder den Hintergrund sperren tut es nicht. Das relativiert den ersten Punkt oben: Ein `aria-expanded` lässt sich nachrüsten, eben nur per Skript. Ob Screenreader `aria-expanded` an einer Checkbox sinnvoll ansagen, habe ich nicht geprüft. Ein Kandidat für eine spätere Umstellung auf Variante A.
 
 ## Fallstricke
 
-- **WebKit-Fokusring:** Nach `showModal()` bzw. Invoker Commands zeigt WebKit laut David Bushell den `:focus-visible`-Stil am ersten Button auch bei Mausbedienung.[^bushell] Einen Workaround beschreibt er selbst als ungetestet. Nicht in Safari nachgeprüft.
-- **Kein `tabindex` auf `dialog`.**[^mdn-dialog]
-- **Scrollen der Seite hinter dem Dialog:** Ob ein modaler Dialog das verhindert, ist in den Quellen nicht beschrieben. Eine verbreitete Lösung ist `body:has(dialog[open]) { overflow: hidden; }` (siehe [[selektoren/has|CSS-Pseudoklasse has()]]). Im Chrome-Test scrollte die Seite hinter dem offenen Dialog mit und ohne diese Regel weiter – das verwendete Werkzeug scrollt aber vermutlich per Skript, was `overflow: hidden` ohnehin nicht verhindert. Mit echtem Mausrad bzw. Touch ist das noch zu prüfen.
+- **Fokusring in WebKit:** Nach `showModal()` bzw. Invoker Commands zeigt WebKit laut David Bushell den `:focus-visible`-Stil am ersten Button auch bei Mausbedienung.[^bushell] Einen Workaround nennt er, hat ihn nach eigener Aussage aber nicht getestet. In Safari habe ich das nicht nachgeprüft.
+- **Kein `tabindex` an `dialog`.**[^mdn-dialog]
+- **Scrollen der Seite hinter dem Dialog:** Ob ein modaler Dialog das verhindert, beschreiben die Quellen nicht. Eine verbreitete Lösung ist `body:has(dialog[open]) { overflow: hidden; }` (siehe [[selektoren/has|CSS-Pseudoklasse has()]]). In Chrome 155 am 2026-10-18 mit dem Mausrad geprüft: Ohne die Regel scrollte die Seite hinter dem offenen Dialog weiter (500 px), mit der Regel gar nicht. Ein früherer Test in Chrome 152 hatte das nicht gezeigt, weil das damalige Werkzeug vermutlich per Skript scrollte. Auf Touch-Geräten ist es noch nicht geprüft.
 - **`closedby` fehlt in Safari:** Das Menü bleibt bedienbar, nur ein Klick daneben schließt dort nicht.
-- **Ausblend-Animation nicht überall:** `display`-Transitions fehlen in Firefox, das Menü verschwindet dort beim Schließen sofort. `overlay` gibt es nur in Chromium; ob die Animation in Safari ohne `overlay` sichtbar abgeschnitten wird, ist nicht geprüft – MDN nennt den Effekt bei einfachen Animationen „möglicherweise nicht bemerkbar“.[^mdn-popover]
-- **Button-Beschriftung:** Nur ein Icon ohne Text ist schwer verständlich; ein sichtbares Wort wie „Menü“ hilft. Zusatzwörter wie „öffnen“ im Namen können laut dem Feedback, das Bushell wiedergibt, Sprachsteuerung stören.[^bushell]
-- **Doppelte Links (Variante A):** Die Menüinhalte müssen an beiden Stellen gleich gepflegt werden; bei Templates oder Komponenten unkritisch, bei Handarbeit fehleranfällig.
+- **Ausblenden nicht überall animiert:** Firefox kann `display` nicht per Transition verzögern, das Menü verschwindet dort beim Schließen sofort. `overlay` gibt es nur in Chromium. Ob die Animation in Safari ohne `overlay` sichtbar abgeschnitten wird, habe ich nicht geprüft. MDN nennt den Effekt bei einfachen Animationen „möglicherweise nicht bemerkbar“.[^mdn-popover]
+- **Beschriftung des Buttons:** Nur ein Icon ohne Text ist schwer verständlich, ein sichtbares Wort wie „Menü“ hilft. Zusatzwörter wie „öffnen“ im Namen können laut den Rückmeldungen, die Bushell wiedergibt, die Sprachsteuerung stören.[^bushell]
+- **Doppelte Links (Variante A):** Die Menüinhalte müssen an beiden Stellen gleich gepflegt werden. Mit Templates oder Komponenten ist das kein Problem, von Hand ist es fehleranfällig.
 
 ### Browsersupport
 

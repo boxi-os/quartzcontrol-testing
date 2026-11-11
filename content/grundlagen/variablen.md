@@ -14,15 +14,15 @@ applies_to:
 
 Custom Properties sind eigene CSS-Eigenschaften mit frei wählbarem Namen, der mit `--` beginnt. Ausgelesen werden sie mit `var()`.
 
-Der entscheidende Unterschied zu Präprozessor-Variablen: Sie sind **Teil der Kaskade**. Sie werden vererbt, können pro Element überschrieben werden, reagieren auf Media Queries und lassen sich aus JavaScript lesen und setzen. Eine Sass-Variable existiert nur bis zum Build und weiß nichts vom DOM.
+Der entscheidende Unterschied zu Variablen aus Präprozessoren: Sie sind **Teil der Kaskade**. Sie werden vererbt, lassen sich pro Element überschreiben, reagieren auf Media Queries und können aus JavaScript gelesen und gesetzt werden. Eine Sass-Variable gibt es dagegen nur bis zum Build, vom DOM weiß sie nichts.
 
-Streng genommen ist eine benutzerdefinierte Eigenschaft keine Variable — sie *ermöglicht* eine Variable, die über `var()` verwendet wird. In der Praxis benutzen sogar Spezifikation und MDN beide Begriffe nebeneinander.
+Streng genommen ist eine Custom Property keine Variable, sie *ermöglicht* nur eine, die man dann über `var()` verwendet. In der Praxis benutzen sogar die Spezifikation und MDN beide Begriffe nebeneinander.
 
 ## Hintergrund
 
-### Der Auflösungszeitpunkt — die wichtigste Falle
+### Wann `var()` ausgewertet wird: die wichtigste Falle
 
-`var()` wird in dem Moment aufgelöst, in dem die **umgebende Eigenschaft** auf ein Element angewendet wird. Danach ist der Wert eingefroren und wird als fertiger Wert weitervererbt.
+`var()` wird in dem Moment eingesetzt, in dem die **Eigenschaft, in der es steht,** auf ein Element angewendet wird. Danach steht der Wert fest und wird als fertiger Wert weitervererbt.
 
 ```html
 <style>
@@ -35,9 +35,9 @@ Streng genommen ist eine benutzerdefinierte Eigenschaft keine Variable — sie *
 
 <a href="beispiele/variablen-01-aufloesungszeitpunkt.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
-Das `li` bleibt **rot**. `color` wurde bereits auf dem `ul` aufgelöst — vererbt wird der berechnete Wert, nicht die Rechenvorschrift. Das `--farbe: blue` auf dem `li` hat keine Wirkung, weil dort keine Eigenschaft `var(--farbe)` verwendet.
+Das `li` bleibt **rot**. `color` wurde schon am `ul` ausgewertet, und vererbt wird das Ergebnis, nicht die Formel. `--farbe: blue` am `li` bewirkt nichts, weil dort keine Eigenschaft `var(--farbe)` benutzt.
 
-Anders liegt der Fall, wenn die verwendende Regel auf dem Element selbst greift:
+Anders ist es, wenn die Regel mit `var()` direkt auf das Element selbst zielt:
 
 ```html
 <style>
@@ -49,19 +49,19 @@ Anders liegt der Fall, wenn die verwendende Regel auf dem Element selbst greift:
 
 <a href="beispiele/variablen-02-aufloesung-pro-element.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
-Hier wird pro `p` neu aufgelöst, weil die `color`-Deklaration jedes Mal auf dem `p` angewendet wird und `--farbe` von der jeweiligen `section` erbt. Ergebnis: erster Absatz rot, zweiter blau.
+Hier wird für jedes `p` neu ausgewertet, weil die `color`-Deklaration jedes Mal am `p` selbst greift und `--farbe` von der jeweiligen `section` erbt. Ergebnis: erster Absatz rot, zweiter blau.
 
-**Faustregel:** Das Custom Property muss dort gesetzt sein, wo das Element steht, das die verwendende Eigenschaft trägt — nicht dort, wo die Farbe erscheinen soll.
+**Faustregel:** Die Custom Property muss an dem Element (oder einem Vorfahren davon) gesetzt sein, an dem die Eigenschaft mit `var()` greift, nicht dort, wo die Farbe am Ende zu sehen ist.
 
 ### Was im Wert stehen darf
 
-Der Wert ist fast beliebig, aber es gilt eine harte Bedingung: **Nach dem Einsetzen muss an der Stelle gültige CSS-Syntax stehen.**
+Im Wert darf fast alles stehen, aber eine Bedingung ist unverhandelbar: **Nach dem Einsetzen muss an der Stelle gültiges CSS stehen.**
 
 - Die öffnende Klammer einer CSS-Funktion kann nicht aus der Variablen kommen.
-- Wert und Einheit müssen gemeinsam in der Variablen stehen — oder die Einheit wird per `calc()` angehängt.
-- Anführungszeichen einer Zeichenkette müssen im Wert enthalten sein; ein so notierter Wert ist dann nur dort brauchbar, wo eine Zeichenkette erwartet wird (`content`, `font-family`).
+- Wert und Einheit müssen zusammen in der Variablen stehen, oder die Einheit wird per `calc()` angehängt.
+- Bei Text gehören die Anführungszeichen in den Wert. So ein Wert taugt dann nur dort, wo Text erwartet wird (`content`, `font-family`).
 
-Namen sind **case-sensitive** (`--self` ≠ `--Self`), dürfen Unicode ab `\x80` enthalten (Umlaute, sogar Emojis) und keine Leerzeichen.
+Bei Namen zählt die Groß- und Kleinschreibung (`--self` ≠ `--Self`). Sie dürfen Unicode ab `\x80` enthalten (Umlaute, sogar Emojis), aber keine Leerzeichen.
 
 ### Fallback in `var()`
 
@@ -69,13 +69,13 @@ Namen sind **case-sensitive** (`--self` ≠ `--Self`), dürfen Unicode ab `\x80`
 color: var(--akzentfarbe, red);
 ```
 
-Greift, wenn das Property nicht gesetzt ist. Ist der Fallback selbst ungültig, gilt `unset`. Als Browserschutz braucht man ihn nicht mehr — der Support ist lückenlos —, als bewusste Vorgabe in wiederverwendbaren Komponenten ist er nützlich.
+Der Fallback greift, wenn die Property nicht gesetzt ist. Ist der Fallback selbst ungültig, gilt `unset`. Als Absicherung für alte Browser braucht man ihn nicht mehr, weil alle Browser Custom Properties können. Als bewusster Standardwert in wiederverwendbaren Komponenten ist er aber nützlich.
 
 ## Wichtige Aspekte
 
 ### Registrieren mit `@property`
 
-Ohne Registrierung ist der Typ eines Custom Property unbekannt: alles ist ein Token-Strom. Mit `@property` (oder `CSS.registerProperty()`) bekommt es Typ, Vererbungsverhalten und Anfangswert.
+Ohne Registrierung kennt der Browser den Typ einer Custom Property nicht, für ihn ist der Wert nur eine Folge von Zeichen. Mit `@property` (oder `CSS.registerProperty()`) bekommt sie einen Typ, ein Vererbungsverhalten und einen Anfangswert.
 
 ```css
 @property --textcolor {
@@ -89,10 +89,10 @@ Ohne Registrierung ist der Typ eines Custom Property unbekannt: alles ist ein To
 
 Was das bringt:
 
-- **Animierbarkeit.** Ohne Typ kann der Browser nicht interpolieren und schaltet zwischen Keyframe-Werten hart um. Erst die Registrierung macht weiche Übergänge auf Custom Properties möglich.
-- **Frühe Fehlererkennung.** Ein ungültiger Wert wird schon beim Zuweisen verworfen. Ohne Registrierung wird er gespeichert, überschreibt einen geerbten Wert, und der Fehler fällt erst bei der Verwendung auf — an einer ganz anderen Stelle.
-- **Vererbung abschaltbar** (`inherits: false`) — nützlich für Werte, die nur lokal gelten sollen.
-- **Ein zentraler Defaultwert** statt eines wiederholten Fallbacks in jedem `var()`.
+- **Animierbar.** Ohne Typ kann der Browser keine Zwischenwerte berechnen und springt zwischen den Keyframe-Werten hart um. Erst mit Registrierung gibt es weiche Übergänge.
+- **Fehler fallen früher auf.** Ein ungültiger Wert wird schon beim Zuweisen verworfen. Ohne Registrierung wird er gespeichert, überschreibt einen geerbten Wert, und der Fehler zeigt sich erst dort, wo die Variable benutzt wird, also an einer ganz anderen Stelle.
+- **Vererbung lässt sich abschalten** (`inherits: false`). Das ist nützlich für Werte, die nur lokal gelten sollen.
+- **Ein zentraler Standardwert** statt eines Fallbacks in jedem einzelnen `var()`.
 
 ### Zusammenspiel mit `calc()`
 
@@ -109,21 +109,21 @@ Custom Properties speichern Werte, `calc()` macht sie rechenbar. Siehe [[grundla
 
 ### Aus JavaScript
 
-- Lesen: `getComputedStyle(el).getPropertyValue('--name')` — immer als Zeichenkette, Längen in px umgerechnet. Über `el.computedStyleMap()` kommt bei registrierten Properties auch der deklarierte Typ zurück.
+- Lesen: `getComputedStyle(el).getPropertyValue('--name')`. Das liefert immer einen String, Längen sind in px umgerechnet. Über `el.computedStyleMap()` bekommt man bei registrierten Properties auch den Typ.
 - Setzen: `el.style.setProperty('--baseHue', wert)`.
 
-Das ist der Standardweg für Themes, die der Nutzer selbst einstellt — ein Regler schreibt einen Wert, das komplette Stylesheet zieht nach.
+So baut man üblicherweise Themes, die man selbst einstellen kann: Ein Regler schreibt einen Wert, und das ganze Stylesheet passt sich an.
 
 ### Mehr als Farben
 
-- **Teilwerte:** `--akzent: 195 46 4`, verwendet als `rgb(var(--akzent) / 0.5)` — eine Farbe, beliebige Deckkraft.
-- **Doppelte Deklarationen entkoppeln:** `--clip` einmal setzen, an `-webkit-clip-path` und `clip-path` zuweisen.
-- **Positionsabhängige Werte:** `sibling-index()` und `sibling-count()` liefern Position und Anzahl unter Geschwistern und funktionieren in `calc()`; damit entfallen manuell pro `:nth-child` gesetzte Index-Variablen.
+- **Teilwerte:** `--akzent: 195 46 4`, verwendet als `rgb(var(--akzent) / 0.5)`. So hat man eine Farbe in beliebiger Deckkraft.
+- **Doppelte Deklarationen vermeiden:** `--clip` einmal setzen und an `-webkit-clip-path` und `clip-path` zuweisen.
+- **Werte nach Position:** `sibling-index()` und `sibling-count()` liefern die Position und die Anzahl unter den Geschwistern und funktionieren in `calc()`. Damit muss man keine Index-Variablen mehr per `:nth-child` von Hand setzen.
 - **Reines CSS statt JavaScript:** ein Countdown über `--duration` im `style`-Attribut, verwendet in `animation-duration` und `steps()`.
 
 ### Was nicht geht
 
-`@media (max-width: var(--breakpoint))` funktioniert nicht — in Media Queries sind Custom Properties nicht verwendbar. `@custom-media` steht seit Jahren in Media Queries Level 5, wird aber offenbar nicht implementiert.
+`@media (max-width: var(--breakpoint))` funktioniert nicht, denn in Media Queries lassen sich Custom Properties nicht verwenden. `@custom-media` steht zwar seit Jahren in Media Queries Level 5, wird aber offenbar von keinem Browser umgesetzt.
 
 ## Beispiele
 
@@ -145,6 +145,8 @@ body { background: var(--bg); color: var(--text); }
 
 <a href="beispiele/variablen-05-farbschema.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
+Soll ein Token in beiden Modi **gleich** sein, lässt man es im Dark-Block ganz weg, statt den hellen Wert dorthin zu kopieren. Dann gilt auch im dunklen Modus die Deklaration aus `:root`, und eine spätere Änderung am hellen Wert wirkt in beiden Modi. Eine Kopie sieht heute gleich aus, zieht aber später nicht mehr mit. Allgemein gesagt: „Übernimm den Wert von X“ drückt man aus, indem man **keinen** eigenen Wert setzt, nicht durch denselben Wert.[^eigene-werte]
+
 Countdown ohne JavaScript:
 
 ```html
@@ -161,16 +163,16 @@ Countdown ohne JavaScript:
 
 <a href="beispiele/variablen-06-countdown.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
-`transform: scaleX()` statt `width` zu animieren, ist die performantere Variante.
+Dass hier `transform: scaleX()` animiert wird und nicht `width`, ist Absicht: Das ist für den Browser deutlich günstiger.
 
 ## Eigene Notizen / Einordnung
 
-Arbeitsregel: **Custom Properties in `:root` sind Design-Tokens, Custom Properties auf Komponenten sind Parameter.** Die erste Gruppe wird global gepflegt (Farben, Abstandsraster, Zeiten), die zweite lokal überschrieben — genau dafür ist die Kaskade da, und genau das kann ein Präprozessor nicht.
+Faustregel: **Custom Properties in `:root` sind Design-Tokens, Custom Properties an Komponenten sind Parameter.** Die erste Gruppe pflegt man global (Farben, Abstände, Zeiten), die zweite überschreibt man lokal. Genau dafür ist die Kaskade da, und genau das kann ein Präprozessor nicht.
 
-Zwei Punkte, die ich für unterschätzt halte:
+Zwei Punkte, die oft unterschätzt werden:
 
-- **`@property` sollte der Normalfall werden**, nicht die Ausnahme. Der Animierbarkeitspunkt allein ist es wert; die frühe Typprüfung erspart dazu eine unangenehme Fehlerklasse, bei der ein kaputter Wert erst weit entfernt von seiner Ursache auffällt.
-- **Der Auflösungszeitpunkt ist der Grund für die meisten „warum ändert sich nichts"-Momente.** Wer einmal verstanden hat, dass der berechnete Wert vererbt wird und nicht die Vorschrift, macht den Fehler nicht wieder.
+- **`@property` sollte der Normalfall sein**, nicht die Ausnahme. Allein dass sich registrierte Properties animieren lassen, lohnt sich schon. Dazu kommt die frühe Typprüfung, die eine besonders lästige Art von Fehler verhindert: einen kaputten Wert, der erst weit weg von seiner Ursache auffällt.
+- **Der Zeitpunkt, zu dem `var()` ausgewertet wird, steckt hinter den meisten „Warum ändert sich nichts?“-Momenten.** Wer einmal verstanden hat, dass das Ergebnis vererbt wird und nicht die Formel, macht den Fehler nicht wieder.
 
 ### Browsersupport
 
@@ -180,9 +182,9 @@ Zwei Punkte, die ich für unterschätzt halte:
 | `@property` (registrierte Properties) | newly available | 2024-07-09 | Chrome 85, Firefox 128, Safari 16.4 |
 | `sibling-index()` / `sibling-count()` | newly available | 2026-08-18 | Chrome 138, Firefox 154, Safari 26.2 |
 
-**Korrektur zur früheren Annahme:** `@property` ist *nicht* breit verfügbar. Es ist seit Juli 2024 Baseline *newly available* — alle aktuellen Browser können es, aber die Schwelle zur breiten Verfügbarkeit ist noch nicht erreicht. Der Rat oben, `@property` zum Normalfall zu machen, gilt deshalb für Projekte ohne Anspruch auf ältere Browserstände; sonst braucht es einen Fallback. `sibling-index()`/`sibling-count()` sind erst seit Mitte August 2026 in allen Browsern und damit noch sehr neu.
+**Korrektur einer früheren Annahme:** `@property` ist *nicht* breit verfügbar. Es ist seit Juli 2024 Baseline *newly available*: Alle aktuellen Browser können es, aber die Schwelle zur breiten Verfügbarkeit ist noch nicht erreicht. Der Rat oben, `@property` zum Normalfall zu machen, gilt deshalb für Projekte, die keine älteren Browser unterstützen müssen. Sonst braucht es einen Fallback. `sibling-index()` und `sibling-count()` gibt es erst seit Mitte August 2026 in allen Browsern, sie sind also noch sehr neu.
 
-Nicht geprüft bleibt das Performanceverhalten bei sehr vielen Properties oder tiefen `var()`-Ketten.
+Nicht geprüft ist, wie sich sehr viele Properties oder lange `var()`-Ketten auf die Performance auswirken.
 
 Quelle: `web-features` 3.36.0 (Baseline-Daten der W3C WebDX Community Group), lokal abgefragt am 2026-09-03.
 
@@ -199,4 +201,6 @@ Quelle: `web-features` 3.36.0 (Baseline-Daten der W3C WebDX Community Group), lo
 - [[quellen/artikel/calc-mediaevent|CSS calc – Rechnen mit gemischten CSS-Einheiten]] — Variablen in Berechnungen, auch für Zeiten
 - [[quellen/artikel/calc-mdn|calc() CSS-Funktion (MDN)]] — Auflösung verschachtelter Variablen
 
-Eigene Einordnung, nicht aus den Quellen: die Trennung Tokens/Parameter, die Empfehlung, `@property` zum Normalfall zu machen, und die Bewertung des Auflösungszeitpunkts als häufigste Fehlerquelle.
+Eigene Einordnung, nicht aus den Quellen: die Trennung in Tokens und Parameter, die Empfehlung, `@property` zum Normalfall zu machen, und die Einschätzung, dass der Auswertungszeitpunkt von `var()` die häufigste Fehlerquelle ist.
+
+[^eigene-werte]: Projekterfahrung aus einer Theme-Oberfläche (QuartzControl 1.0.1, 2026-09-28): Die Option „In beiden Modi gleich“ füllte den dunklen Wert mit dem hellen, statt ihn zu entfernen; spätere Änderungen am hellen Wert kamen im dunklen Modus nicht mehr an.

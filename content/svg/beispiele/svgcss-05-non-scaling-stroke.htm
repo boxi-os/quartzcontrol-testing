@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: Strichstärke festhalten mit non-scaling-stroke – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+.label { font-size: .8rem; color: #57606a; margin: 0 0 .25rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.reihe { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-start; }
+.rahmen { border: 1px solid #9ca3af; }
+</style>
+<style data-beispiel>
+.fest { vector-effect: non-scaling-stroke; }
+</style>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „SVG mit CSS gestalten“</p>
+  <h1>Strichstärke festhalten mit non-scaling-stroke</h1>
+  <p>Das SVG ist mit <code>preserveAspectRatio="none"</code> stark in die Breite gezogen. Die obere Linie (<code>stroke-width="1"</code>) wird dabei dick und unförmig, die untere mit <code>vector-effect: non-scaling-stroke</code> bleibt 1 Pixel.</p>
+  <p class="klein">Getestet in Chrome 155. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<main class="beispiel-buehne">
+<svg class="rahmen" viewBox="0 0 10 10" preserveAspectRatio="none" style="width:100%;max-width:40rem;height:80px">
+  <polyline points="0,3 3,1 6,4 10,2" fill="none" stroke="#1e3a8a" stroke-width="1"/>
+  <polyline class="fest" points="0,8 3,6 6,9 10,7" fill="none" stroke="#1e3a8a" stroke-width="1"/>
+</svg>
+</main>
+</body>
+</html>

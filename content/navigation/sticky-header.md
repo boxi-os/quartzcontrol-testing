@@ -13,7 +13,7 @@ applies_to:
 
 ## Ziel
 
-Ein Seitenkopf, der beim Scrollen oben stehen bleibt, ohne Inhalt zu verdecken – auch nicht bei Sprunglinks auf Überschriften. Optional mit Schatten, sobald er angedockt ist.
+Ein Seitenkopf, der beim Scrollen oben stehen bleibt, ohne Inhalt zu verdecken, auch nicht bei Sprunglinks auf Überschriften. Auf Wunsch mit Schatten, sobald er angedockt ist.
 
 ## Voraussetzungen
 
@@ -22,11 +22,11 @@ Ein Seitenkopf, der beim Scrollen oben stehen bleibt, ohne Inhalt zu verdecken �
 
 ## Getestet mit / Stand
 
-Stand 2026-09-12. **In Chrome 152 (macOS), 2026-09-13 getestet:** Header klebt, Schatten erscheint erst im angedockten Zustand, `scroll-margin-top` und die Alternative `scroll-padding-top` setzen das Sprungziel unter den Header, und beide Fallen (kurzer Wrapper, `overflow` am Vorfahren) lassen sich nachstellen. **Nicht getestet:** Firefox, Safari, Mobilgeräte. Die Mechanik von `sticky` stammt aus MDN, die Sprunglink-Lösung aus CSS-Tricks, der Schatten aus einem Chrome-Artikel.
+Stand 2026-09-12. **Am 2026-09-13 in Chrome 152 (macOS) getestet:** Der Header klebt, der Schatten erscheint erst im angedockten Zustand, `scroll-margin-top` und die Alternative `scroll-padding-top` setzen das Sprungziel unter den Header, und beide Fallen (kurzer Wrapper, `overflow` am Vorfahren) lassen sich nachstellen. **Nicht getestet:** Firefox, Safari, Mobilgeräte. Wie `sticky` funktioniert, stammt von MDN, die Lösung für Sprunglinks von CSS-Tricks, der Schatten aus einem Chrome-Artikel.
 
 ## Vorgehen
 
-1. **Header sticky machen – mit Schwelle.** Ohne `top` (oder eine andere Inset-Eigenschaft) verhält sich `sticky` wie `relative`.[^mdn]
+1. **Header sticky machen, und zwar mit Schwellenwert.** Ohne `top` (oder eine andere Inset-Eigenschaft) verhält sich `sticky` wie `relative`.[^mdn]
 
    ```css
    :root {
@@ -46,9 +46,9 @@ Stand 2026-09-12. **In Chrome 152 (macOS), 2026-09-13 getestet:** Header klebt, 
 
    Der Hintergrund ist nötig, sonst scheint der Inhalt beim Scrollen durch.
 
-2. **Header als direktes Kind von `body` platzieren.** Ein sticky Element klebt nur, bis es an den gegenüberliegenden Rand seines Containing Blocks stößt.[^mdn] Steckt der Header in einem Wrapper, der nur so hoch ist wie er selbst, gibt es keinen Weg, auf dem er kleben könnte.
+2. **Den Header als direktes Kind von `body` platzieren.** Ein Element mit `sticky` klebt nur, bis es an den gegenüberliegenden Rand seines Containing Blocks stößt.[^mdn] Steckt der Header in einem Wrapper, der nur so hoch ist wie er selbst, bleibt ihm keine Strecke, auf der er kleben könnte.
 
-3. **Kein `overflow: hidden | auto | scroll` an Vorfahren.** Das erzeugt einen „Scroll-Mechanismus“, an dem der Header dann klebt – auch wenn dieser Vorfahr gar nicht scrollt.[^mdn]
+3. **Kein `overflow: hidden | auto | scroll` an Vorfahren.** Das erzeugt einen „Scroll-Mechanismus“, an dem der Header dann klebt, auch wenn dieser Vorfahr gar nicht scrollt.[^mdn]
 
 4. **Sprungziele unter dem Header sichtbar halten.**[^csstricks]
 
@@ -62,7 +62,7 @@ Stand 2026-09-12. **In Chrome 152 (macOS), 2026-09-13 getestet:** Header klebt, 
 
    <a href="beispiele/sticky-header-02-scroll-margin-top.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
-   Alternative am Scroll-Container statt an jedem Ziel:
+   Alternativ setzt man es einmal am Scroll-Container statt an jedem Ziel:
 
    ```css
    html {
@@ -72,7 +72,7 @@ Stand 2026-09-12. **In Chrome 152 (macOS), 2026-09-13 getestet:** Header klebt, 
 
    <a href="beispiele/sticky-header-03-scroll-padding-top.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
-5. **Optional: Schatten, sobald der Header angedockt ist.** Das abgefragte Element ist der Header selbst, reagieren kann nur ein Kind.[^scroll-state]
+5. **Optional: Schatten, sobald der Header angedockt ist.** Abgefragt wird der Header selbst, reagieren kann aber nur ein Element darin.[^scroll-state]
 
    ```html
    <header class="site-header">
@@ -107,21 +107,21 @@ flowchart LR
     B -- "zurückscrollen" --> A
 ```
 
-- `sticky` ist **relativ positioniert, bis die Schwelle erreicht ist**, dann „stuck“ bis zum Ende des Containing Blocks.[^mdn] Weil der Header bis dahin im normalen Fluss steht, braucht der Inhalt darunter – anders als bei `position: fixed` – kein `padding-top` als Platzhalter. Das ist eine Ableitung aus der Definition.
-- Ist `body` der Containing Block, reicht der Weg über die ganze Seite. Deshalb Schritt 2.
-- `scroll-margin-top` vergrößert den Abstand, den der Browser beim Scrollen zu einem Ziel einhält. Genau um die Headerhöhe versetzt, landet die Überschrift sichtbar darunter.[^csstricks]
-- `container-type: scroll-state` stellt den browserverwalteten Zustand „angedockt“ als Container Query zur Verfügung.[^scroll-state]
+- `sticky` ist **relativ positioniert, bis der Schwellenwert erreicht ist**, und klebt dann bis zum Ende des Containing Blocks.[^mdn] Weil der Header bis dahin im normalen Fluss steht, braucht der Inhalt darunter anders als bei `position: fixed` kein `padding-top` als Platzhalter. Das habe ich aus der Definition abgeleitet.
+- Ist `body` der Containing Block, reicht die Strecke über die ganze Seite. Deshalb Schritt 2.
+- `scroll-margin-top` vergrößert den Abstand, den der Browser beim Scrollen zu einem Ziel einhält. Ist er so groß wie der Header, landet die Überschrift sichtbar darunter.[^csstricks]
+- Mit `container-type: scroll-state` lässt sich der Zustand „angedockt“, den der Browser selbst verwaltet, per Container Query abfragen.[^scroll-state]
 
 ## Fallstricke
 
-- **`sticky` „funktioniert nicht“:** fast immer fehlendes `top`, ein `overflow` an einem Vorfahren oder ein zu kurzer Containing Block.[^mdn]
-- **`z-index`:** `sticky` erzeugt immer einen eigenen Stapelkontext.[^mdn] Positionierte Inhalte der Seite können trotzdem darüber liegen, wenn ihr Stapelkontext höher ist. Der Wert im Beispiel ist willkürlich.
-- **Headerhöhe ändert sich** (Umbruch auf kleinen Bildschirmen): Dann stimmt `--header-height` nicht mehr, Sprungziele landen teilweise darunter. Die Variable bei Breakpoints anpassen oder großzügig rechnen.
-- **Hoher Header auf Mobilgeräten** frisst dauerhaft Platz. Das ist eine Gestaltungsfrage, keine technische.
-- **Ruckeln beim Scrollen:** Sticky Inhalte müssen neu gezeichnet werden. MDN schlägt `will-change: transform` vor.[^mdn] web.dev rät dagegen, `will-change` nur gezielt einzusetzen[^webdev] – erst messen, dann setzen.
-- **Scroll-State-Queries** gibt es nur in Chromium (ab 133). Ohne `@supports` ist das kein Fehler – der Schatten fehlt dann einfach –, die Abfrage macht die Absicht aber lesbar.
-- **Header beim Herunterscrollen ausblenden, beim Hochscrollen zeigen:** braucht bisher JavaScript. Nicht Teil dieser Anleitung und nicht recherchiert.
-- **Bewegung:** Wer den Header beim Andocken animiert (Größe, Position), legt das in `@media (prefers-reduced-motion: no-preference)`.[^scroll-state] Siehe [[animation/barrierearme-animationen|Barrierearme Animationen]].
+- **`sticky` „funktioniert nicht“:** Meist fehlt `top`, ein Vorfahr hat `overflow` oder der Containing Block ist zu kurz.[^mdn]
+- **`z-index`:** `sticky` erzeugt immer einen eigenen Stacking Context.[^mdn] Positionierte Inhalte der Seite können trotzdem darüber liegen, wenn ihr Stacking Context höher liegt. Der Wert im Beispiel ist willkürlich.
+- **Die Headerhöhe ändert sich** (Umbruch auf kleinen Bildschirmen): Dann stimmt `--header-height` nicht mehr, und Sprungziele landen teilweise darunter. Die Variable bei den Breakpoints anpassen oder großzügig rechnen.
+- **Ein hoher Header auf Mobilgeräten** nimmt dauerhaft Platz weg. Das ist eine Frage der Gestaltung, keine technische.
+- **Ruckeln beim Scrollen:** Inhalte mit `sticky` müssen neu gezeichnet werden. MDN schlägt `will-change: transform` vor.[^mdn] web.dev rät dagegen, `will-change` nur gezielt einzusetzen.[^webdev] Also erst messen, dann setzen.
+- **Scroll-State-Queries** gibt es nur in Chromium (ab 133). Ohne `@supports` ist das kein Fehler, dann fehlt der Schatten einfach. Die Abfrage macht aber deutlich, was gemeint ist.
+- **Header beim Herunterscrollen ausblenden und beim Hochscrollen zeigen:** Das braucht bisher JavaScript, gehört nicht zu dieser Anleitung und ist nicht recherchiert.
+- **Bewegung:** Wer den Header beim Andocken animiert (Größe, Position), packt das in `@media (prefers-reduced-motion: no-preference)`.[^scroll-state] Siehe [[animation/barrierearme-animationen|Barrierearme Animationen]].
 
 ### Browsersupport
 
@@ -147,7 +147,7 @@ Quelle: `web-features` 3.38.0 (Baseline-Daten der W3C WebDX Community Group), lo
 - [[quellen/artikel/scroll-state-chrome|CSS scroll-state() (Chrome for Developers)]] — Zustand „angedockt“ abfragen
 - [[quellen/artikel/performante-animationen-webdev|How to create high-performance CSS animations (web.dev)]] — `will-change` gezielt einsetzen
 
-Nicht aus den Quellen: `scroll-padding-top` als Alternative (Baseline-Daten und Chrome-Test), die Custom Property für die Headerhöhe, die Wrapper-Erklärung in Schritt 2 als Folgerung aus der MDN-Definition, das Diagramm und die Fallstricke zu wechselnder Headerhöhe.
+Nicht aus den Quellen: `scroll-padding-top` als Alternative (Baseline-Daten und Chrome-Test), die Custom Property für die Headerhöhe, die Erklärung zum Wrapper in Schritt 2 (aus der MDN-Definition abgeleitet), das Diagramm und die Fallstricke zur wechselnden Headerhöhe.
 
 [^mdn]: [[quellen/artikel/position-mdn|position CSS-Eigenschaft (MDN)]], Abschnitte zu `sticky` und „Accessibility“.
 [^csstricks]: [[quellen/artikel/scroll-margin-top-csstricks|Fixed Headers and Jump Links – scroll-margin-top (CSS-Tricks)]].

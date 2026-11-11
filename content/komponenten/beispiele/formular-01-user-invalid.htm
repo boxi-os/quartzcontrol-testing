@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: :user-invalid statt :invalid – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+.label { font-size: .8rem; color: #57606a; margin: 0 0 .25rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.reihe { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-start; }
+form { width: 18rem; max-width: 100%; } .feld { margin-bottom: 1rem; }
+label { display: block; font-weight: 600; }
+input { font: inherit; padding: .4rem .5rem; border: 2px solid #9ca3af; border-radius: .25rem; width: 100%; box-sizing: border-box; }
+.hinweis { margin: .25rem 0 0; font-size: .875rem; color: #57606a; }
+</style>
+<style data-beispiel>
+.sofort input:invalid { border-color: crimson; }
+
+.spaeter input:user-invalid { border-color: crimson; }
+.spaeter input:user-valid   { border-color: seagreen; }
+
+.fehler { display: none; color: crimson; margin: .25rem 0 0; }
+.spaeter .feld:has(input:user-invalid) .fehler { display: block; }
+</style>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „Formularfehler erst nach der Eingabe anzeigen“</p>
+  <h1>:user-invalid statt :invalid</h1>
+  <p>Links reagiert das Formular mit <code>:invalid</code> und ist schon beim Laden rot. Rechts mit <code>:user-invalid</code>: erst nach dem Verlassen eines falsch ausgefüllten Felds oder nach einem Absendeversuch. Beim Korrigieren verschwindet der Fehler sofort.</p>
+  <p class="klein">Beim Absenden zeigt der Browser zusätzlich seine eigene Fehlerblase. Abgeschickt wird im Beispiel nie.</p>
+  <p class="klein">Getestet in Chrome 155. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<main class="beispiel-buehne">
+<div class="reihe">
+<form class="sofort" novalidate><p class="label">:invalid</p>
+  <div class="feld"><label for="m1">E-Mail</label><input id="m1" type="email" required></div>
+  <div class="feld"><label for="n1">Name</label><input id="n1" required minlength="2"></div>
+</form>
+<form class="spaeter" id="f2"><p class="label">:user-invalid</p>
+  <div class="feld"><label for="m2">E-Mail</label><input id="m2" type="email" required aria-describedby="m2-hinweis"><p class="hinweis" id="m2-hinweis">Zum Beispiel name@example.org</p><p class="fehler">Bitte eine gültige E-Mail-Adresse eingeben.</p></div>
+  <div class="feld"><label for="n2">Name</label><input id="n2" required minlength="2"><p class="fehler">Bitte mindestens zwei Zeichen.</p></div>
+  <button>Absenden</button>
+</form>
+</div>
+</main>
+<script>
+// Rahmen-Skript: nur für die Bedienung der Beispielseite
+document.getElementById("f2").addEventListener("submit", e => e.preventDefault());
+</script>
+</body>
+</html>

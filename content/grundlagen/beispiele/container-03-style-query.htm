@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: Style Query mit Custom Property – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+.label { font-size: .8rem; color: #57606a; margin: 0 0 .25rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.reihe { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-start; }
+.karte { border: 1px solid #d0d7de; padding: 1rem; width: 14rem; } .karte-titel { font-weight: 700; margin: 0; }
+</style>
+<style data-beispiel>
+.karte { --variante: normal; }
+.karte.hervorgehoben { --variante: hervorgehoben; }
+
+@container style(--variante: hervorgehoben) {
+  .karte-titel { color: crimson; }
+}
+</style>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „Container Queries“</p>
+  <h1>Style Query mit Custom Property</h1>
+  <p>Beide Karten haben dieselbe Struktur. Die zweite setzt <code>--variante: hervorgehoben</code>, und eine Style Query färbt daraufhin den Titel darin.</p>
+  <p class="klein">Style Queries sind seit Mai 2026 in allen aktuellen Browsern verfügbar (Baseline newly available).</p>
+  <p class="klein">Getestet in Chrome 155. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<main class="beispiel-buehne">
+<div class="reihe">
+  <div class="karte"><p class="karte-titel">Normale Karte</p></div>
+  <div class="karte hervorgehoben"><p class="karte-titel">Hervorgehobene Karte</p></div>
+</div>
+</main>
+</body>
+</html>

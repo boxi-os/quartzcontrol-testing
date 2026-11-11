@@ -11,7 +11,7 @@ applies_to:
 
 ## Kurz erklärt
 
-CSS erlaubt es, Regeln ineinander zu schreiben, statt jeden Selektor vollständig auszuformulieren. Was jahrelang der Hauptgrund war, überhaupt Sass einzusetzen, geht heute nativ im Browser — ohne Build-Schritt.
+In CSS kann man Regeln ineinander schreiben, statt jeden Selektor vollständig auszuschreiben. Jahrelang war das der Hauptgrund, überhaupt Sass zu benutzen. Heute kann es der Browser selbst, ganz ohne Build-Schritt.
 
 ```css
 .card {
@@ -29,15 +29,15 @@ CSS erlaubt es, Regeln ineinander zu schreiben, statt jeden Selektor vollständi
 
 ## Hintergrund
 
-Der Gewinn ist nicht Tipparbeit, sondern **Lokalität**: Alles, was zu einer Komponente gehört — Zustände, Breakpoints, Kindelemente — steht an einer Stelle. Wer die Komponente löscht, löscht auch ihre Sonderfälle mit, statt sie irgendwo im Stylesheet zurückzulassen.
+Der Gewinn liegt nicht darin, dass man weniger tippt, sondern dass **alles beisammen steht**: Zustände, Breakpoints und Kindelemente einer Komponente stehen an einer Stelle. Wer die Komponente löscht, löscht ihre Sonderfälle gleich mit, statt sie irgendwo im Stylesheet zu vergessen.
 
-Der Preis ist derselbe wie bei Sass: Verschachtelung verführt dazu, die HTML-Struktur eins zu eins nachzubauen. Das erzeugt lange, spezifische Selektoren, die sich später nur mit noch spezifischeren überschreiben lassen.
+Der Nachteil ist derselbe wie bei Sass: Man ist versucht, die HTML-Struktur eins zu eins nachzubauen. So entstehen lange, spezifische Selektoren, die sich später nur mit noch spezifischeren überschreiben lassen.
 
 ## Wichtige Aspekte
 
 ### Der `&`-Selektor
 
-`&` steht für den übergeordneten Selektor. Nötig, sobald etwas direkt am Elternselektor hängt:
+`&` steht für den übergeordneten Selektor. Man braucht es, sobald etwas direkt am übergeordneten Selektor hängt:
 
 ```css
 .button {
@@ -48,11 +48,11 @@ Der Preis ist derselbe wie bei Sass: Verschachtelung verführt dazu, die HTML-St
 }
 ```
 
-Nach `&` darf kein Leerzeichen stehen. Für einfache Nachfahren (`.card .title`) ist `&` nicht erforderlich.
+Bei `&:hover` oder `&.is-active` darf zwischen `&` und dem Rest kein Leerzeichen stehen, sonst wird daraus ein Nachfahre. Für einfache Nachfahren (`.card .title`) braucht man `&` gar nicht.
 
 ### Kombinatoren
 
-`>`, `+` und `~` dürfen die verschachtelte Regel eröffnen:
+Eine verschachtelte Regel darf mit `>`, `+` oder `~` anfangen:
 
 ```css
 .nav {
@@ -63,28 +63,28 @@ Nach `&` darf kein Leerzeichen stehen. Für einfache Nachfahren (`.card .title`)
 
 ### `@`-Regeln
 
-`@media`, `@supports` und `@container` sind verschachtelbar und einer der Hauptgründe für Nesting. `@font-face`, `@keyframes` und `@import` sind es nicht — sie gehören auf die oberste Ebene.
+`@media`, `@supports` und `@container` lassen sich verschachteln, und das ist einer der Hauptgründe für Nesting. `@font-face`, `@keyframes` und `@import` dagegen nicht, die gehören auf die oberste Ebene.
 
 ### Spezifität
 
-Der wichtigste Fallstrick, und der am seltensten erwähnte: Ein verschachtelter Selektor verhält sich wie `:is()` und übernimmt die Spezifität des **spezifischsten** Selektors in der Liste. `h2, .title { & span { } }` ist damit spezifischer als der ausgeschriebene `h2 span`. Bei gemischten Selektorlisten kann das Regeln unerwartet gewinnen lassen.
+Der wichtigste Fallstrick, und der am seltensten erwähnte: Ein verschachtelter Selektor verhält sich wie `:is()` und übernimmt die Spezifität des **spezifischsten** Selektors in der Liste. `h2, .title { & span { } }` ist damit spezifischer als der ausgeschriebene `h2 span`. Bei gemischten Selektorlisten kann deshalb eine Regel gewinnen, mit der man nicht gerechnet hat.
 
-### Kaskadenschichten schlagen Spezifität
+### Cascade Layers schlagen Spezifität
 
-Nesting verschiebt Spezifität, `@layer` hebelt sie aus — beides gehört zusammen gedacht. Die Regel, die dabei am häufigsten überrascht: **Ungeschichtetes CSS schlägt geschichtetes, unabhängig von der Spezifität.** Eine unbeteiligte Regel außerhalb jeder Schicht gewinnt also gegen eine sehr spezifische Regel in `@layer`.
+Nesting verschiebt die Spezifität, `@layer` hebelt sie aus. Beides sollte man zusammen im Blick haben. Am häufigsten überrascht dabei diese Regel: **CSS ohne Layer schlägt CSS in einem Layer, egal wie spezifisch es ist.** Irgendeine Regel außerhalb eines Layers gewinnt also gegen eine sehr spezifische Regel in `@layer`.
 
-Praktische Folge für erzeugtes CSS: **Es gehört in die Kaskadenschicht dessen, was es nachspricht.** Wer fremde Regeln kopiert — Kompatibilitätsblöcke, Theme-Nachbauten — und das ungeschichtet tut, überholt damit nicht nur die Quelle, sondern auch jeden, der die Quelle überschreiben dürfte.
+Für erzeugtes CSS heißt das: **Es gehört in denselben Layer wie das CSS, das es nachbildet.** Wer fremde Regeln kopiert, etwa Kompatibilitätsblöcke oder nachgebaute Themes, und sie ohne Layer einfügt, überholt damit nicht nur das Original, sondern auch alle, die das Original überschreiben dürften.
 
-Zwei Sätze, die daraus folgen:
+Zwei Faustregeln, die daraus folgen:
 
-- **Wer fremdes CSS abschreibt, schreibt beide Hälften ab** — Regeln *und* Schicht.
-- Die Behauptung „vollständig übernommen" wird Regel für Regel gegen die Quelle geprüft, nicht gegen die Erinnerung an sie.
+- **Wer fremdes CSS abschreibt, übernimmt beides:** die Regeln *und* den Layer.
+- Ob wirklich alles übernommen wurde, prüft man Regel für Regel gegen das Original, nicht aus dem Gedächtnis.
 
-Eigene Regeln, die eine Frage beantworten, die sonst niemand beantwortet, dürfen dagegen bewusst ungeschichtet bleiben.
+Eigene Regeln, die etwas regeln, das sonst niemand regelt, dürfen dagegen bewusst ohne Layer bleiben.
 
 ### Verschachtelungstiefe
 
-Faustregel: **höchstens eine Ebene unter dem Komponenten-Selektor.** Wird es tiefer, ist das fast immer ein Hinweis darauf, dass die innere Struktur eine eigene Komponente sein sollte.
+Faustregel: **höchstens eine Ebene unter dem Selektor der Komponente.** Wird es tiefer, sollte der innere Teil fast immer eine eigene Komponente sein.
 
 ```css
 /* Zu tief */
@@ -112,19 +112,19 @@ Zustände und Breakpoints bei der Komponente statt am Ende des Stylesheets:
 
 <a href="beispiele/nesting-02-button.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
-Gilt eine Media Query für mehrere Komponenten, gehört sie **nicht** ins Nesting, sondern als eigener Block nach außen.
+Gilt eine Media Query für mehrere Komponenten, gehört sie **nicht** verschachtelt in eine davon, sondern als eigener Block auf die oberste Ebene.
 
 ## Eigene Notizen / Einordnung
 
-Nesting ist eine Strukturhilfe, kein Architekturersatz. Es verbessert lesbaren Code, macht schlechten aber schneller unübersichtlich, weil die Spezifität im Verborgenen wächst.
+Nesting hilft beim Ordnen, ersetzt aber keine durchdachte Struktur. Guten Code macht es lesbarer, schlechten dagegen schneller unübersichtlich, weil die Spezifität unbemerkt wächst.
 
-Für dieses Vault und eigene Projekte: nutzen, aber flach halten und die Spezifitätsregel im Kopf behalten. Zusammen mit [[selektoren/has|CSS-Pseudoklasse has()]], `color-mix()` (siehe [[grundlagen/farben|Farben in CSS]]) und Custom Properties bleibt von den ursprünglichen Sass-Argumenten kaum noch etwas übrig — außer Variablen-Scoping zur Buildzeit und Mixins.
+Für eigene Projekte: nutzen, aber flach halten und die Spezifitätsregel im Kopf behalten. Zusammen mit [[selektoren/has|CSS-Pseudoklasse has()]], `color-mix()` (siehe [[grundlagen/farben|Farben in CSS]]) und Custom Properties bleibt von den alten Argumenten für Sass kaum etwas übrig, außer Variablen, die nur beim Build existieren, und Mixins.
 
 ### Browsersupport
 
 Nesting ist Baseline **widely available seit 2026-06-11**; Baseline *newly available* war es seit 2023-12-11 (Chrome/Edge 120, Firefox 117, Safari 17.2).
 
-Die breite Verfügbarkeit ist also erst wenige Monate alt — deutlich jünger, als das Gefühl „gibt es doch schon lange" nahelegt. Ältere Syntaxvarianten verlangten `&` auch vor Nachfahren-Selektoren; Code aus dieser Zeit sieht deshalb anders aus.
+Breit verfügbar ist Nesting also erst seit wenigen Monaten, deutlich kürzer, als es sich anfühlt. Frühere Fassungen der Syntax verlangten `&` auch vor Nachfahren-Selektoren, deshalb sieht Code aus dieser Zeit anders aus.
 
 Quelle: `web-features` 3.36.0 (Baseline-Daten der W3C WebDX Community Group), lokal abgefragt am 2026-09-03.
 
@@ -137,4 +137,4 @@ Quelle: `web-features` 3.36.0 (Baseline-Daten der W3C WebDX Community Group), lo
 
 - [[quellen/artikel/nesting-kulturbanause|CSS-Nesting (kulturbanause)]] — Syntax, Media Queries, Warnung vor zu tiefer Verschachtelung
 
-Der Abschnitt zur Spezifität, die Ein-Ebenen-Faustregel und die Einordnung gegenüber Sass stammen nicht aus der Quelle, sondern sind eigene Einordnung und nicht am Spezifikationstext gegengeprüft. Dasselbe gilt für den Abschnitt zu Kaskadenschichten: Er stammt aus eigener Projektpraxis (Kompatibilitäts-CSS, das fremde Plugin-Regeln nachspricht) und ist ebenfalls nicht am Spezifikationstext gegengeprüft.
+Der Abschnitt zur Spezifität, die Faustregel mit der einen Ebene und der Vergleich mit Sass stammen nicht aus der Quelle, sondern sind eigene Einordnung und nicht an der Spezifikation gegengeprüft. Dasselbe gilt für den Abschnitt zu Cascade Layers: Er stammt aus eigener Projektpraxis (Kompatibilitäts-CSS, das Regeln fremder Plugins nachbildet) und ist ebenfalls nicht an der Spezifikation gegengeprüft.

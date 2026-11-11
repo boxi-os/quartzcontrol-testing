@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: currentColor: Icon übernimmt die Textfarbe – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+.label { font-size: .8rem; color: #57606a; margin: 0 0 .25rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.reihe { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-start; }
+button { font: inherit; padding: .4rem .8rem; background: #fff; border: 1px solid currentColor; border-radius: .25rem; }
+</style>
+<style data-beispiel>
+.loeschen { color: crimson; }
+.loeschen:hover,
+.loeschen:focus-visible { color: darkred; background: #fee2e2; }
+.loeschen svg { width: 1em; height: 1em; vertical-align: -0.125em; }
+</style>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „SVG mit CSS gestalten“</p>
+  <h1>currentColor: Icon übernimmt die Textfarbe</h1>
+  <p>Das Icon hat <code>fill="currentColor"</code>. Beim Hover und Fokus wechselt nur <code>color</code> am Button, das Icon färbt sich mit.</p>
+  <p class="klein">Getestet in Chrome 155. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<main class="beispiel-buehne">
+<button type="button" class="loeschen"><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="currentColor" d="M6 2h8l1 2h3v2H2V4h3zM4 7h12l-1 11H5z"/></svg> Löschen</button>
+</main>
+</body>
+</html>

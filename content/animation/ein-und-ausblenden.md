@@ -13,7 +13,7 @@ applies_to:
 
 ## Ziel
 
-Ein Element – Popover, Dialog, Menü, Hinweis – soll beim Erscheinen einblenden und beim Verschwinden ausblenden, obwohl es dazwischen `display: none` hat. Optional auch auf seine natürliche Höhe (`height: auto`) auf- und zuklappen.
+Ein Element wie ein Popover, Dialog, Menü oder Hinweis soll weich einblenden, wenn es erscheint, und weich ausblenden, wenn es verschwindet, obwohl es dazwischen `display: none` hat. Auf Wunsch soll es auch auf seine natürliche Höhe (`height: auto`) auf- und zuklappen.
 
 ## Voraussetzungen
 
@@ -22,7 +22,7 @@ Ein Element – Popover, Dialog, Menü, Hinweis – soll beim Erscheinen einblen
 
 ## Getestet mit / Stand
 
-Stand 2026-09-12. Die CSS-Muster stammen aus MDN. **In Chrome 152 (macOS), 2026-09-13 getestet:** Popover blendet ein und aus, `display: none` in Keyframes greift am Ende, `interpolate-size` animiert in beide Richtungen, der `0fr`/`1fr`-Trick ebenfalls. **Nicht getestet:** Firefox und Safari – dort gelten die Einschränkungen unten. Wichtig vorab – laut `web-features` 3.38.0:
+Stand 2026-09-12. Die CSS-Muster stammen von MDN. **Am 2026-09-13 in Chrome 152 (macOS) getestet:** Das Popover blendet ein und aus, `display: none` in Keyframes greift am Ende, `interpolate-size` animiert in beide Richtungen, der Trick mit `0fr`/`1fr` ebenfalls. **Nicht getestet:** Firefox und Safari, dort gelten die Einschränkungen unten. Vorab das Wichtigste laut `web-features` 3.38.0:
 
 - **Einblenden** mit `@starting-style` funktioniert in allen großen Browsern.
 - **Ausblenden** hängt davon ab, dass `display` beim Schließen verzögert wird. Das kann Firefox nicht (Feature „display animation“: Chrome 117, Safari 18). Dort verschwindet das Element sofort.
@@ -33,11 +33,11 @@ Stand 2026-09-12. Die CSS-Muster stammen aus MDN. **In Chrome 152 (macOS), 2026-
 
 ### Popover oder Dialog mit Transition
 
-1. **Offenen Zustand definieren** – das Ziel des Einblendens.
-2. **Geschlossenen Zustand am Element selbst definieren** – das Ziel des Ausblendens.
-3. **`display` und `overlay` in die Transition-Liste** und beide mit `allow-discrete` versehen.
-4. **`@starting-style` nach der Regel für den offenen Zustand** – gleiche Spezifität, also gewinnt die spätere Regel.
-5. **`::backdrop` separat**, mit eigenem `@starting-style`-Block außerhalb – `&` kann keine Pseudoelemente abbilden.
+1. **Den offenen Zustand festlegen**, also das, worauf das Einblenden hinläuft.
+2. **Den geschlossenen Zustand am Element selbst festlegen**, also das, worauf das Ausblenden hinläuft.
+3. **`display` und `overlay` in die Transition-Liste aufnehmen**, beide mit `allow-discrete`.
+4. **`@starting-style` hinter die Regel für den offenen Zustand schreiben.** Beide sind gleich spezifisch, also gewinnt die spätere.
+5. **`::backdrop` gesondert behandeln**, mit eigenem `@starting-style`-Block außerhalb, weil `&` keine Pseudoelemente abbilden kann.
 
 ```css
 @media (prefers-reduced-motion: no-preference) {
@@ -87,9 +87,9 @@ Stand 2026-09-12. Die CSS-Muster stammen aus MDN. **In Chrome 152 (macOS), 2026-
 
 <a href="beispiele/ein-ausblenden-01-popover.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
-Das ist das MDN-Beispiel mit `translate` statt `transform: scaleX()` und eingebettet in die Media Query.[^mdn-popover] Für einen modalen Dialog dasselbe mit `dialog:open` und `dialog` – oder `dialog[open]`, wo `:open` fehlt.[^mdn-dialog]
+Das ist das MDN-Beispiel, nur mit `translate` statt `transform: scaleX()` und in der Media Query.[^mdn-popover] Für einen modalen Dialog geht dasselbe mit `dialog:open` und `dialog`, oder mit `dialog[open]`, wo `:open` fehlt.[^mdn-dialog]
 
-Kürzer, aber mit allen Eigenschaften: `transition: all 200ms allow-discrete;` – so steht es als Kommentar im MDN-Beispiel.[^mdn-popover]
+Kürzer geht es mit `transition: all 200ms allow-discrete;`, dann aber für alle Eigenschaften. So steht es als Kommentar im MDN-Beispiel.[^mdn-popover]
 
 ### Alternative: Keyframes
 
@@ -109,7 +109,7 @@ Mit Keyframe-Animationen ist `@starting-style` nicht nötig, und `display` darf 
 
 <a href="beispiele/ein-ausblenden-02-keyframes.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
-`forwards` hält den Endzustand fest.[^chrome-entry-exit] Keyframes lohnen sich bei mehrstufigen Effekten, die mit einer Transition nicht gehen. Die Klasse muss dann ein Skript setzen. Wer das Element anschließend entfernt, wartet das Ende der Animation ab.
+`forwards` hält den Endzustand fest.[^chrome-entry-exit] Keyframes lohnen sich bei Effekten mit mehreren Stufen, die mit einer Transition nicht gehen. Die Klasse muss dann ein Skript setzen. Wer das Element danach entfernt, wartet das Ende der Animation ab.
 
 ### Auf `height: auto` animieren
 
@@ -132,9 +132,9 @@ Mit Keyframe-Animationen ist `@starting-style` nicht nötig, und `display` darf 
 
 <a href="beispiele/ein-ausblenden-03-height-auto.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
-`interpolate-size` wird vererbt; auf `:root` gilt es für die ganze Seite, auf einem Teilbaum wie `main` nur dort.[^height-auto] Browser ohne Unterstützung springen einfach – das ist gewollt.[^height-auto]
+`interpolate-size` wird vererbt. An `:root` gilt es für die ganze Seite, an einem Teilbaum wie `main` nur dort.[^height-auto] Browser, die es nicht können, springen einfach, und das ist so gewollt.[^height-auto]
 
-Wer die Animation überall braucht: Grid-Zeilen lassen sich animieren (laut `web-features` 3.38.0 Baseline *widely available* seit 2022-10-27).
+Wer die Animation in allen Browsern braucht, kann Grid-Zeilen animieren (laut `web-features` 3.38.0 Baseline *widely available* seit 2022-10-27).
 
 ```css
 .panel {
@@ -152,28 +152,28 @@ Wer die Animation überall braucht: Grid-Zeilen lassen sich animieren (laut `web
 
 <a href="beispiele/ein-ausblenden-04-grid-rows.htm" target="_blank" rel="noopener">↗ Beispiel in neuem Tab öffnen</a>
 
-Der `0fr`/`1fr`-Trick ist in keiner der ausgewerteten Quellen beschrieben, sondern verbreitete Praxis. In Chrome 152 getestet; ob er in Firefox und Safari genauso läuft, ist offen, obwohl die Baseline-Daten dafür sprechen.
+Der Trick mit `0fr`/`1fr` steht in keiner der ausgewerteten Quellen, ist aber weit verbreitet. In Chrome 152 getestet. Ob er in Firefox und Safari genauso läuft, ist offen, auch wenn die Baseline-Daten dafür sprechen.
 
 ## Warum funktioniert das?
 
-- Transitions starten normalerweise **nicht**, wenn ein Element zum ersten Mal Stile bekommt oder aus `display: none` kommt. `@starting-style` liefert für genau diesen Moment Startwerte.[^starting-style]
-- Es gibt **drei Zustände**: Start (`@starting-style`), offen und Standard. Beim Schließen geht es zum Standardzustand, nicht zurück zum Start – Ein- und Ausblenden dürfen sich unterscheiden.[^starting-style]
-- `display` ist diskret. Mit `allow-discrete` wechselt es beim Einblenden bei 0 %, beim Ausblenden erst bei 100 % – das Element bleibt während der Transition sichtbar.[^mdn-popover]
-- `overlay` verzögert das Entfernen aus dem Top Layer bis zum Ende der Transition.[^mdn-popover]
-- `interpolate-size` ist Opt-in, weil viele bestehende Stylesheets davon ausgehen, dass `auto` nicht animiert.[^height-auto]
+- Transitions starten normalerweise **nicht**, wenn ein Element zum ersten Mal Styles bekommt oder aus `display: none` kommt. `@starting-style` liefert genau für diesen Moment Startwerte.[^starting-style]
+- Es gibt **drei Zustände**: Start (`@starting-style`), offen und Standard. Beim Schließen geht es zum Standardzustand, nicht zurück zum Start. Ein- und Ausblenden dürfen also unterschiedlich aussehen.[^starting-style]
+- `display` kennt keine Zwischenwerte. Mit `allow-discrete` springt es beim Einblenden gleich am Anfang um, beim Ausblenden erst am Ende. So bleibt das Element während der Transition sichtbar.[^mdn-popover]
+- `overlay` sorgt dafür, dass das Element erst am Ende der Transition aus dem Top Layer genommen wird.[^mdn-popover]
+- `interpolate-size` muss man ausdrücklich einschalten, weil viele bestehende Stylesheets davon ausgehen, dass `auto` nicht animiert wird.[^height-auto]
 
 ## Fallstricke
 
-- **`@starting-style` vor der offenen Regel:** wird überschrieben, das Einblenden fehlt.[^starting-style] Verschachtelt in der Regel stellt sich das Problem nicht.
-- **`display` fehlt in der Transition-Liste:** Das Ausblenden ist unsichtbar, das Element verschwindet sofort.[^mdn-popover]
-- **Firefox:** blendet laut Baseline-Daten nicht aus, egal wie korrekt das CSS ist. Das Einblenden funktioniert.
-- **Firefox und `display` in Keyframes:** Auch das gehört zum Feature „display animation“. Beim Keyframe-Beispiel bleibt das Element dort vermutlich unsichtbar, aber vorhanden (`opacity: 0`, weiter im Layout und klickbar) – abgeleitet, nicht getestet. Wer sichergehen will, entfernt oder versteckt es nach dem `animationend`-Event per Skript.
-- **Ohne `overlay` (Firefox, Safari):** MDN nennt den Unterschied bei einfachen Animationen „möglicherweise nicht bemerkbar“, bei komplexeren kann das Element vor Ende der Transition aus dem Top Layer fallen.[^mdn-popover]
-- **`::backdrop` und Nesting:** Der Startzustand für `::backdrop` muss als eigener Block stehen.[^mdn-popover]
-- **`interpolate-size` global:** Kann Stellen der Seite verändern, die bisher bewusst gesprungen sind. Dann auf einen Teilbaum beschränken.[^height-auto]
-- **Tippfehler in der Chrome-Quelle:** Dort steht einmal `interpolate-size: allow-sizes`; richtig ist `allow-keywords`.
-- **`height` animiert Layout:** Das ist teurer als `transform`/`opacity`.[^webdev] Bei kurzen Aufklapp-Effekten meist vertretbar, bei vielen Elementen gleichzeitig prüfen.
-- **Bewegung:** alles in `@media (prefers-reduced-motion: no-preference)`, siehe [[animation/barrierearme-animationen|Barrierearme Animationen]]. Deckkraft-Übergänge sind meist unkritisch, Verschiebungen weniger.
+- **`@starting-style` vor der Regel für den offenen Zustand:** Dann wird es überschrieben, und das Einblenden fehlt.[^starting-style] Verschachtelt man es in die Regel, tritt das Problem nicht auf.
+- **`display` fehlt in der Transition-Liste:** Dann sieht man das Ausblenden nicht, das Element verschwindet sofort.[^mdn-popover]
+- **Firefox** blendet laut Baseline-Daten nicht aus, egal wie korrekt das CSS ist. Das Einblenden funktioniert.
+- **Firefox und `display` in Keyframes:** Auch das gehört zum Feature „display animation“. Beim Keyframe-Beispiel bleibt das Element dort vermutlich unsichtbar, ist aber noch da (`opacity: 0`, weiter im Layout und klickbar). Das ist abgeleitet, nicht getestet. Wer sichergehen will, entfernt oder versteckt es nach dem `animationend`-Event per Skript.
+- **Ohne `overlay` (Firefox, Safari):** Bei einfachen Animationen ist der Unterschied laut MDN „möglicherweise nicht bemerkbar“. Bei aufwendigeren kann das Element vor dem Ende der Transition aus dem Top Layer fallen.[^mdn-popover]
+- **`::backdrop` und Nesting:** Der Startzustand für `::backdrop` muss als eigener Block dastehen.[^mdn-popover]
+- **`interpolate-size` für die ganze Seite:** Kann Stellen verändern, die bisher bewusst gesprungen sind. Dann besser auf einen Teilbaum beschränken.[^height-auto]
+- **Tippfehler in der Chrome-Quelle:** Dort steht einmal `interpolate-size: allow-sizes`, richtig ist `allow-keywords`.
+- **`height` animiert das Layout:** Das ist teurer als `transform` oder `opacity`.[^webdev] Bei kurzem Aufklappen meist vertretbar, bei vielen Elementen gleichzeitig sollte man es prüfen.
+- **Bewegung:** alles in `@media (prefers-reduced-motion: no-preference)` packen, siehe [[animation/barrierearme-animationen|Barrierearme Animationen]]. Übergänge der Deckkraft sind meist unproblematisch, Verschiebungen eher nicht.
 
 ### Browsersupport
 
@@ -207,7 +207,7 @@ Quelle: `web-features` 3.38.0 (Baseline-Daten der W3C WebDX Community Group), lo
 - [[quellen/artikel/height-auto-chrome|Animate to height auto (Chrome for Developers)]] — `interpolate-size`, `calc-size()`
 - [[quellen/artikel/performante-animationen-webdev|How to create high-performance CSS animations (web.dev)]] — Layout-Animationen sind teurer
 
-Eigene Einordnung bzw. nicht aus den Quellen: der `0fr`/`1fr`-Trick, die Anpassung mit `translate` und die Einbettung in die Media Query. Getestet nur in Chrome 152.
+Eigene Einordnung bzw. nicht aus den Quellen: der Trick mit `0fr`/`1fr`, die Anpassung mit `translate` und die Media Query drumherum. Getestet nur in Chrome 152.
 
 [^mdn-popover]: [[quellen/artikel/popover-api-mdn|Using the Popover API (MDN)]], Abschnitte „Animating popovers“ und „Transitioning a popover“.
 [^mdn-dialog]: [[quellen/artikel/dialog-element-mdn|dialog-Element (MDN)]], Abschnitt „Animating dialogs“.

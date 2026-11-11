@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: CSS schlägt Präsentationsattribute – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+.label { font-size: .8rem; color: #57606a; margin: 0 0 .25rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.reihe { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-start; }
+
+</style>
+<style data-beispiel>
+.a rect          { fill: royalblue; }
+:where(.b) rect  { fill: royalblue; }
+.c rect          { fill: royalblue; }
+</style>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „SVG mit CSS gestalten“</p>
+  <h1>CSS schlägt Präsentationsattribute</h1>
+  <p>Alle drei Rechtecke haben im SVG <code>fill="red"</code>. Die CSS-Regel gewinnt immer, auch mit <code>:where()</code> und Spezifität 0. Nur ein <code>style</code>-Attribut schlägt das Stylesheet.</p>
+  <p class="klein">Getestet in Chrome 155. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<main class="beispiel-buehne">
+<div class="reihe">
+  <figure class="a"><svg width="80" height="80"><rect width="80" height="80" fill="red"/></svg><figcaption class="label">fill="red" + .a rect</figcaption></figure>
+  <figure class="b"><svg width="80" height="80"><rect width="80" height="80" fill="red"/></svg><figcaption class="label">fill="red" + :where(.b) rect</figcaption></figure>
+  <figure class="c"><svg width="80" height="80"><rect width="80" height="80" style="fill:seagreen"/></svg><figcaption class="label">style="fill: seagreen" + .c rect</figcaption></figure>
+</div>
+</main>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beispiel: Drehen um die eigene Mitte mit transform-box – CSS-Notizen</title>
+<style>
+/* Rahmen der Beispielseite – nicht Teil des Beispiels */
+:root { color-scheme: light; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1f2328; background: #fff; }
+.beispiel-kopf { padding: 1rem 1.25rem; background: #f3f4f6; border-bottom: 1px solid #d0d7de; }
+.beispiel-kopf.unten { border-top: 1px solid #d0d7de; border-bottom: 0; margin-top: 2rem; }
+.beispiel-kopf h1 { font-size: 1.25rem; line-height: 1.3; margin: .25rem 0; }
+.beispiel-kopf p { margin: .25rem 0; max-width: 60rem; }
+.beispiel-kopf .klein { font-size: .875rem; color: #57606a; }
+.beispiel-buehne { padding: 1.25rem; }
+.fuell p { max-width: 38rem; }
+.label { font-size: .8rem; color: #57606a; margin: 0 0 .25rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.reihe { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-start; }
+.rahmen { border: 1px solid #9ca3af; overflow: visible; }
+</style>
+<style data-beispiel>
+.zahnrad { transition: rotate .6s ease; }
+@media (prefers-reduced-motion: reduce) { .zahnrad { transition: none; } }
+svg:hover .zahnrad { rotate: 90deg; }
+
+.mit .zahnrad { transform-box: fill-box; transform-origin: center; }
+</style>
+</head>
+<body>
+<header class="beispiel-kopf">
+  <p class="klein">Beispiel zur Notiz „SVG mit CSS gestalten“</p>
+  <h1>Drehen um die eigene Mitte mit transform-box</h1>
+  <p>Mit der Maus über die Zahnräder fahren. Links dreht sich die Form um den Ursprung des SVG und wandert aus dem Bild. Rechts mit <code>transform-box: fill-box</code> dreht sie sich an Ort und Stelle.</p>
+  <p class="klein">Statt eines echten Zahnrads dreht sich ein Rechteck, damit die Drehung gut zu sehen ist.</p>
+  <p class="klein">Getestet in Chrome 155. Browserstand und Einordnung: siehe Notiz.</p>
+</header>
+<main class="beispiel-buehne">
+<div class="reihe">
+  <figure class="ohne"><svg class="rahmen" width="160" height="160" viewBox="0 0 100 100"><rect class="zahnrad" x="35" y="40" width="30" height="20" fill="#1e3a8a"/></svg><figcaption class="label">ohne transform-box</figcaption></figure>
+  <figure class="mit"><svg class="rahmen" width="160" height="160" viewBox="0 0 100 100"><rect class="zahnrad" x="35" y="40" width="30" height="20" fill="#1e3a8a"/></svg><figcaption class="label">transform-box: fill-box</figcaption></figure>
+</div>
+</main>
+</body>
+</html>
