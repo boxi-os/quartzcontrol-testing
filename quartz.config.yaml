@@ -44,6 +44,10 @@ configuration:
   contentIndex:
     enableSiteMap: true
     enableRSS: true
+  fonts:
+    enabled: true
+    interface: Noto Sans
+    fontOrigin: local
 plugins:
   - source: "@quartz-community/created-modified-date"
     enabled: true
@@ -112,8 +116,6 @@ plugins:
   - source: "@quartz-community/roam"
     enabled: false
     order: 92
-  - source: "@quartz-community/quartz-fonts"
-    enabled: false
   - source: "@quartz-themes/core"
     enabled: false
     options:
@@ -160,7 +162,7 @@ plugins:
     enabled: false
     layout:
       position: left
-      priority: 30
+      priority: 20
     options:
       folderDefaultState: open
       folderClickBehavior: link
@@ -175,7 +177,7 @@ plugins:
     enabled: true
     layout:
       position: header
-      priority: 30
+      priority: 40
       group: toolbar
       groupOptions:
         shrink: false
@@ -209,19 +211,19 @@ plugins:
     enabled: true
     layout:
       position: header
-      priority: 20
+      priority: 30
       group: brand
   - source: "@quartz-community/darkmode"
     enabled: true
     layout:
       position: header
-      priority: 40
+      priority: 50
       group: toolbar
   - source: "@quartz-community/reader-mode"
     enabled: true
     layout:
       position: header
-      priority: 50
+      priority: 60
       group: toolbar
   - source: "@quartz-community/breadcrumbs"
     enabled: true
@@ -266,7 +268,7 @@ plugins:
     order: 25
     layout:
       position: left
-      priority: 25
+      priority: 10
       display: mobile-only
   - source: "@quartz-community/bases-page"
     enabled: true
@@ -325,7 +327,7 @@ plugins:
         class="site-mark-text">{{siteTitle}}</span></a>
     layout:
       position: header
-      priority: 10
+      priority: 20
       group: brand
   - source: github:boxi-os/quartz-multilanguage
     enabled: false
@@ -392,7 +394,7 @@ plugins:
             — or you switch it off there.</p>
     layout:
       position: left
-      priority: 40
+      priority: 30
       display: desktop-only
   - source: github:boxi-os/quartz-layout-box
     enabled: true
@@ -471,7 +473,6 @@ plugins:
     enabled: true
     order: 600
     options:
-      variant: accordion
       showHome: true
       folderClick: toggle
       indexEntry: first
@@ -482,9 +483,23 @@ plugins:
       breakpoints:
         mobile: 900px
         desktop: 1200px
+      rail:
+        rest: icons
+        content: push
+        hoverContent: overlay
+        pinContent: push
+      variant: rail
+      dividers:
+        - komponenten
+      nodeIcons:
+        komponenten: lucide:book-open
+      depth: 1
     layout:
-      position: left
-      priority: 30
+      position: header
+      priority: 10
+      group: brand
+      groupOptions:
+        align: start
   - source: github:boxi-os/quartz-navigations
     enabled: true
     order: 600
@@ -498,8 +513,7 @@ plugins:
       chevrons: true
       folderClick: link
       persistState: true
-      scope: parent
-      depth: 1
+      scope: section
     layout:
       position: right
       priority: 20

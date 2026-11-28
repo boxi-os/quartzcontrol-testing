@@ -1,0 +1,19 @@
+{
+  "title": "CSS-Notizen",
+  "subtitle": "zum testen",
+  "author": "",
+  "language": "",
+  "root": "",
+  "order": null,
+  "excluded": [],
+  "coverImage": "",
+  "toc": true,
+  "tagIndex": false,
+  "backlinks": false,
+  "outsideLinks": "site",
+  "pdf": {
+    "pageSize": "A4",
+    "landscape": false
+  },
+  "version": 1
+}

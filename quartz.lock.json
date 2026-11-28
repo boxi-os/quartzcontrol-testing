@@ -34,8 +34,8 @@
     "obsidian-plugin-excalidraw": {
       "source": "github:quartz-community/obsidian-plugin-excalidraw",
       "resolved": "https://github.com/quartz-community/obsidian-plugin-excalidraw.git",
-      "commit": "56de4bba10e1ce9d30526b382790a6071c69b7ef",
-      "installedAt": "2026-11-11T23:04:45.504Z"
+      "commit": "9862e345ba01d9a9e2e2fb1414795868c2bde10d",
+      "installedAt": "2026-11-28T10:25:45.540Z"
     },
     "quartz-forms": {
       "source": "/Users/boxi/Development/quartz-forms",
@@ -46,20 +46,20 @@
     "quartz-layout-box": {
       "source": "github:boxi-os/quartz-layout-box",
       "resolved": "https://github.com/boxi-os/quartz-layout-box.git",
-      "commit": "6fecd5add422820d62f104be7843f46189bce420",
-      "installedAt": "2026-11-04T19:57:57.284Z"
+      "commit": "61e242ce2074b1fb614fbadd7201a482cf30a5a1",
+      "installedAt": "2026-11-15T19:00:27.473Z"
     },
     "quartz-multilanguage": {
       "source": "github:boxi-os/quartz-multilanguage",
       "resolved": "https://github.com/boxi-os/quartz-multilanguage.git",
-      "commit": "4d74d9f332075910ce7e12231b4d31da25a37c6d",
-      "installedAt": "2026-11-11T23:04:45.558Z"
+      "commit": "eb1b232146afb6a993b4bdb36801ddefaf67d959",
+      "installedAt": "2026-11-25T19:55:40.984Z"
     },
     "quartz-navigations": {
       "source": "github:boxi-os/quartz-navigations",
       "resolved": "https://github.com/boxi-os/quartz-navigations.git",
-      "commit": "354dd51227269c8a9b91831369f7b43759cf857e",
-      "installedAt": "2026-10-26T00:07:12.161Z"
+      "commit": "a01a2877ea1a2b9a7ab276fe5f9e39cb784dad00",
+      "installedAt": "2026-11-21T23:27:49.587Z"
     }
   }
 }
